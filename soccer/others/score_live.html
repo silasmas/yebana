@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YEBANA Scores en Direct</title>
+    <link rel="stylesheet" href="css/live.css"> <!-- On réutilise le CSS général pour l'expérience mobile -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #f4f4f4; /* Fond gris clair */
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.header {
+    background-color: #007bff; /* Bleu standard */
+    color: white;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 1.8em;
+}
+
+.container {
+    flex-grow: 1;
+    padding: 20px;
+    max-width: 900px; /* Taille standard pour le conteneur */
+    margin: 20px auto 80px auto; /* Espace pour le menu fixe en bas */
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    color: #333;
+    font-size: 1.5em;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+/* --- Formulaires Généraux --- */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group input[type="number"],
+.form-group select,
+.form-group textarea {
+    width: calc(100% - 20px); /* Ajustement pour padding */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1em;
+    box-sizing: border-box; /* Inclut padding et border dans la largeur */
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.btn-submit {
+    background-color: #28a745; /* Vert pour les actions principales */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+.btn-submit:hover {
+    background-color: #218838;
+}
+
+/* --- Styles spécifiques du formulaire d'enregistrement --- */
+.registration-form {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0; /* Bordure plus douce */
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    max-width: 800px; /* La largeur agrandie */
+    margin: 30px auto;
+}
+
+.registration-form .form-group-inline {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.registration-form .form-group-inline .form-group {
+    flex: 1;
+    min-width: calc(50% - 10px); /* Pour 2 colonnes */
+    margin-bottom: 15px;
+}
+
+@media (max-width: 600px) {
+    .registration-form .form-group-inline .form-group {
+        min-width: 100%; /* Une colonne sur mobile */
+    }
+}
+
+
+/* --- Statistiques Clés (Dashboard) --- */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.stat-card h3 {
+    margin-top: 10px;
+    color: #555;
+    font-size: 1.1em;
+}
+
+.stat-card .stat-value {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #007bff;
+    margin: 10px 0 0;
+}
+
+.stat-card i {
+    font-size: 3em;
+    color: #007bff;
+}
+
+/* --- Styles pour les Tableaux --- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    border-radius: 5px;
+    overflow: hidden; /* Pour que border-radius fonctionne */
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px 15px;
+    text-align: left;
+    font-size: 0.9em;
+}
+
+th {
+    background-color: #f2f2f2;
+    color: #555;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #eef;
+}
+
+/* --- Boutons d'action dans les tableaux --- */
+.btn-action {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    margin: 2px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85em;
+    transition: background-color 0.3s ease;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-action i {
+    margin-right: 5px;
+}
+
+.btn-action:hover {
+    background-color: #0056b3;
+}
+
+.btn-action.approve {
+    background-color: #28a745; /* Vert */
+}
+.btn-action.approve:hover {
+    background-color: #218838;
+}
+
+.btn-action.reject {
+    background-color: #dc3545; /* Rouge */
+}
+.btn-action.reject:hover {
+    background-color: #c82333;
+}
+
+.btn-action.view {
+    background-color: #17a2b8; /* Bleu-cyan */
+}
+.btn-action.view:hover {
+    background-color: #138496;
+}
+
+.btn-action.resolve {
+    background-color: #6c757d; /* Gris pour résolue */
+}
+.btn-action.resolve:hover:not(:disabled) {
+    background-color: #5a6268;
+}
+.btn-action:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* --- Badges de statut --- */
+.status {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.75em;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.status.pending {
+    background-color: #ffc107; /* Jaune */
+    color: #333;
+}
+
+.status.resolved {
+    background-color: #28a745; /* Vert */
+    color: white;
+}
+.status.active {
+    background-color: #007bff;
+    color: white;
+}
+.status.inactive {
+    background-color: #6c757d;
+    color: white;
+}
+
+/* --- Pagination --- */
+.pagination {
+    text-align: center;
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
+.pagination a {
+    color: #007bff;
+    padding: 8px 15px;
+    text-decoration: none;
+    transition: background-color .3s;
+    border: 1px solid #ddd;
+    margin: 0 4px;
+    border-radius: 4px;
+}
+
+.pagination a.active {
+    background-color: #007bff;
+    color: white;
+    border: 1px solid #007bff;
+}
+
+.pagination a:hover:not(.active) {
+    background-color: #e9ecef;
+}
+
+/* --- Styles pour le formulaire de recherche (page recherche.php) --- */
+.search-form {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    max-width: 900px;
+    margin: 30px auto;
+    text-align: center;
+}
+
+.form-group-inline {
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Réduit un peu le gap */
+    margin-bottom: 25px; /* Réduit un peu la marge */
+    flex-wrap: wrap;
+}
+
+.search-form .form-group {
+    margin-bottom: 0;
+    flex: 1;
+    min-width: 100px; /* Légèrement plus petit */
+    max-width: 150px; /* Légèrement plus petit */
+}
+
+.search-form select {
+    width: 100%;
+    padding: 10px; /* Moins de padding */
+    border: 1px solid #ccc;
+    border-radius: 4px; /* Moins arrondi */
+    font-size: 0.95em; /* Légèrement plus petit */
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    /* Flèche par défaut du navigateur, ou une icône plus simple si nécessaire */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292%22%20height%3D%22292%22%3E%3Cpath%20fill%3D%22%23333%22%20d%3D%22M287%2069L146%20208%205%2069%2025%2049%20146%20169%20267%2049z%22%2F%3E%3C%2Fsvg%3E'); /* Flèche noire */
+    background-repeat: no-repeat;
+    background-position: right 8px top 50%;
+    background-size: 10px auto;
+}
+
+.search-form select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    outline: none;
+}
+
+.search-form .btn-submit {
+    background-color: #007bff; /* Bleu standard pour le bouton */
+    margin-top: 15px; /* Moins de marge */
+}
+
+.search-form .btn-submit:hover {
+    background-color: #0056b3;
+}
+
+/* Message de recherche */
+.message {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    text-align: center;
+}
+
+.message.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* --- Navigation du pied de page (footer-nav) --- */
+.footer-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #343a40; /* Gris foncé pour le footer */
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.footer-nav .nav-item {
+    color: #adb5bd; /* Gris clair */
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+    font-size: 0.8em;
+}
+
+.footer-nav .nav-item i {
+    font-size: 1.5em;
+    margin-bottom: 5px;
+}
+
+.footer-nav .nav-item:hover,
+.footer-nav .nav-item.active {
+    background-color: #007bff; /* Bleu principal au survol/actif */
+    color: white;
+}
+
+.footer-nav .nav-item.active {
+    font-weight: bold;
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+        margin: 15px auto 80px auto;
+    }
+
+    h2 {
+        font-size: 1.4em;
+        padding-bottom: 8px;
+        margin-bottom: 15px;
+    }
+
+    .stat-card {
+        padding: 15px;
+    }
+
+    .stat-card .stat-value {
+        font-size: 2em;
+    }
+
+    .stat-card i {
+        font-size: 2.5em;
+    }
+
+    th, td {
+        padding: 8px 10px;
+        font-size: 0.8em;
+    }
+
+    .btn-action {
+        padding: 6px 10px;
+        font-size: 0.75em;
+        margin: 1px;
+    }
+    .btn-action i {
+        margin-right: 3px;
+    }
+
+    .status {
+        padding: 3px 8px;
+        font-size: 0.7em;
+    }
+}
+
+@media (max-width: 480px) {
+    .header h1 {
+        font-size: 1.5em;
+    }
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    .btn-action {
+        display: block; /* Empile les boutons sur les très petits écrans */
+        width: calc(100% - 4px);
+        margin-bottom: 4px;
+    }
+    .footer-nav {
+        flex-wrap: wrap; /* Permet aux éléments de passer à la ligne si trop nombreux */
+        padding: 8px 0;
+        justify-content: center; /* Centre les éléments si wrap */
+    }
+    .footer-nav .nav-item {
+        width: auto; /* Laisse le contenu définir la largeur */
+        flex: 1; /* Permet un espacement égal */
+        font-size: 0.7em;
+        padding: 5px 0; /* Padding vertical seulement */
+        margin: 0 2px; /* Petites marges horizontales */
+    }
+    .footer-nav .nav-item i {
+        font-size: 1.3em;
+    }
+
+    .search-form .form-group-inline {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .search-form .form-group {
+        width: 100%;
+        max-width: none;
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Scores en Direct</h1>
+    </div>
+
+    <div class="container score-container">
+        <div id="liveScoresList">
+            <!-- Les matchs seront chargés et mis à jour ici par JavaScript -->
+            <div class="loading-message">Chargement des scores en direct... <i class="fas fa-spinner fa-spin"></i></div>
+            <!-- Exemple de structure d'un match (sera généré dynamiquement) -->
+            <!--
+            <div class="match-card live">
+                <div class="match-header">
+                    <span class="league">Ligue 1 - France</span>
+                    <span class="status live-status"><i class="fas fa-futbol"></i> EN DIRECT</span>
+                    <span class="time">75'</span>
+                </div>
+                <div class="teams">
+                    <div class="team">
+                        <img src="https://placehold.co/40x40/0000FF/FFFFFF?text=DOM" alt="Équipe Domicile" class="team-logo">
+                        <span class="team-name">Équipe Domicile</span>
+                        <span class="score">2</span>
+                    </div>
+                    <div class="team">
+                        <img src="https://placehold.co/40x40/FF0000/FFFFFF?text=EXT" alt="Équipe Extérieur" class="team-logo">
+                        <span class="team-name">Équipe Extérieur</span>
+                        <span class="score">1</span>
+                    </div>
+                </div>
+                <div class="match-details">
+                    <p>Prochain match le 28/06 à 20:00</p>
+                </div>
+            </div>
+            -->
+        </div>
+        <div id="noMatchesMessage" class="message error" style="display: none;">
+            Aucun match en direct ou à venir pour le moment.
+        </div>
+    </div>
+
+    <nav class="footer-nav">
+        <a href="index.php" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>Accueil</span>
+        </a>
+        <a href="profil.php" class="nav-item">
+            <i class="fas fa-user"></i>
+            <span>Profil</span>
+        </a>
+        <a href="live.php" class="nav-item">
+            <i class="fas fa-video"></i>
+            <span>Live</span>
+        </a>
+        <a href="explore.html" class="nav-item active">
+            <i class="fas fa-search"></i>
+            <span>Explorer</span>
+        </a>
+    </nav>
+
+    <script src="js/score_live.js"></script>
+</body>
+</html>

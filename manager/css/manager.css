@@ -1,0 +1,307 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    background-color: #f0f2f5; /* Un gris très clair */
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.header {
+    background-color: #cc0000; /* Un bleu foncé pour les managers */
+    color: white;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 2em;
+    font-weight: 700;
+}
+
+.container {
+    flex-grow: 1;
+    padding: 30px;
+    max-width: 1000px;
+    margin: 30px auto 100px auto;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    color: #333;
+    font-size: 1.8em;
+    font-weight: 700;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 15px;
+    margin-top: 40px;
+    margin-bottom: 25px;
+}
+
+/* --- Formulaire de Recherche --- */
+.search-form {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    margin-bottom: 40px;
+    width: 80%; /* Augmentation de la largeur maximale */
+    margin-left: auto; /* Pour centrer */
+    margin-right: auto; /* Pour centrer */
+}s
+
+.search-form .form-group {
+    margin-bottom: 20px;
+}
+
+.search-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+}
+
+.search-form input[type="text"],
+.search-form input[type="number"],
+.search-form select {
+    width: calc(100% - 22px); /* Ajustement pour padding et border */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1em;
+    box-sizing: border-box;
+}
+
+.search-form select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292%22%20height%3D%22292%22%3E%3Cpath%20fill%3D%22%23333%22%20d%3D%22M287%2069L146%20208%205%2069%2025%2049%20146%20169%20267%2049z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right 10px top 50%;
+    background-size: 12px auto;
+}
+
+.search-form input:focus,
+.search-form select:focus {
+    border-color: #cc0000;
+    box-shadow: 0 0 0 0.2rem rgba(0, 77, 128, 0.25);
+    outline: none;
+}
+
+.btn-submit {
+    background-color: #007bff; /* Un bleu plus clair pour les actions */
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.05em;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-submit:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+/* --- Cartes de Talents --- */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.talent-card {
+    background-color: #fcfcfc;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.talent-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.talent-card img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #cc0000; /* Bordure colorée autour de l'image */
+    margin-bottom: 15px;
+}
+
+.talent-card h3 {
+    margin: 10px 0;
+    font-size: 1.4em;
+    color: #cc0000;
+}
+
+.talent-card p {
+    font-size: 0.95em;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.talent-card .details {
+    font-size: 0.85em;
+    color: #888;
+    margin-top: 15px;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+}
+
+.talent-card .btn-view-profile {
+    background-color: #28a745; /* Vert pour l'action principale */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+}
+
+.talent-card .btn-view-profile:hover {
+    background-color: #218838;
+}
+
+/* Messages (réutilisé de l'admin) */
+.message {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+}
+.message.success {
+    background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb;
+}
+.message.error {
+    background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;
+}
+
+
+/* --- Navigation du pied de page (footer-nav) --- */
+.footer-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fff; /* Un gris très foncé, presque noir */
+    display: flex;
+    justify-content: space-around;
+    padding: 12px 0; /* Plus de padding */
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.3); /* Ombre plus prononcée */
+    z-index: 1000;
+}
+
+.footer-nav .nav-item {
+    color: #bdc1c6; /* Gris clair */
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 15px; /* Plus de padding */
+    border-radius: 8px; /* Plus arrondi */
+    transition: background-color 0.3s, color 0.3s, transform 0.2s;
+    font-size: 0.95em; /* Légèrement plus grand */
+    font-weight: 500;
+}
+
+.footer-nav .nav-item i {
+    font-size: 1.8em; /* Icônes plus grandes */
+    margin-bottom: 6px; /* Plus d'espace */
+}
+
+.footer-nav .nav-item:hover,
+.footer-nav .nav-item.active {
+    background-color: #cc0000; /* Bleu foncé du manager au survol/actif */
+    color: white;
+    transform: translateY(-3px); /* Léger effet 3D */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.footer-nav .nav-item.active {
+    font-weight: bold;
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+        margin: 20px auto 100px auto;
+    }
+
+    h2 {
+        font-size: 1.5em;
+        padding-bottom: 10px;
+        margin-top: 30px;
+        margin-bottom: 20px;
+    }
+
+    .search-form {
+        padding: 20px;
+    }
+
+    .talent-card {
+        padding: 15px;
+    }
+
+    .talent-card img {
+        width: 80px;
+        height: 80px;
+    }
+
+    .talent-card h3 {
+        font-size: 1.2em;
+    }
+
+    .talent-card p {
+        font-size: 0.9em;
+    }
+
+    .talent-card .btn-view-profile {
+        padding: 8px 15px;
+        font-size: 0.85em;
+    }
+}
+
+@media (max-width: 480px) {
+    .header h1 {
+        font-size: 1.5em;
+    }
+    .cards-grid {
+        grid-template-columns: 1fr; /* Une seule colonne sur mobile */
+    }
+
+    .footer-nav {
+        flex-wrap: nowrap; /* Assure que les éléments restent sur une seule ligne */
+        justify-content: space-around; /* Distribue l'espace uniformément entre les éléments */
+        overflow-x: hidden; /* Cache la barre de défilement horizontale */
+        padding: 10px 0;
+    }
+    .footer-nav .nav-item {
+        flex: 1; /* Chaque élément prend une part égale de l'espace */
+        min-width: unset;
+        padding: 5px 0;
+        font-size: 0.75em;
+        text-align: center;
+    }
+    .footer-nav .nav-item i {
+        font-size: 1.6em;
+        margin-bottom: 3px;
+    }
+}

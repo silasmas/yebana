@@ -1,0 +1,372 @@
+/* style.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+/* Définition des variables CSS pour les couleurs */
+:root {
+    --primary-color: #cc0000;          /* Bleu vif (pour les accents, liens) */
+    --secondary-color: #f5b70e;        /* Vert (pour les boutons d'action) */
+    --dark-text-color: #333;           /* Texte sombre général */
+    --medium-text-color: #666;         /* Texte secondaire */
+    --light-bg-color: #f8f9fa;         /* Fond clair des éléments */
+    --white-color: #fff;               /* Blanc */
+    --border-color: #e2e6ea;           /* Couleur des bordures */
+    --input-border-color: #c9d0d6;     /* Couleur des bordures d'input */
+    --hover-bg-color: #e9ecef;         /* Couleur de fond au survol */
+    --shadow-color: rgba(0, 0, 0, 0.1); /* Couleur de l'ombre légère */
+    --primary-shadow-color: rgba(0, 123, 255, 0.4); /* Ombre pour le primaire sélectionné */
+    --secondary-shadow-color: rgba(40, 167, 69, 0.3); /* Ombre pour le secondaire (bouton) */
+}
+
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--primary-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    color: var(--dark-text-color);
+    overflow-x: hidden;
+}
+
+.container {
+    background-color: var(--white-color);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px var(--shadow-color);
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+    transform: translateY(0);
+    animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 25px;
+    color: var(--primary-color); /* Couleur primaire pour l'icône du logo */
+}
+
+.logo i {
+    font-size: 3em;
+    margin-right: 10px;
+}
+
+.logo h1 {
+    font-size: 2.5em;
+    margin: 0;
+    color: var(--dark-text-color);
+}
+
+p {
+    margin-bottom: 30px;
+    color: var(--medium-text-color);
+    font-size: 1.1em;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--dark-text-color);
+    font-size: 1em;
+}
+
+.form-group label i {
+    margin-right: 8px;
+    color: var(--primary-color);
+}
+
+.form-group input[type="email"],
+.form-group input[type="password"],
+.form-group input[type="text"],
+.form-group input[type="tel"],
+.form-group input[type="date"] { /* Ajout des nouveaux types d'input */
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--input-border-color);
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 1em;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input[type="email"]:focus,
+.form-group input[type="password"]:focus,
+.form-group input[type="text"]:focus,
+.form-group input[type="tel"]:focus { /* Ajout des nouveaux types d'input */
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25); /* Garder cette rgba pour la clarté du focus */
+    outline: none;
+}
+
+.role-selection {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.role-selection input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.role-selection label {
+    background-color: var(--light-bg-color);
+    padding: 15px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-weight: 400;
+    color: var(--medium-text-color);
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.role-selection label i {
+    font-size: 1.8em;
+    margin-bottom: 8px;
+    color: var(--medium-text-color); /* Couleur d'icône par défaut */
+}
+
+.role-selection input[type="radio"]:checked + label {
+    background: linear-gradient(45deg, var(--primary-color), #f5b70e); /* Garde une nuance plus foncée pour le dégradé */
+    color: var(--white-color);
+    border-color: var(--primary-color);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px var(--primary-shadow-color);
+}
+
+.role-selection input[type="radio"]:checked + label i {
+    color: var(--white-color);
+}
+
+.role-selection label:hover {
+    background-color: var(--hover-bg-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px var(--shadow-color);
+}
+
+button[type="submit"] {
+    background: #f5b70e; /* Garde une nuance plus foncée pour le dégradé */
+    color: var(--white-color);
+    padding: 15px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.2em;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    width: 100%;
+    margin-top: 30px;
+    box-shadow: 0 5px 15px var(--secondary-shadow-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+button[type="submit"] i {
+    margin-right: 10px;
+    font-size: 1.1em;
+}
+
+button[type="submit"]:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px var(--secondary-shadow-color);
+    background: linear-gradient(45deg, #f5b70e, rgba(64, 153, 85, 0.986)); /* Garde une nuance plus foncée pour le dégradé */
+}
+
+.login-link {
+    margin-top: 25px;
+    font-size: 0.95em;
+    color: var(--medium-text-color);
+}
+
+.login-link a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.login-link a:hover {
+    color: #0056b3; /* Garde une nuance plus foncée pour le survol du lien */
+    text-decoration: underline;
+}
+
+/* Media query pour les petits écrans */
+@media (max-width: 600px) {
+    body {
+        padding: 20px;
+    }
+    .container {
+        margin: 0;
+        padding: 25px;
+        border-radius: 10px;
+    }
+
+    .logo i {
+        font-size: 2.5em;
+    }
+    .logo h1 {
+        font-size: 2em;
+    }
+
+    p {
+        font-size: 1em;
+    }
+
+    .role-selection {
+        grid-template-columns: 1fr;
+    }
+
+    .role-selection label {
+        flex-direction: row;
+        justify-content: flex-start;
+        padding: 12px 15px;
+    }
+    .role-selection label i {
+        margin-bottom: 0;
+        margin-right: 10px;
+        font-size: 1.5em;
+    }
+
+    button[type="submit"] {
+        padding: 12px 15px;
+        font-size: 1.1em;
+    }
+}
+
+
+/* Styles pour les liens en bas du formulaire (signup et forgot password) */
+.signup-link,
+.forgot-password-link {
+    margin-top: 15px; /* Espace entre les liens */
+    font-size: 0.95em;
+    color: var(--medium-text-color);
+}
+
+.signup-link a,
+.forgot-password-link a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.signup-link a:hover,
+.forgot-password-link a:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+
+/* Media query pour les petits écrans */
+@media (max-width: 600px) {
+    body {
+        padding: 20px;
+    }
+    .container {
+        margin: 0;
+        padding: 25px;
+        border-radius: 10px;
+    }
+
+    .logo i { 
+        font-size: 2.5em;
+    }
+    .logo h1 {
+        font-size: 2em;
+    }
+
+    p {
+        font-size: 1em;
+    }
+
+    .role-selection {
+        grid-template-columns: 1fr;
+    }
+
+    .role-selection label {
+        flex-direction: row;
+        justify-content: flex-start;
+        padding: 12px 15px;
+    }
+    .role-selection label i {
+        margin-bottom: 0;
+        margin-right: 10px;
+        font-size: 1.5em;
+    }
+
+    button[type="submit"] {
+        padding: 12px 15px;
+        font-size: 1.1em;
+    }
+}
+/* Media query pour les petits écrans */
+@media (max-width: 400px) {
+    body {
+        padding: 10px;
+    }
+    .container {
+        margin: 0;
+        padding: 15px;
+        border-radius: 10px;
+    }
+
+    .logo i { 
+        font-size: 2.5em;
+    }
+    .logo h1 {
+        font-size: 1em;
+    }
+
+    p {
+        font-size: 0.5em;
+    }
+
+    .nav-item span{
+        display: none;
+    }
+    .nav-item i{
+        font-size: 20px;
+    }
+    .header-logo span, .header-user span{
+        display: inline;
+    }
+    .header-user span{
+        font-size: 15px;
+    }
+    .hero-section h1{
+        font-size: 30px;
+        padding-top: 50px;
+    }
+}

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YEBANA - Témoignages</title>
+    <!-- Lien vers Font Awesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Lien vers le fichier CSS principal global (pour les variables de couleur et styles de base) -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Lien vers le fichier CSS spécifique à la section soccer (pour la nav et le header) -->
+    <link rel="stylesheet" href="soccer/soccer.css">
+
+    <!-- Inline styles specific to the testimonials page -->
+    <style>
+        /* ==================================== */
+        /* Styles spécifiques pour la page Témoignages */
+        /* ==================================== */
+
+        /* Override body styles from global CSS for this specific page */
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark-text-color);
+            margin: 0;
+            padding-top: var(--header-height); /* Space for the fixed header */
+            padding-bottom: var(--bottom-nav-height); /* Space for the fixed bottom nav */
+            background-color: var(--dashboard-bg); /* Consistent light background */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            box-sizing: border-box;
+            overflow-x: hidden;
+        }
+
+        .testimonials-main {
+            flex-grow: 1; /* Allows content to expand and push footer down */
+            width: 100%;
+            max-width: 1000px; /* Wider for testimonials grid */
+            margin: 0 auto;
+            padding: 25px 20px 50px 20px; /* Top padding and bottom padding for footer space */
+            box-sizing: border-box;
+        }
+
+        .section-title {
+            font-size: 2.5em;
+            color: var(--dark-text-color);
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: 700;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-color);
+            margin: 15px auto 0 auto;
+            border-radius: 2px;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid, min 300px per card */
+            gap: 30px; /* Space between testimonial cards */
+        }
+
+        .testimonial-card {
+            background-color: var(--white-color);
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .testimonial-card .testimonial-author-pic {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary-color);
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .testimonial-card .testimonial-quote {
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: var(--dark-text-color);
+            margin-bottom: 20px;
+            font-style: italic; /* Emphasize the quote */
+        }
+
+        .testimonial-card .testimonial-quote::before,
+        .testimonial-card .testimonial-quote::after {
+            font-family: 'Font Awesome 5 Free'; /* Using Font Awesome for quotes */
+            font-weight: 900;
+            color: var(--primary-color);
+            font-size: 1.5em;
+            vertical-align: middle;
+        }
+
+        .testimonial-card .testimonial-quote::before {
+            content: "\f10d"; /* fa-quote-left */
+            margin-right: 8px;
+        }
+
+        .testimonial-card .testimonial-quote::after {
+            content: "\f10e"; /* fa-quote-right */
+            margin-left: 8px;
+        }
+
+        .testimonial-card .testimonial-author-info h3 {
+            font-size: 1.2em;
+            margin: 0;
+            color: var(--dark-text-color);
+        }
+
+        .testimonial-card .testimonial-author-info p {
+            font-size: 0.9em;
+            color: var(--medium-text-color);
+            margin: 5px 0 0 0;
+        }
+
+        .testimonial-card .rating {
+            margin-top: 15px;
+            color: #FFD700; /* Gold color for stars */
+            font-size: 1.1em;
+        }
+
+        .testimonial-card .rating i {
+            margin: 0 2px;
+        }
+
+
+        /* Media queries for responsiveness */
+        @media (max-width: 900px) {
+            .section-title {
+                font-size: 2em;
+            }
+            .testimonials-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 25px;
+            }
+            .testimonial-card {
+                padding: 25px;
+            }
+            .testimonial-card .testimonial-quote {
+                font-size: 1em;
+            }
+            .testimonial-card .testimonial-author-pic {
+                width: 70px;
+                height: 70px;
+            }
+            .testimonial-card .testimonial-author-info h3 {
+                font-size: 1.1em;
+            }
+            .testimonial-card .testimonial-author-info p {
+                font-size: 0.85em;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .testimonials-main {
+                padding: 20px 15px 40px 15px;
+            }
+            .section-title {
+                font-size: 1.8em;
+                margin-bottom: 30px;
+            }
+            .testimonials-grid {
+                grid-template-columns: 1fr; /* Single column on mobile */
+                gap: 20px;
+            }
+            .testimonial-card {
+                padding: 20px;
+            }
+            .testimonial-card .testimonial-quote {
+                font-size: 0.95em;
+            }
+            .testimonial-card .testimonial-quote::before,
+            .testimonial-card .testimonial-quote::after {
+                font-size: 1.2em;
+            }
+            .testimonial-card .testimonial-author-pic {
+                width: 60px;
+                height: 60px;
+            }
+            .testimonial-card .rating {
+                font-size: 1em;
+            }
+        }
+        @media (max-width: 400px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                margin: 0;
+                padding: 15px;
+                border-radius: 10px;
+            }
+
+            .logo i { 
+                font-size: 2.5em;
+            }
+            .logo h1 {
+                font-size: 1em;
+            }
+
+            p {
+                font-size: 0.5em;
+            }
+
+            a {
+                font-size: 0.5em;
+            }
+
+            .nav-item span{
+                display: none;
+            }
+            .nav-item i{
+                font-size: 20px;
+            }
+            .header-logo span{
+                display: inline;
+            }
+            .header-user span{
+                font-size: 15px;
+            }
+            .hero-section h1{
+                font-size: 30px;
+                padding-top: 50px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <!-- App Header - Uses global header styles from soccer.css -->
+    <header class="app-header">
+        <div class="header-content">
+             <div class="header-logo">
+                <i class="fas fa-futbol"></i>
+                <span> YEBANA</span>
+            </div>
+            <div class="header-user">
+                <!-- Links for public actions or user options -->
+                <a href="login.php" style="text-decoration: none; color: inherit; display: flex; align-items: center;">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span>Connexion</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="testimonials-main">
+        <h2 class="section-title">Ce qu'ils disent de YEBANA</h2>
+
+        <div class="testimonials-grid">
+            <!-- Témoignage 1 - Joueur -->
+            <div class="testimonial-card">
+                <img src="https://placehold.co/80x80/007bff/ffffff?text=Joueur1" alt="Profil de Mariam Coulibaly" class="testimonial-author-pic">
+                <p class="testimonial-quote">"Grâce à YEBANA, j'ai pu créer un profil professionnel qui a attiré l'attention de plusieurs recruteurs. J'ai même eu un essai ! C'est une plateforme incroyable pour les jeunes talents en Afrique."</p>
+                <div class="testimonial-author-info">
+                    <h3>Mariam Coulibaly</h3>
+                    <p>Joueuse de football, 18 ans</p>
+                </div>
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+            </div>
+
+            <!-- Témoignage 2 - Manager -->
+            <div class="testimonial-card">
+                <img src="https://placehold.co/80x80/28a745/ffffff?text=Mng1" alt="Profil de David Ngoma" class="testimonial-author-pic">
+                <p class="testimonial-quote">"En tant que manager, trouver des jeunes talents fiables est crucial. YEBANA a révolutionné ma façon de recruter. Les profils sont détaillés, les vidéos de qualité, et la communication est simple. Un outil indispensable !"</p>
+                <div class="testimonial-author-info">
+                    <h3>David Ngoma</h3>
+                    <p>Manager Sportif</p>
+                </div>
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+            </div>
+
+            <!-- Témoignage 3 - Recruteur/Club -->
+            <div class="testimonial-card">
+                <img src="https://placehold.co/80x80/6c757d/ffffff?text=Club1" alt="Logo de l'AS Futur" class="testimonial-author-pic">
+                <p class="testimonial-quote">"Notre club cherchait à diversifier notre recrutement en Afrique. YEBANA nous a donné accès à une base de données de talents exceptionnelle. Nous avons déjà identifié plusieurs joueurs prometteurs."</p>
+                <div class="testimonial-author-info">
+                    <h3>Directeur du Recrutement</h3>
+                    <p>AS Futur (Club de football)</p>
+                </div>
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+            </div>
+
+            <!-- Témoignage 4 - Joueur -->
+            <div class="testimonial-card">
+                <img src="https://placehold.co/80x80/ffc107/333333?text=Joueur2" alt="Profil de Koffi Amani" class="testimonial-author-pic">
+                <p class="testimonial-quote">"Avant YEBANA, je ne savais pas comment me faire connaître. Maintenant, mon profil est visible par des professionnels. J'apprécie la simplicité de la plateforme et le soutien qu'elle apporte."</p>
+                <div class="testimonial-author-info">
+                    <h3>Koffi Amani</h3>
+                    <p>Gardien de but, 20 ans</p>
+                </div>
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                </div>
+            </div>
+
+            <!-- Témoignage 5 - Parent de joueur -->
+            <div class="testimonial-card">
+                <img src="https://placehold.co/80x80/17a2b8/ffffff?text=Parent1" alt="Profil de Madame Diop" class="testimonial-author-pic">
+                <p class="testimonial-quote">"Je suis la mère d'un jeune joueur. YEBANA nous a donné l'espoir et les outils pour que mon fils réalise son rêve. La sécurité et la transparence sont très importantes pour nous."</p>
+                <div class="testimonial-author-info">
+                    <h3>Madame Diop</h3>
+                    <p>Parent de jeune talent</p>
+                </div>
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+            </div>
+
+             <!-- Témoignage 6 - Scout indépendant -->
+            <div class="testimonial-card">
+                <img src="https://placehold.co/80x80/6f42c1/ffffff?text=Scout1" alt="Profil de M. Benali" class="testimonial-author-pic">
+                <p class="testimonial-quote">"En tant que scout indépendant, YEBANA est devenu ma ressource principale. La qualité des profils et la facilité de contact sont un atout majeur pour mon travail de détection."</p>
+                <div class="testimonial-author-info">
+                    <h3>M. Benali</h3>
+                    <p>Scout de football</p>
+                </div>
+                <div class="rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bottom fixed navigation menu - Uses global navigation styles from soccer.css -->
+    <nav class="bottom-nav">
+        <a href="index.php" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>Accueil</span>
+        </a>
+        <a href="recherche_filtre.php" class="nav-item">
+            <i class="fas fa-search"></i>
+            <span>Explorer</span>
+        </a>
+        <a href="about.html" class="nav-item">
+            <i class="fas fa-info-circle"></i>
+            <span>À propos</span>
+        </a>
+        <a href="temoignages.html" class="nav-item active">
+            <i class="fas fa-quote-right"></i>
+            <span>Témoignages</span>
+        </a>
+        <a href="contact.html" class="nav-item"> <!-- Updated to actual contact page -->
+            <i class="fas fa-envelope"></i>
+            <span>Contact</span>
+        </a>
+    </nav>
+</body>
+</html>

@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YEBANA - Messagerie</title>
+    <!-- Link to Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Link to the main CSS file for global styles -->
+    <link rel="stylesheet" href="../style.css">
+    <!-- Link to the CSS file specific to the soccer section (for nav and header if used, relative path) -->
+    <link rel="stylesheet" href="soccer.css">
+
+    <!-- Inline styles specific to the messages page -->
+    <style>
+        /* ==================================== */
+        /* Styles spécifiques pour la page de Messagerie */
+        /* ==================================== */
+
+        .messages-main {
+            flex-grow: 1; /* Allows the main area to take available space */
+            display: flex;
+            background-color: var(--dashboard-bg); /* Uses the soft dashboard background */
+            width: 100%;
+            max-width: 960px; /* Limits content width */
+            margin: 0 auto; /* Centers content */
+            box-sizing: border-box;
+            overflow: hidden; /* Prevents content overflow */
+            border-radius: 15px; /* Rounded corners for the entire messaging interface */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Soft shadow */
+        }
+
+        /* Conversation list container */
+        .conversations-list-container {
+            flex: 0 0 350px; /* Fixed width on desktop */
+            background-color: var(--white-color);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            padding: 15px 0;
+            overflow-y: auto; /* Allows scrolling if list is long */
+        }
+
+        .search-chat {
+            padding: 0 15px 15px;
+            position: relative;
+        }
+        .search-chat input {
+            width: calc(100% - 24px); /* Full width minus padding/border */
+            padding: 10px 10px 10px 40px; /* Padding for icon */
+            border: 1px solid var(--input-border-color);
+            border-radius: 25px; /* Rounded search bar */
+            font-size: 0.95em;
+            box-sizing: border-box;
+        }
+        .search-chat i {
+            position: absolute;
+            left: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--medium-text-color);
+        }
+
+        .conversations-list {
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        .conversation-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            position: relative;
+        }
+
+        .conversation-item:hover {
+            background-color: var(--hover-bg-color);
+        }
+
+        .conversation-item.active {
+            background-color: var(--light-bg-color); /* Lighter for active */
+            border-left: 4px solid var(--primary-color); /* Colored border for active */
+            padding-left: 11px; /* Adjust padding after border */
+        }
+
+        .conversation-item .profile-pic {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+            flex-shrink: 0;
+            border: 2px solid var(--border-color);
+        }
+
+        .conversation-info {
+            flex-grow: 1;
+            overflow: hidden; /* Hides overflowing text */
+        }
+
+        .conversation-info h3 {
+            margin: 0;
+            font-size: 1.1em;
+            color: var(--dark-text-color);
+            white-space: nowrap; /* Prevents line wrapping */
+            overflow: hidden;
+            text-overflow: ellipsis; /* Adds "..." if text is too long */
+        }
+
+        .conversation-info p {
+            margin: 5px 0 0 0;
+            font-size: 0.9em;
+            color: var(--medium-text-color);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .conversation-item .time {
+            font-size: 0.8em;
+            color: var(--medium-text-color);
+            position: absolute;
+            top: 15px;
+            right: 15px;
+        }
+
+        .unread-count {
+            background-color: var(--secondary-color);
+            color: var(--white-color);
+            font-size: 0.75em;
+            font-weight: 600;
+            border-radius: 50%;
+            min-width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+        }
+
+        /* Chat area container */
+        .chat-area-container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--white-color); /* A slightly different background for chat */
+        }
+
+        .chat-header {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            background-color: var(--light-bg-color); /* Chat header background */
+            flex-shrink: 0; /* Prevents header from shrinking */
+        }
+
+        .chat-header .profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+            border: 2px solid var(--primary-color);
+        }
+
+        .chat-info {
+            flex-grow: 1;
+        }
+
+        .chat-info h3 {
+            margin: 0;
+            font-size: 1.2em;
+            color: var(--dark-text-color);
+        }
+
+        .chat-info p {
+            margin: 0;
+            font-size: 0.8em;
+            color: var(--medium-text-color);
+        }
+
+        .chat-header .back-to-list-btn {
+            font-size: 1.5em;
+            color: var(--primary-color);
+            margin-right: 15px;
+            cursor: pointer;
+            display: none; /* Hidden by default, shown on mobile */
+        }
+
+        .chat-header .chat-options-btn {
+            font-size: 1.2em;
+            color: var(--medium-text-color);
+            cursor: pointer;
+        }
+
+        /* Message display area */
+        .messages-display {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto; /* Allows message scrolling */
+            display: flex;
+            flex-direction: column;
+            gap: 10px; /* Space between messages */
+            background-color: var(--dashboard-bg); /* Message history background */
+        }
+
+        .message {
+            max-width: 80%; /* Messages don't take full width */
+            padding: 10px 15px;
+            border-radius: 15px; /* Rounded corners for message bubbles */
+            font-size: 0.95em;
+            line-height: 1.4;
+            position: relative;
+        }
+
+        .message p {
+            margin: 0;
+            padding-bottom: 15px; /* Space for timestamp */
+        }
+
+        .message .timestamp {
+            position: absolute;
+            bottom: 5px;
+            right: 10px;
+            font-size: 0.7em;
+            color: rgba(0, 0, 0, 0.5); /* More discreet timestamp */
+        }
+
+        .message.received {
+            background-color: var(--white-color);
+            align-self: flex-start; /* Aligned left */
+            border-bottom-left-radius: 5px; /* Less rounded bottom-left corner */
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+
+        .message.sent {
+            background: linear-gradient(45deg, var(--primary-color), #0056b3); /* Gradient for sent messages */
+            color: white;
+            align-self: flex-end; /* Aligned right */
+            border-bottom-right-radius: 5px; /* Less rounded bottom-right corner */
+            box-shadow: 0 1px 3px rgba(0, 123, 255, 0.2);
+        }
+        .message.sent p {
+            color: white;
+        }
+
+        .message.sent .timestamp {
+            color: rgba(255, 255, 255, 0.7); /* White timestamp for sent messages */
+        }
+
+        /* Message input area */
+        .message-input-area {
+            display: flex;
+            padding: 15px 20px;
+            background-color: var(--white-color);
+            border-top: 1px solid var(--border-color);
+            flex-shrink: 0;
+            gap: 10px;
+        }
+
+        .message-input-area .message-input {
+            flex-grow: 1;
+            border: 1px solid var(--input-border-color);
+            border-radius: 25px; /* Rounded input field */
+            padding: 10px 15px;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+
+        .message-input-area .message-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+            outline: none;
+        }
+
+        .message-input-area .send-btn {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            border: none;
+            border-radius: 50%; /* Circular send button */
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(0, 123, 255, 0.2);
+        }
+
+        .message-input-area .send-btn:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+
+        /* Media query for small screens (adjustments for messages page) */
+        @media (max-width: 768px) {
+            /* Main messages container on mobile: stacks panels */
+            .messages-main {
+                flex-direction: column; /* Stack conversations and chat area */
+                height: calc(100vh - var(--header-height) - var(--bottom-nav-height)); /* Take remaining height */
+                margin: 0; /* No lateral margin on mobile */
+                border-radius: 0; /* Remove rounded corners to take full screen */
+                box-shadow: none; /* No shadow on mobile */
+                position: relative; /* Make it a positioning context for absolute children */
+            }
+
+            .conversations-list-container {
+                border-right: none; /* No vertical border on mobile */
+                width: 100%;
+                height: 100%; /* Take full height of parent */
+                position: absolute; /* Position absolutely to allow overlay */
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 40; /* Below chat area when chat is active */
+                background-color: var(--white-color); /* Ensure background is solid */
+                transition: transform 0.3s ease-out; /* Slide transition */
+            }
+
+            .chat-area-container {
+                width: 100%;
+                height: 100%; /* Take full height of parent */
+                position: absolute; /* Position absolutely to overlay */
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 50; /* Above conversation list */
+                background-color: var(--white-color); /* Ensure background is solid */
+                transform: translateX(100%); /* Hidden by default (slid off to the right) */
+                transition: transform 0.3s ease-out; /* Transition animation */
+            }
+            /* State for when chat area is active on mobile */
+            .chat-area-container.active-on-mobile {
+                transform: translateX(0); /* Visible (slid into view) */
+            }
+
+            /* Hide conversation list when chat is active on mobile */
+            .conversations-list-container.hidden-on-mobile {
+                transform: translateX(-100%); /* Hidden (slid off to the left) */
+            }
+
+
+            .chat-header .back-to-list-btn {
+                display: block; /* Show back button on mobile */
+            }
+
+            .chat-header .profile-pic {
+                width: 35px;
+                height: 35px;
+                margin-right: 10px;
+            }
+
+            .chat-info h3 {
+                font-size: 1.1em;
+            }
+
+            .message-input-area {
+                padding: 10px 15px;
+                gap: 8px;
+            }
+
+            .message-input-area .message-input {
+                padding: 8px 12px;
+                font-size: 0.9em;
+            }
+            .message-input-area .send-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1.1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- App Header - Reuses global class -->
+    <header class="app-header">
+        <div class="header-content">
+            <div class="header-logo">
+                <i class="fas fa-comments"></i>
+                <span>Messagerie</span>
+            </div>
+            <div class="header-user">
+                <!-- Icon for new conversation or options -->
+                <i class="fas fa-plus-circle"></i>
+                <span>Nouveau</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main messaging content -->
+    <main class="messages-main">
+        <div class="conversations-list-container">
+            <div class="search-chat">
+                <input type="text" placeholder="Rechercher des conversations...">
+                <i class="fas fa-search"></i>
+            </div>
+            <div class="conversations-list">
+                <!-- Example of active conversation -->
+                <div class="conversation-item active">
+                    <img src="https://placehold.co/50x50/A0E7E5/000000?text=R1" alt="Recruteur 1" class="profile-pic">
+                    <div class="conversation-info">
+                        <h3>Recruteur XYZ <span class="time">14:30</span></h3>
+                        <p>Salut, nous avons vu ton profil et...</p>
+                    </div>
+                    <span class="unread-count">2</span>
+                </div>
+                <!-- Other conversation examples -->
+                <div class="conversation-item">
+                    <img src="https://placehold.co/50x50/F0B27A/000000?text=M1" alt="Manager 1" class="profile-pic">
+                    <div class="conversation-info">
+                        <h3>Manager Dupont <span class="time">Hier</span></h3>
+                        <p>N'oublie pas l'entraînement de demain.</p>
+                    </div>
+                </div>
+                <div class="conversation-item">
+                    <img src="https://placehold.co/50x50/B2D8D8/000000?text=J1" alt="Joueur 1" class="profile-pic">
+                    <div class="conversation-info">
+                        <h3>Junior Samba <span class="time">Lun</span></h3>
+                        <p>Merci pour tes conseils !</p>
+                    </div>
+                    <span class="unread-count">1</span>
+                </div>
+                <div class="conversation-item">
+                    <img src="https://placehold.co/50x50/C6A7D8/000000?text=R2" alt="Recruteur 2" class="profile-pic">
+                    <div class="conversation-info">
+                        <h3>Club AS <span class="time">05/06</span></h3>
+                        <p>Intéressés par ton CV.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-area-container">
+            <!-- Current chat header -->
+            <div class="chat-header">
+                <i class="fas fa-arrow-left back-to-list-btn"></i> <!-- Back button for mobile -->
+                <img src="https://placehold.co/50x50/A0E7E5/000000?text=R1" alt="Recruteur 1" class="profile-pic">
+                <div class="chat-info">
+                    <h3>Recruteur XYZ</h3>
+                    <p>Actif il y a 5 min</p>
+                </div>
+                <i class="fas fa-ellipsis-v chat-options-btn"></i> <!-- Chat options -->
+            </div>
+
+            <!-- Message display area -->
+            <div class="messages-display">
+                <div class="message received">
+                    <p>Salut, nous avons vu ton profil et sommes très intéressés par tes performances récentes.</p>
+                    <span class="timestamp">14:28</span>
+                </div>
+                <div class="message sent">
+                    <p>Bonjour ! Merci beaucoup, je suis ravi de l'apprendre. Comment puis-je vous aider ?</p>
+                    <span class="timestamp">14:30</span>
+                </div>
+                <div class="message received">
+                    <p>Nous aimerions discuter d'une éventuelle opportunité. Seriez-vous disponible pour un appel la semaine prochaine ?</p>
+                    <span class="timestamp">14:31</span>
+                </div>
+                 <div class="message received">
+                    <p>Le lundi ou le mardi vous conviendrait-il ?</p>
+                    <span class="timestamp">14:31</span>
+                </div>
+                <div class="message sent">
+                    <p>Oui, bien sûr ! Le mardi matin me conviendrait parfaitement.</p>
+                    <span class="timestamp">14:33</span>
+                </div>
+            </div>
+
+            <!-- Message input field -->
+            <div class="message-input-area">
+                <input type="text" placeholder="Écrire un message..." class="message-input">
+                <button class="send-btn"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bottom fixed navigation menu - Reuses global class -->
+    <nav class="bottom-nav">
+        <a href="index.php" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>Accueil</span>
+        </a>
+        <a href="profile.php" class="nav-item">
+            <i class="fas fa-user-circle"></i>
+            <span>Profil</span>
+        </a>
+        <a href="messages.php" class="nav-item active">
+            <i class="fas fa-envelope"></i>
+            <span>Messages</span>
+        </a>
+        <a href="explore.php" class="nav-item">
+            <i class="fas fa-search"></i>
+            <span>Explorer</span>
+        </a>
+    </nav>
+
+    <script>
+        // JavaScript for mobile view: show/hide chat list
+        const conversationsListContainer = document.querySelector('.conversations-list-container');
+        const chatAreaContainer = document.querySelector('.chat-area-container');
+        const backToListBtn = document.querySelector('.back-to-list-btn');
+        const conversationItems = document.querySelectorAll('.conversation-item');
+
+        // Function to show chat area and hide conversation list
+        function showChatArea() {
+            conversationsListContainer.classList.add('hidden-on-mobile');
+            chatAreaContainer.classList.add('active-on-mobile');
+        }
+
+        // Function to show conversation list and hide chat area
+        function showConversationsList() {
+            conversationsListContainer.classList.remove('hidden-on-mobile');
+            chatAreaContainer.classList.remove('active-on-mobile');
+        }
+
+        // Add click listener to each conversation item
+        conversationItems.forEach(item => {
+            item.addEventListener('click', () => {
+                // Remove 'active' class from all, add to clicked one
+                conversationItems.forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+                
+                // On mobile, show the chat area
+                if (window.innerWidth <= 768) { // Assuming 768px as mobile breakpoint
+                    showChatArea();
+                }
+            });
+        });
+
+        // Add click listener to the back button in chat header (mobile only)
+        if (backToListBtn) {
+            backToListBtn.addEventListener('click', () => {
+                showConversationsList();
+            });
+        }
+
+        // Handle initial view based on screen size
+        window.addEventListener('load', () => {
+            if (window.innerWidth <= 768) {
+                // On initial load, only show conversation list if no specific chat is selected
+                // For simplicity, we start with the list visible by default on mobile
+                showConversationsList();
+            } else {
+                // On desktop, show both (or default to a selected chat)
+                conversationsListContainer.classList.remove('hidden-on-mobile');
+                chatAreaContainer.classList.add('active-on-mobile'); // Show the chat area by default on desktop
+            }
+        });
+
+        // Handle resize to adjust view
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                // On desktop, always show both panels
+                conversationsListContainer.classList.remove('hidden-on-mobile');
+                chatAreaContainer.classList.remove('hidden-on-mobile'); // Ensure it's not hidden if resized from mobile while chat was active
+                chatAreaContainer.classList.add('active-on-mobile'); // Keep chat active on resize to desktop
+            } else {
+                // On mobile, if a chat was active, switch back to list view unless specifically told to stay
+                // For this MVP, we'll revert to list on resize to mobile
+                if (chatAreaContainer.classList.contains('active-on-mobile')) {
+                    // Only hide if a chat was active, otherwise keep list visible
+                    showConversationsList();
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>

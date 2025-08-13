@@ -1,0 +1,469 @@
+/* soccer/soccer.css */
+
+/* Import des polices - Important pour ce fichier aussi */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+/* Ré-import des variables globales si elles sont utilisées directement ici */
+/* Pour éviter la duplication, on va s'assurer que style.css est importé en premier dans l'HTML */
+/* Si ce fichier est utilisé seul, il faudrait ré-importer les variables ici */
+
+/* ==================================== */
+/* Styles spécifiques pour le Tableau de Bord Joueur */
+/* ==================================== */
+
+/* Variables spécifiques si besoin pour cette section */
+:root {
+    /* Il est préférable de définir toutes les variables dans le style.css principal */
+    /* et de les utiliser ici, mais pour la clarté de cet exemple, nous les mettons ici
+       au cas où soccer.css serait le seul fichier chargé pour un contexte donné.
+       Dans notre cas, elles seront déjà définies par style.css */
+    --header-height: 60px;
+    --bottom-nav-height: 70px;
+    --dashboard-bg: #eef2f7; /* Un fond plus doux pour le tableau de bord */
+    --primary-color: #cc0000;
+    --secondary-color: #cc0000;
+    --dark-text-color: #333;
+    --medium-text-color: #666;
+    --light-bg-color: #f8f9fa;
+    --white-color: #fff;
+    --border-color: #e2e6ea;
+    --input-border-color: #c9d0d6;
+    --hover-bg-color: #e9ecef;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --primary-shadow-color: rgba(0, 123, 255, 0.4);
+    --secondary-shadow-color: rgba(40, 167, 69, 0.3);
+}
+
+
+/* En-tête de l'application (fixe en haut) */
+.app-header {
+    background-color: var(--white-color);
+    position: fixed; /* Fixé en haut */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--header-height);
+    box-shadow: 0 2px 10px var(--shadow-color);
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centre le contenu de l'en-tête */
+    z-index: 1000; /* Assure qu'il est au-dessus du contenu */
+    padding: 0 20px; /* Padding latéral pour les contenus */
+    box-sizing: border-box; /* Inclut le padding dans la largeur */
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between; /* Espace entre logo et user */
+    align-items: center;
+    width: 100%;
+    max-width: 960px; /* Limite la largeur du contenu de l'en-tête */
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+    font-size: 1.5em;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.header-logo i {
+    margin-right: 10px;
+    font-size: 1.2em;
+}
+
+.header-user {
+    display: flex;
+    align-items: center;
+    color: var(--medium-text-color);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.header-user i {
+    font-size: 1.8em;
+    margin-right: 10px;
+    color: var(--primary-color);
+}
+
+
+/* Contenu principal du tableau de bord (défilant) */
+.dashboard-main {
+    flex-grow: 1; /* Prend l'espace restant après le header et la nav */
+    background-color: var(--dashboard-bg); /* Fond léger pour le dashboard */
+    padding: 20px;
+    padding-bottom: 20px; /* Assure un espace en bas avant la nav */
+    display: flex;
+    flex-direction: column; /* Sections empilées */
+    gap: 25px; /* Espace entre les sections */
+    max-width: 960px; /* Limite la largeur du contenu */
+    margin: 0 auto; /* Centre le contenu */
+    box-sizing: border-box;
+    width: 100%; /* Prend toute la largeur disponible dans le max-width */
+    padding-top: 85px;
+}
+
+.dashboard-section {
+    background-color: var(--white-color);
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Ombre plus douce */
+}
+
+.dashboard-section h2 {
+    color: var(--primary-color);
+    font-size: 1.6em;
+    margin-top: 0;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.dashboard-section h2 i {
+    margin-right: 10px;
+    font-size: 1em;
+}
+
+button{
+    background: var(--primary-color); /* Garde une nuance plus foncée pour le dégradé */
+    color: var(--white-color);
+    padding: 15px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.2em;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    width: 100%;
+    margin-top: 30px;
+    box-shadow: 0 5px 15px var(--secondary-shadow-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Styles spécifiques pour le résumé du profil */
+.profile-summary p {
+    font-size: 1.1em;
+    margin-bottom: 20px;
+}
+
+.profile-summary .btn {
+    margin-bottom: 25px;
+}
+
+.profile-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); /* 2 ou 3 colonnes selon l'espace */
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.stat-card {
+    background-color: var(--light-bg-color);
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border-color);
+}
+
+.stat-card i {
+    font-size: 2em;
+    color: var(--secondary-color);
+    margin-bottom: 8px;
+}
+
+.stat-card h3 {
+    font-size: 1.1em;
+    color: var(--dark-text-color);
+    margin: 0 0 5px 0;
+}
+
+.stat-card p {
+    font-size: 0.9em;
+    color: var(--medium-text-color);
+    margin: 0;
+}
+
+/* Activité récente */
+.activity-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.activity-list li {
+    background-color: var(--light-bg-color);
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    font-size: 0.95em;
+    color: var(--dark-text-color);
+}
+
+.activity-list li i {
+    color: var(--primary-color);
+    margin-right: 10px;
+}
+
+/* Liens rapides */
+.links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 15px;
+}
+
+.quick-link-card {
+    background: var(--primary-color);
+    color: var(--white-color);
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.quick-link-card i {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+.quick-link-card span {
+    font-weight: 600;
+    font-size: 1.1em;
+}
+
+.quick-link-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px var(--primary-shadow-color);
+}
+
+/* Talents à la Une */
+.featured-talents {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.talent-card {
+    display: flex;
+    align-items: center;
+    background-color: var(--light-bg-color);
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border-color);
+}
+
+.talent-img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+    border: 3px solid var(--primary-color);
+}
+
+.talent-card h3 {
+    margin: 0;
+    font-size: 1.2em;
+    color: var(--dark-text-color);
+}
+
+.talent-card p {
+    margin: 5px 0 10px 0;
+    font-size: 0.9em;
+    color: var(--medium-text-color);
+}
+
+.talent-card .btn {
+    margin-left: auto; /* Aligne le bouton à droite */
+    font-size: 0.9em;
+    padding: 8px 15px;
+    box-shadow: none; /* Pas d'ombre sur les petits boutons */
+}
+
+/* Menu de navigation en bas (fixe) */
+.bottom-nav {
+    background-color: var(--white-color);
+    position: fixed; /* Fixé en bas */
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: var(--bottom-nav-height);
+    box-shadow: 0 -2px 10px var(--shadow-color); /* Ombre vers le haut */
+    display: flex;
+    justify-content: space-around; /* Répartit les éléments */
+    align-items: center;
+    z-index: 1000;
+    padding: 0 10px; /* Padding latéral */
+    box-sizing: border-box;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column; /* Icône au-dessus du texte */
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: var(--medium-text-color);
+    font-size: 0.85em; /* Texte plus petit */
+    font-weight: 500;
+    padding: 8px; /* Padding pour la zone cliquable */
+    transition: color 0.3s ease, transform 0.2s ease;
+    flex: 1; /* Chaque élément prend une part égale de l'espace */
+    max-width: 100px; /* Empêche les éléments de devenir trop larges sur de grands écrans */
+}
+
+.nav-item i {
+    font-size: 1.5em; /* Taille de l'icône */
+    margin-bottom: 5px;
+}
+
+.nav-item:hover {
+    color: var(--primary-color);
+    transform: translateY(-3px); /* Petit effet de levée au survol */
+}
+
+.nav-item.active {
+    color: var(--primary-color);
+    font-weight: 700;
+    transform: translateY(-3px);
+}
+.nav-item.active i {
+    color: var(--primary-color);
+}
+
+
+/* Media query pour les petits écrans (s'applique aussi aux nouveaux éléments) */
+@media (max-width: 768px) {
+    .app-header {
+        height: var(--header-height); /* Conserve la hauteur */
+        padding: 0 15px; /* Padding latéral réduit */
+    }
+
+    .header-logo, .header-user {
+        font-size: 1.2em; /* Taille de police réduite */
+    }
+    .header-logo i {
+        font-size: 1em;
+    }
+    .header-user i {
+        font-size: 1.5em;
+    }
+
+    .dashboard-main {
+        padding: 15px; /* Padding général réduit */
+        gap: 20px; /* Espace réduit entre les sections */
+    }
+
+    .dashboard-section {
+        padding: 20px;
+    }
+
+    .dashboard-section h2 {
+        font-size: 1.4em;
+    }
+
+    .profile-summary .btn {
+        width: 100%; /* Bouton prend toute la largeur sur mobile */
+        font-size: 0.95em;
+        padding: 10px 15px;
+    }
+
+    .profile-stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Plus compact sur mobile */
+        gap: 10px;
+    }
+
+    .stat-card {
+        padding: 10px;
+    }
+    .stat-card i {
+        font-size: 1.5em;
+    }
+    .stat-card h3 {
+        font-size: 1em;
+    }
+    .stat-card p {
+        font-size: 0.8em;
+    }
+
+    .activity-list li {
+        padding: 10px;
+        font-size: 0.9em;
+    }
+
+    .links-grid {
+        grid-template-columns: 1fr; /* Une seule colonne pour les liens rapides sur mobile */
+    }
+
+    .quick-link-card {
+        padding: 15px;
+    }
+    .quick-link-card i {
+        font-size: 2em;
+    }
+    .quick-link-card span {
+        font-size: 1em;
+    }
+
+    .talent-card {
+        flex-direction: column; /* Les talents s'empilent sur mobile */
+        align-items: flex-start;
+    }
+    .talent-img {
+        width: 60px;
+        height: 60px;
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+    .talent-card .btn {
+        margin-left: 0; /* Réinitialise la marge */
+        margin-top: 10px; /* Ajoute une marge en haut */
+        width: 100%; /* Prend toute la largeur */
+    }
+
+    .bottom-nav {
+        height: var(--bottom-nav-height); /* Conserve la hauteur */
+        padding: 0 5px; /* Padding latéral réduit */
+    }
+
+    .nav-item {
+        font-size: 0.75em;
+        padding: 5px;
+    }
+    .nav-item i {
+        font-size: 1.2em;
+    }
+}
+
+/* Ajustements pour les écrans très petits (< 400px) */
+@media (max-width: 400px) {
+    .header-logo span,
+    .header-user span {
+        display: none; /* Cache le texte du logo et du nom d'utilisateur pour gagner de la place */
+    }
+    .header-logo i {
+        margin-right: 0;
+    }
+    .header-user i {
+        margin-right: 0;
+    }
+
+    .dashboard-section h2 {
+        font-size: 1.2em;
+    }
+    .dashboard-section h2 i {
+        font-size: 0.9em;
+    }
+}

@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YEBANA - Mes Listes</title>
+    <!-- Lien vers Font Awesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Lien vers le fichier CSS principal global (pour les variables de couleur et styles de base) -->
+    <link rel="stylesheet" href="../style.css">
+    <!-- Lien vers le fichier CSS spécifique à la section soccer (pour le header et le menu de navigation) -->
+    <link rel="stylesheet" href="../soccer/soccer.css">
+
+    <!-- Styles en ligne spécifiques à la page de listes pour manager -->
+    <style>
+        /* ==================================== */
+        /* Styles spécifiques pour la page Mes Listes (Manager) */
+        /* ==================================== */
+
+        /* Surcharge des styles du corps provenant du CSS global */
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark-text-color);
+            margin: 0;
+            padding-top: var(--header-height); /* Espace pour l'en-tête fixe */
+            padding-bottom: var(--bottom-nav-height); /* Espace pour la barre de navigation fixe en bas */
+            background-color: var(--dashboard-bg); /* Arrière-plan clair cohérent */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            box-sizing: border-box;
+            overflow-x: hidden;
+        }
+
+        .manager-list-main {
+            flex-grow: 1; /* Permet au contenu de s'étendre et de pousser le pied de page vers le bas */
+            width: 100%;
+            max-width: 1000px; /* Largeur maximale pour la grille de listes */
+            margin: 25px auto; /* Centre le contenu et ajoute une marge supérieure */
+            padding: 0 20px; /* Rembourrage latéral */
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .section-title {
+            font-size: 2.5em;
+            color: var(--dark-text-color);
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: 700;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-color);
+            margin: 15px auto 0 auto;
+            border-radius: 2px;
+        }
+
+        /* Styles de la grille des profils de joueurs (réutilisés) */
+        .player-profiles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .profile-card { /* Réutilisé de l'index et de la recherche manager */
+            background-color: var(--white-color);
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+            overflow: hidden;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .profile-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .profile-card .card-image-container {
+            width: 100%;
+            height: 160px;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .profile-card .card-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .profile-card:hover .card-image-container img {
+            transform: scale(1.05);
+        }
+
+        .profile-card .card-content {
+            padding: 18px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .profile-card h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.4em;
+            color: var(--dark-text-color);
+            font-weight: 700;
+        }
+
+        .profile-card .player-details {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 15px;
+            font-size: 0.85em;
+            color: var(--medium-text-color);
+        }
+
+        .profile-card .detail-item {
+            display: flex;
+            align-items: center;
+            background-color: var(--light-bg-color);
+            padding: 3px 8px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            white-space: nowrap;
+        }
+
+        .profile-card .detail-item i {
+            margin-right: 5px;
+            color: var(--primary-color);
+            font-size: 0.8em;
+        }
+        
+        /* Boutons d'action pour la carte de profil */
+        .profile-card .card-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            width: 100%;
+            padding: 0 10px 18px 10px;
+            box-sizing: border-box;
+        }
+
+        .profile-card .btn-view-profile,
+        .profile-card .btn-remove-from-list { /* Nouveau bouton */
+            width: calc(100% - 16px);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            font-size: 0.95em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .profile-card .btn-view-profile {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            box-shadow: 0 4px 12px var(--primary-shadow-color);
+        }
+        .profile-card .btn-view-profile:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px var(--primary-shadow-color);
+        }
+
+        .profile-card .btn-remove-from-list {
+            background-color: var(--danger-color); /* Rouge pour supprimer */
+            color: var(--white-color);
+            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
+        }
+        .profile-card .btn-remove-from-list:hover {
+            background-color: #c82333;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(220, 53, 69, 0.6);
+        }
+
+        .profile-card .btn-view-profile i,
+        .profile-card .btn-remove-from-list i {
+            margin-right: 8px;
+        }
+
+        /* Message "aucun résultat" */
+        .no-shortlist-message {
+            text-align: center;
+            font-size: 1.2em;
+            color: var(--medium-text-color);
+            margin-top: 50px;
+            padding: 30px;
+            background-color: var(--white-color);
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .no-shortlist-message i {
+            font-size: 2.5em;
+            color: var(--secondary-color); /* Vert pour un message positif/explicatif */
+            margin-bottom: 15px;
+            display: block;
+        }
+        .no-shortlist-message p strong {
+            color: var(--primary-color);
+        }
+
+        /* Pagination styles (réutilisés) */
+        .pagination-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 30px;
+            margin-bottom: 40px;
+        }
+
+        .pagination-controls button {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            box-shadow: 0 3px 10px var(--primary-shadow-color);
+        }
+
+        .pagination-controls button i {
+            margin: 0 5px;
+        }
+
+        .pagination-controls button:hover:not(:disabled) {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px var(--primary-shadow-color);
+        }
+
+        .pagination-controls button:disabled {
+            background-color: var(--border-color);
+            color: var(--medium-text-color);
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .pagination-info {
+            font-size: 1em;
+            color: var(--dark-text-color);
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        /* Requêtes média pour la réactivité */
+        @media (max-width: 900px) {
+            .manager-list-main {
+                padding: 20px 15px 40px 15px;
+            }
+            .section-title {
+                font-size: 2em;
+            }
+            .player-profiles-grid {
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+                gap: 15px;
+            }
+            .profile-card .card-image-container {
+                height: 140px;
+            }
+            .profile-card .card-content {
+                padding: 15px;
+            }
+            .profile-card h3 {
+                font-size: 1.3em;
+            }
+            .profile-card .player-details {
+                font-size: 0.8em;
+            }
+            .profile-card .detail-item {
+                padding: 2px 6px;
+            }
+            .profile-card .btn-view-profile,
+            .profile-card .btn-remove-from-list {
+                font-size: 0.85em;
+                padding: 8px 15px;
+                width: calc(100% - 16px);
+            }
+            .profile-card .card-actions {
+                padding: 0 8px 15px 8px;
+            }
+            .pagination-controls button {
+                padding: 10px 20px;
+                font-size: 0.9em;
+            }
+            .pagination-info {
+                font-size: 0.9em;
+            }
+            .no-shortlist-message {
+                font-size: 1.1em;
+            }
+            .no-shortlist-message i {
+                font-size: 2em;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .section-title {
+                font-size: 1.8em;
+            }
+            .player-profiles-grid {
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+                gap: 10px;
+            }
+            .profile-card .card-image-container {
+                height: 120px;
+            }
+            .profile-card .card-content {
+                padding: 10px;
+            }
+            .profile-card h3 {
+                font-size: 1.1em;
+            }
+            .profile-card .player-details {
+                font-size: 0.7em;
+                gap: 4px;
+            }
+            .profile-card .detail-item {
+                padding: 1px 4px;
+            }
+            .profile-card .btn-view-profile,
+            .profile-card .btn-remove-from-list {
+                font-size: 0.8em;
+                padding: 6px 12px;
+                width: calc(100% - 12px);
+                margin-top: 6px;
+            }
+            .profile-card .card-actions {
+                padding: 0 6px 12px 6px;
+                gap: 6px;
+            }
+            .pagination-controls {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .pagination-controls button {
+                width: 100%;
+                font-size: 0.9em;
+                padding: 10px 15px;
+            }
+            .pagination-info {
+                font-size: 0.85em;
+            }
+            .no-shortlist-message {
+                font-size: 1em;
+                padding: 20px;
+            }
+            .no-shortlist-message i {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- En-tête de l'application - Utilise les styles globaux -->
+    <header class="app-header">
+        <div class="header-content">
+            <div class="header-logo">
+                <i class="fas fa-list"></i>
+                <span>Mes Listes</span>
+            </div>
+            <div class="header-user">
+                <!-- Bouton de déconnexion -->
+                <a href="login.php" style="text-decoration: none; color: inherit; display: flex; align-items: center;">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Déconnexion</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="manager-list-main">
+        <h2 class="section-title">Mes Joueurs Suivis</h2>
+
+        <div class="player-profiles-grid" id="shortlistGrid">
+            <!-- Exemple de Cartes de Profil Joueur (seront remplies dynamiquement avec les joueurs suivis) -->
+            <!-- Player 1 on shortlist -->
+            <div class="profile-card">
+                <div class="card-image-container">
+                    <img src="https://placehold.co/400x220/007bff/ffffff?text=Joueur+A" alt="Profil de Joueur A">
+                </div>
+                <div class="card-content">
+                    <h3>Samuel Eto'o (Exemple)</h3>
+                    <div class="player-details">
+                        <span class="detail-item"><i class="fas fa-crosshairs"></i> Attaquant</span>
+                        <span class="detail-item"><i class="fas fa-birthday-cake"></i> 20 ans</span>
+                        <span class="detail-item"><i class="fas fa-globe-africa"></i> Camerounais</span>
+                    </div>
+                </div>
+                <div class="card-actions">
+                    <a href="view_player_profile.php?id=playerA" class="btn-view-profile">
+                        <i class="fas fa-eye"></i> Voir Profil
+                    </a>
+                    <button class="btn-remove-from-list" data-player-id="playerA">
+                        <i class="fas fa-heart-crack"></i> Retirer
+                    </button>
+                </div>
+            </div>
+
+            <!-- Player 2 on shortlist -->
+            <div class="profile-card">
+                <div class="card-image-container">
+                    <img src="https://placehold.co/400x220/28a745/ffffff?text=Joueur+B" alt="Profil de Joueur B">
+                </div>
+                <div class="card-content">
+                    <h3>Sarah Koné</h3>
+                    <div class="player-details">
+                        <span class="detail-item"><i class="fas fa-shield-alt"></i> Défenseur</span>
+                        <span class="detail-item"><i class="fas fa-birthday-cake"></i> 21 ans</span>
+                        <span class="detail-item"><i class="fas fa-globe-africa"></i> Ivoirienne</span>
+                    </div>
+                </div>
+                <div class="card-actions">
+                    <a href="view_player_profile.php?id=playerB" class="btn-view-profile">
+                        <i class="fas fa-eye"></i> Voir Profil
+                    </a>
+                    <button class="btn-remove-from-list" data-player-id="playerB">
+                        <i class="fas fa-heart-crack"></i> Retirer
+                    </button>
+                </div>
+            </div>
+
+            <!-- Player 3 on shortlist -->
+            <div class="profile-card">
+                <div class="card-image-container">
+                    <img src="https://placehold.co/400x220/ffc107/333333?text=Joueur+C" alt="Profil de Joueur C">
+                </div>
+                <div class="card-content">
+                    <h3>Mamadou Diallo</h3>
+                    <div class="player-details">
+                        <span class="detail-item"><i class="fas fa-hand-paper"></i> Gardien</span>
+                        <span class="detail-item"><i class="fas fa-birthday-cake"></i> 19 ans</span>
+                        <span class="detail-item"><i class="fas fa-globe-africa"></i> Guinéen</span>
+                    </div>
+                </div>
+                <div class="card-actions">
+                    <a href="view_player_profile.php?id=playerC" class="btn-view-profile">
+                        <i class="fas fa-eye"></i> Voir Profil
+                    </a>
+                    <button class="btn-remove-from-list" data-player-id="playerC">
+                        <i class="fas fa-heart-crack"></i> Retirer
+                    </button>
+                </div>
+            </div>
+
+            <!-- Player 4 on shortlist -->
+            <div class="profile-card">
+                <div class="card-image-container">
+                    <img src="https://placehold.co/400x220/17a2b8/ffffff?text=Joueur+D" alt="Profil de Joueur D">
+                </div>
+                <div class="card-content">
+                    <h3>Aisha Musa</h3>
+                    <div class="player-details">
+                        <span class="detail-item"><i class="fas fa-futbol"></i> Milieu</span>
+                        <span class="detail-item"><i class="fas fa-birthday-cake"></i> 22 ans</span>
+                        <span class="detail-item"><i class="fas fa-globe-africa"></i> Nigériane</span>
+                    </div>
+                </div>
+                <div class="card-actions">
+                    <a href="view_player_profile.php?id=playerD" class="btn-view-profile">
+                        <i class="fas fa-eye"></i> Voir Profil
+                    </a>
+                    <button class="btn-remove-from-list" data-player-id="playerD">
+                        <i class="fas fa-heart-crack"></i> Retirer
+                    </button>
+                </div>
+            </div>
+
+        </div> <!-- end player-profiles-grid -->
+
+        <!-- Message si la liste est vide (initialement caché ou affiché selon la logique JS) -->
+        <div class="no-shortlist-message" id="noShortlistMessage" style="display: none;">
+            <i class="fas fa-list-ul"></i>
+            <p>Votre liste de joueurs suivis est actuellement vide.</p>
+            <p>Utilisez la page de <strong><a href="recherche.php">Recherche</a></strong> pour explorer de nouveaux talents et les ajouter à votre liste !</p>
+            <p>Cela vous permettra de garder une trace des joueurs qui vous intéressent pour un suivi facile.</p>
+        </div>
+
+        <div class="pagination-controls">
+            <button id="prevPageBtn" disabled><i class="fas fa-arrow-left"></i> Précédent</button>
+            <span id="paginationInfo" class="pagination-info">Page 1 sur 1</span>
+            <button id="nextPageBtn"><i class="fas fa-arrow-right"></i> Suivant</button>
+        </div>
+    </main>
+
+    <!-- Menu de navigation fixe en bas - Utilise les styles globaux -->
+    <nav class="bottom-nav">
+        <a href="index.php" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>Accueil</span>
+        </a>
+        <a href="recherche.php" class="nav-item">
+            <i class="fas fa-search"></i>
+            <span>Recherche</span>
+        </a>
+        <a href="messages.php" class="nav-item">
+            <i class="fas fa-envelope"></i>
+            <span>Messages</span>
+        </a>
+        <a href="profile.php" class="nav-item"> <!-- A modifier pour un profil Manager dédié plus tard -->
+            <i class="fas fa-user-circle"></i>
+            <span>Mon Profil</span>
+        </a>
+        <a href="liste.php" class="nav-item active">
+            <i class="fas fa-list"></i>
+            <span>Listes</span>
+        </a>
+    </nav>
+
+    <script>
+        const shortlistGrid = document.getElementById('shortlistGrid');
+        const noShortlistMessage = document.getElementById('noShortlistMessage');
+        const prevPageBtn = document.getElementById('prevPageBtn');
+        const nextPageBtn = document.getElementById('nextPageBtn');
+        const paginationInfo = document.getElementById('paginationInfo');
+        let profileCards = Array.from(shortlistGrid.getElementsByClassName('profile-card'));
+
+        const cardsPerPage = 6; // Nombre de cartes à afficher par page
+        let currentPage = 1;
+
+        function displayCards(page) {
+            const startIndex = (page - 1) * cardsPerPage;
+            const endIndex = startIndex + cardsPerPage;
+
+            profileCards.forEach((card, index) => {
+                if (index >= startIndex && index < endIndex) {
+                    card.style.display = 'flex'; // Afficher la carte
+                } else {
+                    card.style.display = 'none'; // Masquer la carte
+                }
+            });
+
+            updatePaginationControls();
+            toggleNoShortlistMessage();
+        }
+
+        function updatePaginationControls() {
+            const totalPages = Math.ceil(profileCards.length / cardsPerPage);
+            paginationInfo.textContent = `Page ${currentPage} sur ${totalPages}`;
+
+            prevPageBtn.disabled = currentPage === 1;
+            nextPageBtn.disabled = currentPage === totalPages;
+
+            // Hide pagination if only one page or no cards
+            if (totalPages <= 1) {
+                prevPageBtn.style.display = 'none';
+                nextPageBtn.style.display = 'none';
+                paginationInfo.style.display = 'none';
+            } else {
+                prevPageBtn.style.display = 'inline-flex';
+                nextPageBtn.style.display = 'inline-flex';
+                paginationInfo.style.display = 'inline-flex';
+            }
+        }
+
+        function toggleNoShortlistMessage() {
+            if (profileCards.length === 0) {
+                noShortlistMessage.style.display = 'block'; // Show message
+                shortlistGrid.style.display = 'none'; // Hide grid
+            } else {
+                noShortlistMessage.style.display = 'none'; // Hide message
+                shortlistGrid.style.display = 'grid'; // Show grid
+            }
+        }
+
+        // Event listeners for pagination buttons
+        prevPageBtn.addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                displayCards(currentPage);
+            }
+        });
+
+        nextPageBtn.addEventListener('click', () => {
+            const totalPages = Math.ceil(profileCards.length / cardsPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                displayCards(currentPage);
+            }
+        });
+
+        // Event listener for "Retirer" button (delegation for dynamic elements)
+        shortlistGrid.addEventListener('click', (event) => {
+            if (event.target.classList.contains('btn-remove-from-list') || event.target.closest('.btn-remove-from-list')) {
+                const button = event.target.closest('.btn-remove-from-list');
+                const playerIdToRemove = button.dataset.playerId;
+                
+                // Simulate removal from shortlist (in a real app, this would be an API call)
+                console.log(`Retirer le joueur ${playerIdToRemove} de la liste.`);
+                
+                // Remove the card from the DOM
+                button.closest('.profile-card').remove();
+                
+                // Re-get the updated list of cards
+                profileCards = Array.from(shortlistGrid.getElementsByClassName('profile-card'));
+                
+                // Adjust current page if needed after removal (e.g., last card on page removed)
+                const totalPages = Math.ceil(profileCards.length / cardsPerPage);
+                if (currentPage > totalPages && totalPages > 0) {
+                    currentPage = totalPages;
+                } else if (profileCards.length === 0) {
+                    currentPage = 1; // Reset to page 1 if list becomes empty
+                }
+
+                displayCards(currentPage); // Re-display cards and update controls
+            }
+        });
+
+        // Initial display when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            // For demonstration, let's remove some cards to simulate an empty list
+            // Uncomment the following lines to test the empty list message
+            // profileCards.forEach(card => card.remove());
+            // profileCards = Array.from(shortlistGrid.getElementsByClassName('profile-card'));
+
+            displayCards(currentPage);
+        });
+    </script>
+</body>
+</html>

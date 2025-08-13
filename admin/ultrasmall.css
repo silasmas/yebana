@@ -1,0 +1,171 @@
+/* ======================================================= */
+/* styles/ultrasmall.css                                   */
+/* Styles spécifiques pour les écrans inférieurs à 300px   */
+/* À inclure APRES tous les autres fichiers CSS.           */
+/* ======================================================= */
+
+@media (max-width: 300px) {
+    /* Ajustements généraux pour le corps */
+    body {
+        font-size: 0.85em; /* Réduire la taille de police de base */
+        padding-top: var(--header-height, 60px); /* Assurer un espace pour l'en-tête */
+        padding-bottom: var(--bottom-nav-height, 60px); /* Assurer un espace pour la nav bottom */
+    }
+
+    /* En-tête de l'application */
+    .app-header .header-content {
+        padding: 0 8px; /* Réduire le padding horizontal */
+    }
+    .app-header .header-logo span,
+    .app-header .header-user span {
+        font-size: 0.9em; /* Réduire la taille du texte dans l'en-tête */
+        white-space: nowrap; /* Empêcher le retour à la ligne */
+        overflow: hidden;
+        text-overflow: ellipsis; /* Ajouter des points de suspension si le texte est trop long */
+    }
+    .app-header .header-logo i,
+    .app-header .header-user i {
+        font-size: 1.2em; /* Ajuster la taille des icônes */
+    }
+
+    /* Navigation du bas */
+    .bottom-nav {
+        padding: 0 5px; /* Réduire le padding */
+    }
+    .bottom-nav .nav-item {
+        padding: 8px 3px; /* Réduire le padding des éléments de navigation */
+        min-width: 50px; /* Assurer une largeur minimale pour les éléments */
+    }
+    .bottom-nav .nav-item span {
+        font-size: 0.7em; /* Réduire la taille du texte de navigation */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .bottom-nav .nav-item i {
+        font-size: 1.3em; /* Ajuster la taille des icônes de navigation */
+        margin-bottom: 3px;
+    }
+
+    /* Conteneurs principaux (ex: .manager-dashboard-main, .educational-main, .upload-main, etc.) */
+    main {
+        padding: 0 10px; /* Réduire le padding latéral dans le main */
+        margin: 15px auto; /* Ajuster la marge supérieure */
+    }
+
+    /* Titres de section */
+    .section-title {
+        font-size: 1.6em; /* Réduire la taille des titres de section */
+        margin-bottom: 25px;
+    }
+    .section-title::after {
+        width: 60px; /* Réduire la ligne sous le titre */
+        margin-top: 10px;
+    }
+
+    /* Cartes (ex: .profile-card, .video-card, .position-card, .report-card, .filter-card, .upload-card) */
+    .profile-card,
+    .video-card,
+    .position-card,
+    .report-card,
+    .filter-card,
+    .upload-card {
+        padding: 15px; /* Réduire le padding interne des cartes */
+        border-radius: 10px; /* Ajuster le rayon des bords */
+    }
+    .profile-card h3,
+    .video-card h3,
+    .position-card h3 {
+        font-size: 1.1em; /* Réduire la taille des titres de carte */
+        margin-bottom: 8px;
+    }
+    .profile-card p,
+    .video-card p,
+    .position-card p {
+        font-size: 0.8em; /* Réduire la taille du texte descriptif */
+    }
+
+    /* Grilles (ex: .player-profiles-grid, .video-grid, .position-grid, .filter-form-grid, .report-metrics-grid) */
+    .player-profiles-grid,
+    .video-grid,
+    .position-grid,
+    .filter-form-grid,
+    .report-metrics-grid {
+        grid-template-columns: 1fr; /* Forcer une seule colonne pour toutes les grilles */
+        gap: 15px; /* Réduire l'espace entre les éléments de grille */
+    }
+
+    /* Éléments de formulaire */
+    .form-group {
+        margin-bottom: 12px; /* Réduire l'espace entre les groupes de formulaires */
+    }
+    .form-group label {
+        font-size: 0.9em;
+        margin-bottom: 5px;
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        padding: 8px; /* Réduire le padding des inputs */
+        font-size: 0.85em;
+        border-radius: 6px;
+    }
+
+    /* Boutons */
+    .form-actions,
+    .card-actions,
+    .filter-actions,
+    .pagination-controls {
+        flex-direction: column; /* Empiler les boutons verticalement */
+        gap: 8px; /* Réduire l'espace entre les boutons */
+        margin-top: 15px;
+    }
+    .form-actions button,
+    .card-actions a,
+    .card-actions button,
+    .filter-actions button,
+    .pagination-controls button {
+        width: 100%; /* Forcer les boutons à prendre toute la largeur */
+        padding: 10px 15px; /* Réduire le padding des boutons */
+        font-size: 0.9em;
+        border-radius: 20px;
+    }
+
+    /* Messages (ex: .no-content-message, .no-shortlist-message, .no-results) */
+    .no-content-message,
+    .no-shortlist-message,
+    .no-results {
+        padding: 20px;
+        font-size: 1em;
+    }
+    .no-content-message i,
+    .no-shortlist-message i,
+    .no-results i {
+        font-size: 2em;
+        margin-bottom: 10px;
+    }
+
+    /* Modale vidéo */
+    .video-modal-content {
+        padding: 10px;
+        width: 98%; /* Augmenter la largeur pour maximiser l'espace */
+        border-radius: 10px;
+    }
+    .modal-close-btn {
+        font-size: 1.2em;
+        top: 5px;
+        right: 5px;
+    }
+    .modal-video-title {
+        font-size: 1.1em;
+        margin-bottom: 10px;
+        padding-right: 20px;
+    }
+    .video-responsive {
+        padding-bottom: 65%; /* Ajuster l'aspect ratio si besoin ou laisser 56.25% */
+    }
+    .hero-section .hero-btn{
+        font-size: 14px;
+        padding: 3px;
+    }
+}

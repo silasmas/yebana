@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YEBANA - Contenu Éducatif par Poste</title>
+    <!-- Link to Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Link to global main CSS file (for variables and base styles) -->
+    <link rel="stylesheet" href="../style.css"> <!-- Adjusted path for subfolder -->
+    <!-- Link to soccer specific CSS file (for header and navigation) -->
+    <link rel="stylesheet" href="soccer.css">
+
+    <!-- Inline styles specific to the select position page -->
+    <style>
+        /* ==================================== */
+        /* Styles spécifiques pour la page Sélectionner un Poste */
+        /* ==================================== */
+
+        /* Override body styles from global CSS */
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark-text-color);
+            margin: 0;
+            padding-top: var(--header-height); /* Space for the fixed header */
+            padding-bottom: var(--bottom-nav-height); /* Space for the fixed bottom nav */
+            background-color: var(--dashboard-bg); /* Consistent light background */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            box-sizing: border-box;
+            overflow-x: hidden;
+        }
+
+        .select-position-main {
+            flex-grow: 1; /* Allows content to expand */
+            width: 100%;
+            max-width: 900px; /* Max width for the content */
+            margin: 25px auto; /* Center the content and add some top margin */
+            padding: 0 20px; /* Side padding */
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .section-title {
+            font-size: 2.5em;
+            color: var(--dark-text-color);
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: 700;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-color);
+            margin: 15px auto 0 auto;
+            border-radius: 2px;
+        }
+
+        .position-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Responsive grid for positions */
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .position-card {
+            background-color: var(--white-color);
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .position-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            background-color: var(--hover-bg-color); /* Light background on hover */
+        }
+
+        .position-card .icon {
+            font-size: 3.5em;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            transition: color 0.3s ease;
+        }
+        .position-card:hover .icon {
+            color: var(--secondary-color); /* Change icon color on hover */
+        }
+
+        .position-card h3 {
+            font-size: 1.5em;
+            color: var(--dark-text-color);
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .position-card p {
+            font-size: 0.9em;
+            color: var(--medium-text-color);
+            margin-top: 10px;
+            line-height: 1.5;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .select-position-main {
+                padding: 20px 15px;
+            }
+            .section-title {
+                font-size: 2em;
+                margin-bottom: 30px;
+            }
+            .position-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 20px;
+            }
+            .position-card {
+                padding: 20px;
+            }
+            .position-card .icon {
+                font-size: 3em;
+                margin-bottom: 10px;
+            }
+            .position-card h3 {
+                font-size: 1.3em;
+            }
+            .position-card p {
+                font-size: 0.85em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .section-title {
+                font-size: 1.8em;
+            }
+            .position-grid {
+                grid-template-columns: 1fr; /* Single column on very small screens */
+                gap: 15px;
+            }
+            .position-card .icon {
+                font-size: 2.5em;
+            }
+            .position-card h3 {
+                font-size: 1.2em;
+            }
+            .position-card p {
+                font-size: 0.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- App Header - Uses global header styles from soccer.css -->
+    <header class="app-header">
+        <div class="header-content">
+            <div class="header-logo">
+                <i class="fas fa-book-reader"></i> <!-- Changed icon to reflect education -->
+                <span>Contenu Éducatif</span> <!-- Changed title -->
+            </div>
+            <div class="header-user">
+                <!-- Back button or Logout button -->
+                <a href="index.php" style="text-decoration: none; color: inherit; display: flex; align-items: center;">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Retour</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="select-position-main">
+        <h2 class="section-title">Sélectionnez un Poste pour Accéder au Contenu Éducatif</h2> <!-- Changed title -->
+
+        <div class="position-grid">
+            <div class="position-card" data-position="Gardien">
+                <i class="fas fa-hand-paper icon"></i>
+                <h3>Gardien de But</h3>
+                <p>Découvrez des techniques d'arrêt, de placement et de communication.</p>
+            </div>
+            <div class="position-card" data-position="Defenseur Central">
+                <i class="fas fa-shield-alt icon"></i>
+                <h3>Défenseur Central</h3>
+                <p>Maîtrisez le marquage, l'anticipation et la relance du jeu.</p>
+            </div>
+            <div class="position-card" data-position="Lateral Droit">
+                <i class="fas fa-running icon"></i>
+                <h3>Latéral Droit</h3>
+                <p>Apprenez le positionnement offensif et défensif sur le flanc droit.</p>
+            </div>
+            <div class="position-card" data-position="Lateral Gauche">
+                <i class="fas fa-running icon"></i>
+                <h3>Latéral Gauche</h3>
+                <p>Développez vos compétences en débordement et en couverture défensive.</p>
+            </div>
+            <div class="position-card" data-position="Milieu Defensif">
+                <i class="fas fa-futbol icon"></i>
+                <h3>Milieu Défensif</h3>
+                <p>Comprenez le rôle de sentinelle, la récupération et la première passe.</p>
+            </div>
+            <div class="position-card" data-position="Milieu Central">
+                <i class="fas fa-futbol icon"></i>
+                <h3>Milieu Central</h3>
+                <p>Améliorez votre vision de jeu, votre distribution et votre soutien.</p>
+            </div>
+            <div class="position-card" data-position="Milieu Offensif">
+                <i class="fas fa-code-branch icon"></i>
+                <h3>Milieu Offensif</h3>
+                <p>Perfectionnez la création d'occasions et la finition.</p>
+            </div>
+            <div class="position-card" data-position="Ailier Droit">
+                <i class="fas fa-bolt icon"></i>
+                <h3>Ailier Droit</h3>
+                <p>Explorez les dribbles, les centres et les tirs depuis le côté droit.</p>
+            </div>
+            <div class="position-card" data-position="Ailier Gauche">
+                <i class="fas fa-bolt icon"></i>
+                <h3>Ailier Gauche</h3>
+                <p>Développez votre capacité à percuter et à créer le danger sur le flanc gauche.</p>
+            </div>
+            <div class="position-card" data-position="Avant Centre">
+                <i class="fas fa-bullseye icon"></i>
+                <h3>Avant-Centre</h3>
+                <p>Axez sur la finition, le jeu de tête et le placement dans la surface.</p>
+            </div>
+            <div class="position-card" data-position="Tous">
+                <i class="fas fa-users icon"></i>
+                <h3>Tous les Postes</h3>
+                <p>Accédez à du contenu général applicable à tous les joueurs.</p>
+            </div>
+        </div>
+    </main>
+
+    <nav class="bottom-nav">
+        <a href="index.php" class="nav-item active">
+            <i class="fas fa-home"></i>
+            <span>Accueil</span>
+        </a>
+        <a href="view_player_profile.php?joueur=<?= $_SESSION['reference'] ?>" class="nav-item">
+            <i class="fas fa-user"></i>
+            <span>Profil</span>
+        </a>
+        <a href="select_position.html" class="nav-item active"> <!-- This page will be active when on it -->
+            <i class="fas fa-graduation-cap"></i> <!-- Changed icon to reflect learning/education -->
+            <span>Apprendre</span> <!-- Changed text to reflect learning/education -->
+        </a>
+        <a href="explore.php" class="nav-item">
+            <i class="fas fa-search"></i>
+            <span>Explorer</span>
+        </a>
+    </nav>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const positionCards = document.querySelectorAll('.position-card');
+            
+            positionCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const selectedPosition = card.dataset.position;
+                    // In a real application, you would pass this position to live.html
+                    // For now, we'll just redirect to live.html
+                    window.location.href = `live.php?position=${selectedPosition}`; // Pass position as URL parameter
+                    console.log(`Position sélectionnée : ${selectedPosition}. Redirection vers live.php`);
+                });
+            });
+
+            // Update active state for the current page in the bottom navigation
+            const currentPath = window.location.pathname;
+            const navItems = document.querySelectorAll('.bottom-nav .nav-item');
+            navItems.forEach(item => {
+                // Remove active from all
+                item.classList.remove('active');
+                // Check if the current path matches the href of the nav item
+                // Use .endsWith() for partial matches in subfolders
+                if (currentPath.endsWith(item.getAttribute('href'))) {
+                    item.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

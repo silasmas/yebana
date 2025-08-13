@@ -1,0 +1,360 @@
+<?php
+include('../db.php');
+if (isset($_SESSION['nom'],$_SESSION['prenom'],$_SESSION['mail'],$_SESSION['reference'])) {
+    if($_SESSION['acces'] === 'joueur'){
+
+        $recuperation_joueurs_enregistrer = $db->prepare('SELECT * FROM `jouers`WHERE reference = ?  LIMIT 1');
+        $recuperation_joueurs_enregistrer->execute(array($_SESSION['reference']));
+        
+        $nbr_jouers_enregistrer = $recuperation_joueurs_enregistrer->rowCount();
+
+        $donnees_joueur = $recuperation_joueurs_enregistrer->fetch();
+
+?>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YEBANA - Mon Profil Joueur</title>
+    <!-- Link to Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Link to the main CSS file for global styles -->
+    <link rel="stylesheet" href="../style.css">
+
+    <!-- Inline styles specific to the player profile page -->
+    <style>
+        /* Specific for player profile container (wider override) */
+        .player-profile-container {
+            max-width: 700px; /* Wider for detailed profile forms */
+        }
+
+        /* Newly added: Styles for form rows (two columns) */
+        .form-row {
+            display: flex;
+            flex-wrap: wrap; /* Allows items to wrap to the next line on small screens */
+            gap: 20px; /* Space between columns */
+            margin-bottom: 20px; /* Space below the row */
+        }
+
+        .form-row .form-group {
+            flex: 1; /* Each form-group takes an equal share of space */
+            min-width: calc(50% - 10px); /* On large screens, two columns */
+            margin-bottom: 0; /* Reset form-group margin for the row */
+        }
+
+        /* Specific styles for video upload group (containing URL and title) */
+        .video-upload-group input[type="text"] {
+            margin-top: 10px; /* Space between video URL and title */
+        }
+        input[type="date"], 
+        textarea,
+        input[type="number"],
+        select,
+        input[type="url"]{
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--input-border-color);
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 1em;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Styles for Profile Picture Section */
+        .profile-picture-section {
+            text-align: center;
+            padding-bottom: 10px; /* Less padding at bottom as image is centered */
+        }
+
+        .profile-picture-preview {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%; /* Make the image circular */
+            overflow: hidden; /* Hide anything outside the circular shape */
+            margin: 20px auto 15px auto; /* Center and space */
+            border: 4px solid var(--primary-color); /* Styled border */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-picture-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensure the image covers the entire area */
+        }
+
+        .upload-btn {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            padding: 10px 20px;
+            border-radius: 25px; /* Pill button */
+            cursor: pointer;
+            display: inline-flex; /* Icon-text alignment */
+            align-items: center;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 10px;
+            box-shadow: 0 3px 10px rgba(0, 123, 255, 0.2);
+        }
+
+        .upload-btn i {
+            margin-right: 8px;
+            color: var(--primary-color);
+        }
+
+        .upload-btn:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+        }
+
+
+        /* Styles for CV upload (file type) */
+        .file-upload-group {
+            position: relative; /* For positioning hidden file input */
+            margin-top: 15px;
+        }
+
+        .file-input-label {
+            background-color: var(--light-bg-color);
+            border: 2px dashed var(--primary-color); /* Styled dashed border */
+            border-radius: 8px;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--dark-text-color);
+            font-weight: 500;
+        }
+
+        .file-input-label i {
+            margin-right: 10px;
+            color: var(--primary-color);
+            font-size: 1.2em;
+        }
+
+        .file-input-label:hover {
+            background-color: var(--hover-bg-color);
+            border-color: #0056b3;
+        }
+
+
+        /* Media query for small screens for profile page specific elements */
+        @media (max-width: 768px) {
+            .player-profile-container {
+                max-width: 100%;
+                padding: 20px;
+            }
+
+            /* For form-row on mobile: elements stack */
+            .form-row {
+                flex-direction: column;
+                gap: 0; /* No lateral space between stacked elements */
+                margin-bottom: 0; /* Individual form-groups already handle margin */
+            }
+            .form-row .form-group {
+                width: 100%; /* Take full width on mobile */
+                margin-bottom: 20px; /* Add space between stacked form-groups */
+            }
+
+            .profile-picture-section .hint-text {
+                font-size: 0.85em; /* Smaller on mobile */
+            }
+
+            .upload-btn {
+                padding: 8px 15px;
+                font-size: 0.9em;
+            }
+
+            .file-input-label {
+                padding: 12px 15px;
+                font-size: 0.95em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container player-profile-container">
+        <div class="logo">
+            <i class="fas fa-futbol"></i>
+            <h1>Mon Profil Joueur</h1>
+        </div>
+        <p>Complétez votre profil pour être visible auprès des recruteurs et managers.</p>
+
+        <form action="save_player_profile.php" method="POST" enctype="multipart/form-data" class="profile-form">
+            
+            <!-- Profile Picture Section -->
+            <div class="profile-picture-section form-section">
+                <legend><i class="fas fa-camera"></i> Photo de Profil</legend>
+                <div class="profile-picture-preview">
+                    <!-- Default placeholder image for profile picture -->
+                    <img id="profileImagePreview" src="https://placehold.co/150x150/007bff/ffffff?text=Votre+Photo" alt="Default profile picture">
+                    
+                    <label for="profile_picture" class="upload-btn"  style="color: red;">
+                        <i class="fas fa-upload" style="color: red;"></i> Changer de photo
+                        <!-- Hidden file input linked to the label for styling -->
+                        <input type="file" value="Importer" id="profile_picture" name="profile_picture" accept="image/*">
+                    </label>
+                </div>
+                <p class="hint-text">Image carrée recommandée (ex: 300x300px).</p>
+            </div>
+            
+            <!-- Personal Information Section -->
+            <fieldset class="form-section">
+                <legend><i class="fas fa-user-circle"></i> Informations Personnelles</legend>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="first_name"><i class="fas fa-signature"></i> Prénom :</label>
+                        <input type="text" id="first_name" name="first_name" placeholder="Votre prénom" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="last_name"><i class="fas fa-signature"></i> Nom :</label>
+                        <input type="text" id="last_name" name="last_name" placeholder="Votre nom" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="date_of_birth"><i class="fas fa-calendar-alt"></i> Date de naissance :</label>
+                    <input type="date" id="date_of_birth" name="date_of_birth" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nationality"><i class="fas fa-globe-africa"></i> Nationalité :</label>
+                        <input type="text" id="nationality" name="nationality" placeholder="Ex: Congolaise, Anglaise" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="city"><i class="fas fa-city"></i> Ville :</label>
+                        <input type="text" id="city" name="city" placeholder="Votre ville de résidence" required>
+                    </div>
+                </div>
+
+                 <div class="form-group">
+                    <label for="bio"><i class="fas fa-info-circle"></i> Biographie courte :</label>
+                    <textarea id="bio" name="bio" rows="4" placeholder="Décrivez-vous en quelques mots (points forts, expérience...)"></textarea>
+                </div>
+            </fieldset>
+
+            <!-- Physical and Sports Characteristics Section -->
+            <fieldset class="form-section">
+                <legend><i class="fas fa-futbol"></i> Caractéristiques Sportives</legend>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="height_cm"><i class="fas fa-ruler-vertical"></i> Taille (cm) :</label>
+                        <input type="number" id="height_cm" name="height_cm" placeholder="Ex: 175" min="100" max="250" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="weight_kg"><i class="fas fa-weight-hanging"></i> Poids (kg) :</label>
+                        <input type="number" id="weight_kg" name="weight_kg" placeholder="Ex: 70" min="40" max="150" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="position"><i class="fas fa-crosshairs"></i> Poste principal :</label>
+                    <select id="position" name="position" required>
+                        <option value="">Sélectionnez un poste</option>
+                        <option value="Gardien">Gardien</option>
+                        <option value="Défenseur Central">Défenseur Central</option>
+                        <option value="Arrière Latéral Droit">Arrière Latéral Droit</option>
+                        <option value="Arrière Latéral Gauche">Arrière Latéral Gauche</option>
+                        <option value="Milieu Défensif">Milieu Défensif</option>
+                        <option value="Milieu Central">Milieu Central</option>
+                        <option value="Milieu Offensif">Milieu Offensif</option>
+                        <option value="Ailier Droit">Ailier Droit</option>
+                        <option value="Ailier Gauche">Ailier Gauche</option>
+                        <option value="Attaquant">Attaquant</option>
+                        <option value="Avant-Centre">Avant-Centre</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="current_club"><i class="fas fa-shield-alt"></i> Club actuel :</label>
+                    <input type="text" id="current_club" name="current_club" placeholder="Nom de votre club ou 'Sans club'">
+                </div>
+            </fieldset>
+
+            <!-- Sports CV Section -->
+            <fieldset class="form-section">
+                <legend><i class="fas fa-file-alt"></i> CV Sportif</legend>
+                <p class="hint-text">Téléchargez votre CV sportif au format PDF (max 2MB).</p>
+                <div class="form-group file-upload-group">
+                    <label for="sport_cv" class="file-input-label">
+                        <i class="fas fa-upload"></i> Choisir un fichier
+                        <span id="cvFileName">Aucun fichier sélectionné</span>
+                    </label>
+                    <!-- Hidden file input for CV upload -->
+                    <input type="file" id="sport_cv" name="sport_cv" accept=".pdf">
+                </div>
+            </fieldset>
+
+            <!-- Media Section (Videos) -->
+            <fieldset class="form-section">
+                <legend><i class="fas fa-video"></i> Vidéos (YouTube/Vimeo)</legend>
+                <p class="hint-text">Partagez les liens de vos meilleures vidéos de match ou d'entraînement. Maximum 3 vidéos pour commencer.</p>
+                
+                <div class="form-group video-upload-group">
+                    <label for="video_url_1">Lien Vidéo 1 :</label>
+                    <input type="url" id="video_url_1" name="video_url_1" placeholder="Ex: https://www.youtube.com/watch?v=XXXXX">
+                    <input type="text" name="video_title_1" placeholder="Titre de la vidéo (ex: Mes meilleurs gestes)">
+                </div>
+            </fieldset>
+
+            <button type="submit">
+                <i class="fas fa-save"></i> Enregistrer le profil
+            </button>
+        </form>
+
+        <div class="back-link">
+            <a href="index.php"><i class="fas fa-arrow-left"></i> Retour au tableau de bord</a>
+        </div>
+    </div>
+    <!-- JavaScript for dynamic features -->
+    <script>
+        // Profile image preview functionality
+        const profilePictureInput = document.getElementById('profile_picture');
+        const profileImagePreview = document.getElementById('profileImagePreview');
+
+        profilePictureInput.addEventListener('change', function() {
+            const file = this.files[0]; // Get the selected file
+            if (file) {
+                const reader = new FileReader(); // Create a FileReader object
+                reader.onload = function(e) {
+                    profileImagePreview.src = e.target.result; // Set the image source to the selected file's data URL
+                };
+                reader.readAsDataURL(file); // Read the file as a data URL
+            } else {
+                // If no file is selected, revert to the default placeholder image
+                profileImagePreview.src = "https://placehold.co/150x150/007bff/ffffff?text=Votre+Photo";
+            }
+        });
+
+        // CV file name display functionality
+        const sportCvInput = document.getElementById('sport_cv');
+        const cvFileNameSpan = document.getElementById('cvFileName');
+
+        sportCvInput.addEventListener('change', function() {
+            if (this.files.length > 0) {
+                cvFileNameSpan.textContent = this.files[0].name; // Display the selected file's name
+            } else {
+                cvFileNameSpan.textContent = "Aucun fichier sélectionné"; // Revert to default text
+            }
+        });
+    </script>
+</body>
+</html>
+<?php
+    }
+    else {
+        header('location:../');
+    }
+}
+else {
+    header('location:../');
+}

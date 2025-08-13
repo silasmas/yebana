@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YEBANA Live - Vidéos pour Joueurs</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            overflow: hidden; /* Cache la barre de défilement par défaut et gère le défilement manuellement */
+            background-color: #000; /* Fond noir pour l'expérience vidéo */
+            color: white;
+            height: 100vh; /* Prend toute la hauteur de la fenêtre */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .video-container {
+            flex-grow: 1;
+            overflow-y: scroll; /* Permet le défilement vertical */
+            scroll-snap-type: y mandatory; /* Force le défilement à s'arrêter sur des éléments spécifiques */
+            height: calc(100vh - 70px); /* Hauteur moins la hauteur de la nav bar */
+            -webkit-overflow-scrolling: touch; /* Améliore le défilement sur iOS */
+            position: relative; /* Pour positionner l'overlay */
+        }
+
+        .video-item {
+            width: 100vw;
+            height: calc(100vh - 70px); /* Chaque vidéo prend la pleine hauteur disponible */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            scroll-snap-align: start; /* S'aligne au début de la vue lors du défilement */
+            position: relative;
+            background-color: #000; /* Assurez-vous que le fond est noir */
+        }
+
+        .video-player {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Recouvre toute la zone, coupant les bords si nécessaire (comme TikTok) */
+            display: block; /* Supprime l'espace sous la vidéo */
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end; /* Aligne le contenu en bas */
+            padding: 20px;
+            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 40%); /* Dégradé pour le texte */
+            pointer-events: none; /* Permet les clics sur la vidéo à travers l'overlay */
+        }
+
+        .video-info {
+            pointer-events: auto; /* Réactive les événements pour le texte */
+            margin-bottom: 50px; /* Espace au-dessus de la nav */
+        }
+
+        .video-info h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.5em;
+            text-shadow: 0 0 5px rgba(0,0,0,0.5);
+        }
+
+        .video-info p {
+            margin: 0;
+            font-size: 1em;
+            color: #ccc;
+            text-shadow: 0 0 5px rgba(0,0,0,0.5);
+        }
+
+        .play-pause-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0,0,0,0.5);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 2em;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            opacity: 0; /* Caché par défaut */
+            transition: opacity 0.3s ease;
+            pointer-events: auto; /* Réactive les événements pour le bouton */
+        }
+
+        /* Montre le bouton pause/play quand la vidéo est en pause ou au survol */
+        .video-item.paused .play-pause-btn,
+        .video-item:hover .play-pause-btn {
+            opacity: 1;
+        }
+
+        /* Style de la barre de navigation du bas (reprise de l'admin) */
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #202124; /* Un gris très foncé, presque noir */
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0; /* Plus de padding */
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.3); /* Ombre plus prononcée */
+            z-index: 1000;
+        }
+
+        .footer-nav .nav-item {
+            color: #bdc1c6; /* Gris clair */
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px 15px; /* Plus de padding */
+            border-radius: 8px; /* Plus arrondi */
+            transition: background-color 0.3s, color 0.3s, transform 0.2s;
+            font-size: 0.95em; /* Légèrement plus grand */
+            font-weight: 500;
+        }
+
+        .footer-nav .nav-item i {
+            font-size: 1.8em; /* Icônes plus grandes */
+            margin-bottom: 6px; /* Plus d'espace */
+        }
+
+        .footer-nav .nav-item:hover,
+        .footer-nav .nav-item.active {
+            background-color: #cc0000; /* Bleu principal au survol/actif */
+            color: white;
+            transform: translateY(-3px); /* Léger effet 3D */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .footer-nav .nav-item.active {
+            font-weight: bold;
+        }
+
+        /* Responsive pour la navigation */
+        @media (max-width: 480px) {
+            .footer-nav {
+                /* Suppression de flex-wrap pour éviter le désordre, et utilisation de justify-content: space-around */
+                flex-wrap: nowrap; /* Assure que les éléments restent sur une seule ligne */
+                justify-content: space-around; /* Distribue l'espace uniformément entre les éléments */
+                overflow-x: hidden; /* Cache la barre de défilement horizontale si elle apparaît */
+                padding: 10px 0; /* Garde le padding vertical, supprime le padding horizontal excessif */
+            }
+            .footer-nav .nav-item {
+                /* Les éléments prennent une part égale de l'espace disponible */
+                flex: 1; /* Chaque élément prend une part égale de l'espace */
+                min-width: unset; /* Annule la min-width précédente si elle créait des problèmes */
+                padding: 5px 0; /* Padding vertical, et pas de padding horizontal forcé pour laisser flex le gérer */
+                font-size: 0.75em; /* Légèrement plus grand pour la lisibilité */
+                text-align: center; /* Centre le texte et l'icône dans leur espace alloué */
+            }
+            .footer-nav .nav-item i {
+                font-size: 1.6em; /* Agrandir un peu les icônes */
+                margin-bottom: 3px; /* Réduire un peu l'espace entre icône et texte */
+            }
+
+            /* Ajustements pour le contenu vidéo sur mobile si nécessaire, bien que le CSS actuel soit déjà bon */
+            .video-info {
+                margin-bottom: 20px;
+            }
+            .video-info h3 {
+                font-size: 1.3em;
+            }
+            .video-info p {
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="video-container">
+        </div>
+
+    <nav class="footer-nav">
+        <a href="index.php" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>Accueil</span>
+        </a>
+        <a href="profil.php" class="nav-item">
+            <i class="fas fa-user"></i>
+            <span>Profil</span>
+        </a>
+        <a href="live.php" class="nav-item active">
+            <i class="fas fa-video"></i>
+            <span>Live</span>
+        </a>
+        <a href="explore.php" class="nav-item">
+            <i class="fas fa-search"></i>
+            <span>Explorer</span>
+        </a>
+    </nav>
+
+    <script src="js/live.js"></script>
+</body>
+</html>

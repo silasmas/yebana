@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YEBANA - Contact</title>
+    <!-- Lien vers Font Awesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Lien vers le fichier CSS principal global (pour les variables de couleur et styles de base) -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Lien vers le fichier CSS spécifique à la section soccer (pour la nav et le header) -->
+    <link rel="stylesheet" href="soccer/soccer.css">
+
+    <!-- Inline styles specific to the contact page -->
+    <style>
+        /* ==================================== */
+        /* Styles spécifiques pour la page Contact */
+        /* ==================================== */
+
+        /* Override body styles from global CSS for this specific page */
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark-text-color);
+            margin: 0;
+            padding-top: var(--header-height); /* Space for the fixed header */
+            padding-bottom: var(--bottom-nav-height); /* Space for the fixed bottom nav */
+            background-color: var(--dashboard-bg); /* Consistent light background */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            box-sizing: border-box;
+            overflow-x: hidden;
+        }
+
+        .contact-main {
+            flex-grow: 1; /* Allows content to expand and push footer down */
+            width: 100%;
+            max-width: 700px; /* Max width for readability of the form */
+            margin: 0 auto;
+            padding: 25px 20px 50px 20px; /* Top padding and bottom padding for footer space */
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .section-title {
+            font-size: 2.5em;
+            color: var(--dark-text-color);
+            text-align: center;
+            margin-bottom: 20px; /* Reduced margin, as card will have its own padding */
+            font-weight: 700;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-color);
+            margin: 15px auto 0 auto;
+            border-radius: 2px;
+        }
+
+        .contact-card {
+            background-color: var(--white-color);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+            margin-bottom: 25px; /* Space if there are multiple cards */
+            text-align: left; /* Align text within card to left */
+        }
+
+        .contact-card h2 {
+            font-size: 1.8em;
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+        }
+
+        .contact-card h2 i {
+            margin-right: 10px;
+            font-size: 1em;
+        }
+
+        .contact-card p {
+            font-size: 1em;
+            line-height: 1.6;
+            color: var(--dark-text-color);
+            margin-bottom: 20px;
+        }
+
+        .contact-form .form-group {
+            margin-bottom: 20px;
+        }
+
+        .contact-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark-text-color);
+            font-size: 1em;
+        }
+
+        .contact-form label i {
+            margin-right: 8px;
+            color: var(--primary-color);
+        }
+
+        .contact-form input[type="text"],
+        .contact-form input[type="email"],
+        .contact-form textarea {
+            width: calc(100% - 24px); /* Full width minus padding/border */
+            padding: 12px;
+            border: 1px solid var(--input-border-color);
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 1em;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .contact-form textarea {
+            resize: vertical; /* Allow vertical resizing */
+            min-height: 120px; /* Minimum height for message area */
+        }
+
+        .contact-form input[type="text"]:focus,
+        .contact-form input[type="email"]:focus,
+        .contact-form textarea:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+            outline: none;
+        }
+
+        .contact-form button[type="submit"] {
+            background: linear-gradient(45deg, var(--secondary-color), #218838);
+            color: var(--white-color);
+            padding: 15px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 10px;
+            box-shadow: 0 5px 15px var(--secondary-shadow-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .contact-form button[type="submit"] i {
+            margin-right: 10px;
+            font-size: 1.1em;
+        }
+
+        .contact-form button[type="submit"]:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px var(--secondary-shadow-color);
+            background: linear-gradient(45deg, #218838, #1e7e34);
+        }
+
+        .contact-info-list {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 0;
+        }
+
+        .contact-info-list li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 1em;
+            color: var(--dark-text-color);
+        }
+
+        .contact-info-list li i {
+            color: var(--primary-color);
+            margin-right: 10px;
+            font-size: 1.2em;
+            width: 25px; /* Fixed width for icons */
+            text-align: center;
+        }
+
+        .contact-info-list li a {
+            color: var(--dark-text-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-info-list li a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .contact-main {
+                padding: 20px 15px 40px 15px;
+            }
+            .section-title {
+                font-size: 1.8em;
+                margin-bottom: 20px;
+            }
+            .contact-card {
+                padding: 20px;
+            }
+            .contact-card h2 {
+                font-size: 1.5em;
+                margin-bottom: 15px;
+            }
+            .contact-card p,
+            .contact-form label,
+            .contact-info-list li {
+                font-size: 0.95em;
+            }
+            .contact-form input[type="text"],
+            .contact-form input[type="email"],
+            .contact-form textarea {
+                padding: 10px;
+                font-size: 0.95em;
+            }
+            .contact-form button[type="submit"] {
+                font-size: 1.1em;
+                padding: 12px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .section-title {
+                font-size: 1.6em;
+            }
+            .contact-card h2 {
+                font-size: 1.3em;
+            }
+            .contact-card p,
+            .contact-form label,
+            .contact-info-list li {
+                font-size: 0.9em;
+            }
+            .contact-form button[type="submit"] {
+                font-size: 1em;
+                padding: 10px 15px;
+            }
+        }
+        @media (max-width: 400px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                margin: 0;
+                padding: 15px;
+                border-radius: 10px;
+            }
+
+            .logo i { 
+                font-size: 2.5em;
+            }
+            .logo h1 {
+                font-size: 1em;
+            }
+
+            p {
+                font-size: 0.5em;
+            }
+
+            .nav-item span{
+                display: none;
+            }
+            .nav-item i{
+                font-size: 20px;
+            }
+            .header-logo span{
+                display: inline;
+            }
+            .header-user span{
+                font-size: 15px;
+            }
+            .hero-section h1{
+                font-size: 30px;
+                padding-top: 50px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <!-- App Header - Uses global header styles from soccer.css -->
+    <header class="app-header">
+        <div class="header-content">
+             <div class="header-logo">
+                <i class="fas fa-futbol"></i>
+                <span> YEBANA</span>
+            </div>
+            <div class="header-user">
+                <!-- Links for public actions or user options -->
+                <a href="login.php" style="text-decoration: none; color: inherit; display: flex; align-items: center;">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span>Connexion</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="contact-main">
+        <h2 class="section-title">Contactez-nous</h2>
+
+        <div class="contact-card">
+            <h2><i class="fas fa-paper-plane"></i> Envoyez-nous un message</h2>
+            <p>Vous avez des questions, des suggestions, ou vous souhaitez en savoir plus sur YEBANA ? Remplissez le formulaire ci-dessous et notre équipe vous répondra dans les plus brefs délais.</p>
+
+            <form action="submit_contact.php" method="POST" class="contact-form">
+                <div class="form-group">
+                    <label for="name"><i class="fas fa-user"></i> Votre Nom Complet :</label>
+                    <input type="text" id="name" name="name" placeholder="Ex: Jean Dupont" required>
+                </div>
+                <div class="form-group">
+                    <label for="email"><i class="fas fa-at"></i> Votre Adresse E-mail :</label>
+                    <input type="email" id="email" name="email" placeholder="Ex: votre.email@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="subject"><i class="fas fa-tag"></i> Sujet :</label>
+                    <input type="text" id="subject" name="subject" placeholder="Ex: Question sur mon profil" required>
+                </div>
+                <div class="form-group">
+                    <label for="message"><i class="fas fa-comment-dots"></i> Votre Message :</label>
+                    <textarea id="message" name="message" rows="6" placeholder="Écrivez votre message ici..." required></textarea>
+                </div>
+                <button type="submit">
+                    <i class="fas fa-paper-plane"></i> Envoyer le Message
+                </button>
+            </form>
+        </div>
+
+        <div class="contact-card">
+            <h2><i class="fas fa-map-marker-alt"></i> Nos Coordonnées</h2>
+            <p>Vous pouvez également nous contacter directement via les informations suivantes :</p>
+            <ul class="contact-info-list">
+                <li><i class="fas fa-phone-alt"></i> <a href="tel:+243812345678">(+243) 81 234 5678</a> (RDC)</li>
+                <li><i class="fas fa-envelope"></i> <a href="mailto:contact@yebana.com">contact@yebana.com</a></li>
+                <li><i class="fas fa-map-marked-alt"></i> Avenue du Stade, N°123, Kinshasa, RDC</li>
+                <li><i class="fas fa-clock"></i> Lun - Ven : 9h00 - 17h00 (Heure de Kinshasa)</li>
+            </ul>
+            <!-- Placeholder for a map, could be Google Maps embed later -->
+            <div style="width: 100%; height: 250px; background-color: #e0e0e0; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #666; font-size: 1.1em; margin-top: 20px;">
+                [Image of Placeholder pour la carte]
+                <!-- Example of an actual Google Maps embed (replace with your location) -->
+                <!-- <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3978.4735237894294!2d15.266209815049363!3d-4.32189919504443!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1a6a3b2b0a1a1a1b%3A0x1a1a1a1a1a1a1a1a!2sKinshasa%2C%20DRC!5e0!3m2!1sen!2scd!4v1678912345678!5m2!1sen!2scd" width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy"></iframe> -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Bottom fixed navigation menu - Uses global navigation styles from soccer.css -->
+    <nav class="bottom-nav">
+        <a href="index.php" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>Accueil</span>
+        </a>
+        <a href="recherche_filtre.php" class="nav-item">
+            <i class="fas fa-search"></i>
+            <span>Explorer</span>
+        </a>
+        <a href="about.html" class="nav-item">
+            <i class="fas fa-info-circle"></i>
+            <span>À propos</span>
+        </a>
+        <a href="temoignages.html" class="nav-item">
+            <i class="fas fa-quote-right"></i>
+            <span>Témoignages</span>
+        </a>
+        <a href="#" class="nav-item active">
+            <i class="fas fa-envelope"></i>
+            <span>Contact</span>
+        </a>
+    </nav>
+</body>
+</html>

@@ -70,7 +70,7 @@ if (isset($_POST['nom'],$_POST['prenom'],$_POST['age'],$_POST['lieu_naissance'],
 
                             if ($error_sub_form === " Succès !") {
 
-                                header('location:enregistrement.php?message=succèss');
+                                header('location:enregistrement.php?message='.$error_sub_form);
 
                             }
 

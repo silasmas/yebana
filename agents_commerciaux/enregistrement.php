@@ -1,5 +1,14 @@
 <?php
 include('../db.php');
+if (isset($_GET['message']) AND !empty($_GET['message'])) {
+
+    $message = htmlspecialchars($_GET['message']);
+
+} else {
+
+    $message = null;
+
+}
 if (isset($_SESSION['nom'],$_SESSION['prenom'],$_SESSION['mail'],$_SESSION['reference'])) {
     if($_SESSION['acces'] === 'Agent'){
 
@@ -472,6 +481,8 @@ if (isset($_SESSION['nom'],$_SESSION['prenom'],$_SESSION['mail'],$_SESSION['refe
                             <label for="contact_manager"><i class="fas fa-user"></i> Contact Manager :</label>
                             <input type="text" id="contact_manager" name="contact_manager" placeholder="">
                         </div>
+                        
+                <div id="message-erreur" style=" color: green; margin-bottom: 10px;text-align:center;"> <?php echo $message; ?></div>
                     </div>
                 </fieldset>
 

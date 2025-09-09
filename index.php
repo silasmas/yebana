@@ -511,7 +511,7 @@ $recuperation_infos_joueurs->execute(array());
         <div class="header-content">
             <div class="header-logo">
                 <i class="fas fa-futbol"></i>
-                <span> YEBANA</span>
+                <span> YEBANA SPORT</span>
             </div>
             <div class="header-user">
                 <!-- Links for public actions -->

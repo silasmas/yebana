@@ -80,7 +80,7 @@ if (isset($_SESSION['acces']) AND !empty($_SESSION['acces'])) {
             Pas encore de compte ? <a href="inscription.html">Inscrivez-vous ici</a>
         </div>
         <div class="forgot-password-link">
-            <a href="forgot_password.html">Mot de passe oublié ?</a>
+            <a href="forgot_password.php">Mot de passe oublié ?</a>
         </div>
     </div>
     <script>

@@ -52,7 +52,7 @@ if (isset($_SESSION['acces']) AND !empty($_SESSION['acces'])) {
     <div class="container">
         <div class="logo">
             <i class="fas fa-futbol"></i>
-            <h1>YEBANA</h1>
+            <h1><a href="index.php" style="text-decoration:none;color:#cc0000;">YEBANA</a></h1>
         </div>
         <p>Connectez-vous à votre compte YEBANA.</p>
 
@@ -80,7 +80,7 @@ if (isset($_SESSION['acces']) AND !empty($_SESSION['acces'])) {
             Pas encore de compte ? <a href="inscription.html">Inscrivez-vous ici</a>
         </div>
         <div class="forgot-password-link">
-            <a href="forgot_password.php">Mot de passe oublié ?</a>
+            <a href="forgot_password.html">Mot de passe oublié ?</a>
         </div>
     </div>
     <script>

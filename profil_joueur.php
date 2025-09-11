@@ -551,13 +551,6 @@ if (isset($_GET['joueur'])) {
             <!-- Add more video items as needed -->
         </div>
 
-        <!-- CV Section -->
-        <div class="profile-section-card">
-            <h2><i class="fas fa-file-alt"></i> CV Sportif</h2>
-            <p>Téléchargez le CV sportif de Samuel Eto'o pour plus de détails.</p>
-            <a href="#" class="cv-download-btn" download><i class="fas fa-download"></i> Télécharger le CV</a>
-        </div>
-
     </main>
 
     <!-- Bottom fixed navigation menu - Reuses global class -->

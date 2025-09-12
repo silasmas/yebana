@@ -511,13 +511,13 @@ $recuperation_infos_joueurs->execute(array());
         <div class="header-content">
             <div class="header-logo">
                 <i class="fas fa-futbol"></i>
-                <span> YEBANA SPORT</span>
+                <span> YEBANA</span>
             </div>
             <div class="header-user">
                 <!-- Links for public actions -->
-                <a href="login.php" style="text-decoration: none; color: inherit; display: flex; align-items: center;">
+                <a href="live/" style="text-decoration: none; color: inherit; display: flex; align-items: center;">
                     <i class="fas fa-sign-in-alt"></i>
-                    <span> Connexion</span>
+                    <span>FOOT TV</span>
                 </a>
             </div>
         </div>

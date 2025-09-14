@@ -1,3 +1,12 @@
+<?php
+include('../db.php');
+
+$recuperation_diffusion = $db->prepare('SELECT * FROM `diffusion` ORDER BY id DESC LIMIT 1');
+$recuperation_diffusion->execute(array());
+
+$donnees = $recuperation_diffusion->fetch();
+
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -103,7 +112,7 @@
     var player;
     function onYouTubeIframeAPIReady() {
       player = new YT.Player('player', {
-        videoId: 'd7IFEBiozuM', // 👈 Mets ici l’ID de ta vidéo
+        videoId: <?php echo json_encode($donnees['youtube_id']) ?>, // 👈 Mets ici l’ID de ta vidéo
         playerVars: {
           autoplay: 1,
           controls: 1,

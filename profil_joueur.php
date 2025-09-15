@@ -457,8 +457,8 @@ if (isset($_GET['joueur'])) {
                 <span><i class="fas fa-globe-africa"></i> <?php echo $donnees['nationalite'] ?></span>
                 <span><i class="fas fa-city"></i> <?php echo $donnees['lieu_naissance'] ?></span>
             </div>
-            <p class="player-bio">Attaquant rapide et puissant, doté d'une finition clinique et d'une excellente vision du jeu. Capable de jouer en pivot ou sur les ailes, toujours prêt à faire la différence.</p>
-            <button class="contact-btn"><i class="fas fa-comment"></i> Contacter</button>
+            
+            <button class="contact-btn" onclick="location.href='https://wa.me/243980331073?text=Bonjour,%20je%20suis%20intéressé(e)%20par%20le%joueur:<?= $donnees['nom'].' '.$donnees['prenom'] ?>.%20Pouvez-vous%20me%20donner%20plus%20d'informations?https://yebana.cd/profil_joueur.php?joueur=<?= $donnees['id']?>'"><i class="fas fa-comment"></i> Contacter</button>
         </div>
 
         <!-- Sports Characteristics Section -->

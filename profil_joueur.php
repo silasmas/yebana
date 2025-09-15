@@ -498,19 +498,19 @@ if (isset($_GET['joueur'])) {
             <div class="details-grid">
                 <div class="detail-item-view">
                     <strong>Matchs Joués :</strong>
-                    <span><i class="fas fa-calendar-check"></i> <?php echo $donnees_matches_jouer['matches_jouer'] ?></span>
+                    <span><i class="fas fa-calendar-check"></i> 0</span>
                 </div>
                 <div class="detail-item-view">
                     <strong>Buts :</strong>
-                    <span><i class="fas fa-futbol"></i> <?php echo $donnees_buts['buts'] ?></span>
+                    <span><i class="fas fa-futbol"></i> 0</span>
                 </div>
                 <div class="detail-item-view">
                     <strong>Passes Décisives :</strong>
-                    <span><i class="fas fa-handshake"></i> <?php echo $donnees_passes_decisives['passes_decisives'] ?></span>
+                    <span><i class="fas fa-handshake"></i> 0</span>
                 </div>
                 <div class="detail-item-view">
                     <strong>Cartons Jaunes :</strong>
-                    <span><i class="fas fa-square"></i> 3</span>
+                    <span><i class="fas fa-square"></i> 0</span>
                 </div>
                 <div class="detail-item-view">
                     <strong>Cartons Rouges :</strong>
@@ -518,15 +518,15 @@ if (isset($_GET['joueur'])) {
                 </div>
                 <div class="detail-item-view">
                     <strong>Minutes Jouées :</strong>
-                    <span><i class="fas fa-stopwatch"></i> <?php echo $donnees_minute['minute'] ?>'</span>
+                    <span><i class="fas fa-stopwatch"></i> 0</span>
                 </div>
                 <div class="detail-item-view">
                     <strong>Tirs Cadrés :</strong>
-                    <span><i class="fas fa-bullseye"></i> 35</span>
+                    <span><i class="fas fa-bullseye"></i> 0</span>
                 </div>
                 <div class="detail-item-view">
                     <strong>Tacles Réussis :</strong>
-                    <span><i class="fas fa-fist-raised"></i> <?php echo $donnees_duos['nbr_recuperation_balles'] ?></span>
+                    <span><i class="fas fa-fist-raised"></i> 0</span>
                 </div>
             </div>
         </div>

@@ -458,7 +458,7 @@ if (isset($_GET['joueur'])) {
                 <span><i class="fas fa-city"></i> <?php echo $donnees['lieu_naissance'] ?></span>
             </div>
             
-            <button class="contact-btn"><i class="fas fa-comment"></i> <a href="https://wa.me/243980331073?text=Bonjour,%20je%20suis%20intéressé(e)%20par%20le%joueur:<?= $donnees['nom'].' '.$donnees['prenom'] ?>.%20Pouvez-vous%20me%20donner%20plus%20d'informations?https://yebana.cd/profil_joueur.php?joueur=<?= $donnees['id']?>" 
+            <button class="contact-btn"><i class="fas fa-comment"></i> <a href="https://wa.me/243980331073?text=Bonjour,%20je%20suis%20intéressé(e)%20par%20le%joueur:<?= $donnees['nom'].' '.$donnees['prenom'] ?>.%20Pouvez-vous%20me%20donner%20plus%20d'informations?https://yebana.cd/profil_joueur.php?joueur=<?= $donnees['reference']?>" 
                style="color:white;text-decoration:none;" target="_blank"> Contacter </a></button>
         </div>
 

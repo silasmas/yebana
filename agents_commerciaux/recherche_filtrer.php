@@ -1,3 +1,62 @@
+<?php
+include('../db.php');
+$ligne_trouver = 0;
+
+    if(isset($_POST['keyword'],$_POST['role'],$_POST['position'],$_POST['nationality'],$_POST['min_age'],$_POST['max_age'])){
+        
+        $keyword = strip_tags($_POST['keyword']);
+        $role = strip_tags($_POST['role']);
+        $position = strip_tags($_POST['position']);
+        $nationality = strip_tags($_POST['nationality']);
+        $min_age = strip_tags($_POST['min_age']);
+        $max_age = strip_tags($_POST['max_age']);
+
+        switch ($role) {
+            case 'player':
+                $query = "SELECT * FROM jouers WHERE 1";
+
+                if (!empty($keyword)) {
+                    
+                    $query .= " AND (nom = '$keyword' OR prenom = '$keyword' OR Club = '$keyword')";
+
+                }
+                if (!empty($position)) {
+                    
+                    $query .= " AND position = '$position'";
+
+                }
+                if (!empty($nationality)) {
+                    
+                    $query .= " AND nationalite = '$nationality'";
+
+                }
+                if (!empty($min_age)) {
+                   $year = date('Y');
+
+                    $age_min_fltre = $year - $min_age;
+
+                    $query .= " AND YEAR(age) <= '$age_min_fltre'";
+                }
+                if (!empty($max_age)) {
+                   $year = date('Y');
+
+                    $age_max_fltre = $year - $max_age;
+
+                    $query .= " AND YEAR(age) >= '$age_max_fltre'";
+                }
+                
+                $recuperation_infos_joueurs = $db->query($query);
+
+                $ligne_trouver = $recuperation_infos_joueurs->rowCount();
+                break;
+            
+            default:
+                # code...
+                break;
+        }
+    }
+    
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -68,7 +127,7 @@
             border-radius: 15px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
             padding: 30px;
-            margin-bottom: 25px;
+            margin-bottom: 25px; /* Space if there are multiple cards */
             text-align: left;
         }
 
@@ -87,29 +146,20 @@
             font-size: 1em;
         }
 
-        .filter-form-grid {
+        .filter-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive columns */
+            gap: 20px; /* Space between filter items */
             margin-bottom: 20px;
         }
-        .filter-form-grid .form-group {
-            margin-bottom: 0;
+
+        .filter-grid .form-group {
+            margin-bottom: 0; /* Reset default margin-bottom from .form-group */
         }
-        .filter-form-grid label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: var(--dark-text-color);
-            font-size: 1em;
-        }
-        .filter-form-grid label i {
-            margin-right: 8px;
-            color: var(--primary-color);
-        }
-        .filter-form-grid input[type="text"],
-        .filter-form-grid input[type="number"],
-        .filter-form-grid select {
+
+        .filter-grid input[type="text"],
+        .filter-grid select,
+        .filter-grid input[type="number"] {
             width: calc(100% - 24px); /* Full width minus padding/border */
             padding: 12px;
             border: 1px solid var(--input-border-color);
@@ -118,8 +168,9 @@
             font-size: 1em;
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
-        .filter-form-grid select {
-            appearance: none;
+
+        .filter-grid select {
+            appearance: none; /* Remove default arrow */
             background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"%3e%3cpolyline points="6 9 12 15 18 9"%3e%3c/polyline%3e%3c/svg%3e');
             background-repeat: no-repeat;
             background-position: right 15px center;
@@ -129,7 +180,7 @@
 
         .filter-actions {
             display: flex;
-            justify-content: flex-end;
+            justify-content: flex-end; /* Align buttons to the right */
             gap: 15px;
             margin-top: 25px;
         }
@@ -171,7 +222,7 @@
             background-color: var(--hover-bg-color);
         }
 
-        /* Results Grid - Reusing styles from showcase.html */
+        /* Results Grid - Reuses styles from showcase.html */
         .results-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -188,7 +239,6 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             display: flex;
             flex-direction: column;
-            justify-content: space-between; /* To push buttons to bottom */
         }
 
         .result-card:hover {
@@ -229,7 +279,7 @@
             font-weight: 700;
         }
 
-        .result-card .profile-details {
+        .result-card .profile-details { /* Renamed from player-details to be more general */
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
@@ -255,16 +305,13 @@
             font-size: 0.8em;
         }
         
-        /* New: Styles for edit button */
-        .result-card .btn-edit-profile,
         .result-card .btn-view-profile {
-            width: calc(100% - 16px); /* Adjusted for padding */
-            background-color: var(--secondary-color); /* Greenish for edit */
+            background-color: var(--primary-color);
             color: var(--white-color);
             padding: 10px 20px;
             border: none;
             border-radius: 25px;
-            font-size: 0.95em;
+            font-size: 1em;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -272,38 +319,20 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 12px var(--secondary-shadow-color);
-            margin-top: 10px; /* Space between content and button */
+            width: 100%;
+            box-shadow: 0 4px 12px var(--primary-shadow-color);
         }
-        .result-card .btn-edit-profile:hover,
-        .result-card .btn-view-profile:hover {
-            background-color: #218838;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 18px var(--secondary-shadow-color);
-        }
-        .result-card .btn-edit-profile i,
+
         .result-card .btn-view-profile i {
             margin-right: 8px;
         }
 
-        /* If both buttons are needed, adjust their layout */
-        .result-card .card-actions {
-            display: flex;
-            flex-direction: column; /* Stack buttons */
-            gap: 8px; /* Space between buttons */
-            width: 100%;
-            padding: 0 10px 18px 10px; /* Padding for the action area within the card */
-            box-sizing: border-box;
-        }
-        /* Style for the "View Profile" button if it's primary for agents too */
-        .result-card .btn-view-profile.primary-agent {
-            background-color: var(--primary-color); /* Blue for view profile */
-            box-shadow: 0 4px 12px var(--primary-shadow-color);
-        }
-        .result-card .btn-view-profile.primary-agent:hover {
+        .result-card .btn-view-profile:hover {
             background-color: #0056b3;
+            transform: translateY(-2px);
             box-shadow: 0 6px 18px var(--primary-shadow-color);
         }
+
 
         /* No results message */
         .no-results {
@@ -326,7 +355,7 @@
 
         /* Media queries for responsiveness */
         @media (max-width: 900px) {
-            .agent-search-main {
+            .search-filter-main {
                 padding: 20px 15px 40px 15px;
             }
             .section-title {
@@ -338,26 +367,27 @@
             .filter-card h2 {
                 font-size: 1.6em;
             }
-            .filter-form-grid {
+            .filter-grid {
                 grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
                 gap: 15px;
             }
-            .filter-form-grid input, .filter-form-grid select {
+            .filter-grid input[type="text"],
+            .filter-grid select,
+            .filter-grid input[type="number"] {
                 font-size: 0.95em;
                 padding: 10px;
             }
             .filter-actions {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 10px;
+                flex-direction: column; /* Stack buttons vertically on smaller screens */
+                align-items: stretch; /* Stretch buttons to full width */
             }
             .filter-actions button {
-                width: 100%;
+                width: 100%; /* Full width */
                 font-size: 0.95em;
                 padding: 10px 20px;
             }
             .results-grid {
-                grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); /* More compact results on medium screens */
                 gap: 15px;
             }
             .result-card .card-image-container {
@@ -375,14 +405,9 @@
             .result-card .detail-item {
                 padding: 2px 6px;
             }
-            .result-card .btn-edit-profile,
             .result-card .btn-view-profile {
-                font-size: 0.85em;
+                font-size: 0.9em;
                 padding: 8px 15px;
-                width: calc(100% - 16px);
-            }
-            .result-card .card-actions {
-                padding: 0 8px 15px 8px; /* Adjusted padding */
             }
         }
 
@@ -396,12 +421,12 @@
             .filter-card h2 {
                 font-size: 1.4em;
             }
-            .filter-form-grid {
-                grid-template-columns: 1fr;
+            .filter-grid {
+                grid-template-columns: 1fr; /* Single column on mobile */
                 gap: 15px;
             }
             .results-grid {
-                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* 2 columns on small mobiles */
                 gap: 10px;
             }
              .result-card .card-image-container {
@@ -419,16 +444,54 @@
             .result-card .detail-item {
                 padding: 1px 4px;
             }
-            .result-card .btn-edit-profile,
             .result-card .btn-view-profile {
                 font-size: 0.8em;
                 padding: 6px 12px;
-                width: calc(100% - 12px); /* Adjusted for padding */
-                margin-top: 8px;
             }
-            .result-card .card-actions {
-                padding: 0 6px 12px 6px; /* Adjusted padding */
-                gap: 6px;
+        }
+        @media (max-width: 400px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                margin: 0;
+                padding: 15px;
+                border-radius: 10px;
+            }
+
+            .logo i { 
+                font-size: 2.5em;
+            }
+            .logo h1 {
+                font-size: 1em;
+            }
+
+            p {
+                font-size: 0.5em;
+            }
+
+            .nav-item span{
+                display: none;
+            }
+            .nav-item i{
+                font-size: 20px;
+            }
+            .header-logo span{
+                display: inline;
+            }
+            .header-user span{
+                font-size: 15px;
+            }
+            .hero-section h1{
+                font-size: 30px;
+                padding-top: 50px;
+            }
+            .section-title{
+                font-size: 16px;
+                padding-top: 50px;
+            }
+            form{
+                padding: 5px;
             }
         }
     </style>
@@ -457,21 +520,11 @@
         <!-- Filter Form Card -->
         <div class="filter-card">
             <h2><i class="fas fa-filter"></i> Options de Filtrage</h2>
-            <form action="#" method="GET" class="filter-form">
-                <div class="filter-form-grid">
+            <form action="" method="POST" class="filter-form">
+                <div class="filter-grid">
                     <div class="form-group">
                         <label for="keyword"><i class="fas fa-keyboard"></i> Mot-clé :</label>
                         <input type="text" id="keyword" name="keyword" placeholder="Nom, club, bio...">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="role"><i class="fas fa-user-tag"></i> Type de Profil :</label>
-                        <select id="role" name="role">
-                            <option value="">Tous</option>
-                            <option value="player">Joueur</option>
-                            <option value="manager">Manager</option>
-                            <option value="recruiter">Recruteur / Club</option>
-                        </select>
                     </div>
 
                     <div class="form-group">
@@ -504,6 +557,8 @@
                         <label for="max_age"><i class="fas fa-birthday-cake"></i> Âge Max. :</label>
                         <input type="number" id="max_age" name="max_age" min="15" max="45" placeholder="45">
                     </div>
+                    
+                    <!-- D'autres filtres peuvent être ajoutés ici (ex: pieds fort, taille, poids, etc.) -->
                 </div>
 
                 <div class="filter-actions">
@@ -517,118 +572,49 @@
 
         <!-- Results Display Area -->
         <div class="results-grid">
-            <!-- Example Result Cards (with Edit Button) -->
-            <div class="result-card">
-                <div class="card-image-container">
-                    <img src="https://placehold.co/400x220/007bff/ffffff?text=Joueur+A" alt="Profil de Joueur A">
-                </div>
-                <div class="card-content">
-                    <h3>Abel Kasa</h3>
-                    <div class="profile-details">
-                        <span class="detail-item"><i class="fas fa-crosshairs"></i> Attaquant</span>
-                        <span class="detail-item"><i class="fas fa-birthday-cake"></i> 20 ans</span>
-                    </div>
-                </div>
-                <div class="card-actions">
-                    <a href="modification_joueur.php" class="btn-edit-profile">
-                        <i class="fas fa-edit"></i> Éditer Profil
-                    </a>
-                    <a href="../view_player_profile.html?id=playerA" class="btn-view-profile primary-agent">
-                        <i class="fas fa-eye"></i> Voir Profil
-                    </a>
-                </div>
-            </div>
+            <?php
+            if ($ligne_trouver >= 1) {
 
+            while($donnes_joueurs = $recuperation_infos_joueurs->fetch()){
+                        
+                $date_naissance = $donnes_joueurs['age'];
+                $date_info = date_parse($date_naissance);
+                $naissance = $date_info['year'];
+                $date_actuel = date('Y');
+                $age_joueur = $date_actuel - $naissance;
+                ?>
             <div class="result-card">
                 <div class="card-image-container">
-                    <img src="https://placehold.co/400x220/28a745/ffffff?text=Manager+B" alt="Profil de Manager B">
+                    <img src="profil_soccer/<?php echo $donnes_joueurs['profil'] ?>" alt="Joueur Talentueux">
                 </div>
                 <div class="card-content">
-                    <h3>Fatima Zahra</h3>
-                    <div class="profile-details">
-                        <span class="detail-item"><i class="fas fa-briefcase"></i> Manager</span>
-                        <span class="detail-item"><i class="fas fa-globe"></i> Marocaine</span>
+                    <h3><?php echo $donnes_joueurs['prenom']." ".$donnes_joueurs['nom'] ?></h3>
+                    <div class="player-details">
+                        <span class="detail-item"><i class="fas fa-crosshairs"></i> <?php echo $donnes_joueurs['position'] ?></span>
+                        <span class="detail-item"><i class="fas fa-birthday-cake"></i> <?php echo $age_joueur ?> ans</span>
+                        <span class="detail-item"><i class="fas fa-globe-africa"></i> <?php echo $donnes_joueurs['nationalite'] ?></span>
                     </div>
-                </div>
-                <div class="card-actions">
-                    <a href="#" class="btn-edit-profile">
-                        <i class="fas fa-edit"></i> Éditer Profil
-                    </a>
-                    <a href="#" class="btn-view-profile primary-agent">
+                    <a href="profil_joueur.php?joueur=<?php echo $donnes_joueurs['reference'] ?>" class="btn-view-profile">
                         <i class="fas fa-eye"></i> Voir Profil
                     </a>
                 </div>
             </div>
-
-            <div class="result-card">
-                <div class="card-image-container">
-                    <img src="https://placehold.co/400x220/6c757d/ffffff?text=Recruteur+C" alt="Profil de Recruteur C">
-                </div>
-                <div class="card-content">
-                    <h3>Club Étoile</h3>
-                    <div class="profile-details">
-                        <span class="detail-item"><i class="fas fa-shield-alt"></i> Club</span>
-                        <span class="detail-item"><i class="fas fa-map-marker-alt"></i> Dakar</span>
-                    </div>
-                </div>
-                 <div class="card-actions">
-                    <a href="#" class="btn-edit-profile">
-                        <i class="fas fa-edit"></i> Éditer Profil
-                    </a>
-                    <a href="#" class="btn-view-profile primary-agent">
-                        <i class="fas fa-eye"></i> Voir Profil
-                    </a>
-                </div>
-            </div>
-
-            <div class="result-card">
-                <div class="card-image-container">
-                    <img src="https://placehold.co/400x220/dc3545/ffffff?text=Joueur+D" alt="Profil de Joueur D">
-                </div>
-                <div class="card-content">
-                    <h3>Chris Okoro</h3>
-                    <div class="profile-details">
-                        <span class="detail-item"><i class="fas fa-futbol"></i> Milieu</span>
-                        <span class="detail-item"><i class="fas fa-birthday-cake"></i> 18 ans</span>
-                    </div>
-                </div>
-                 <div class="card-actions">
-                    <a href="register_player.html?id=playerD" class="btn-edit-profile">
-                        <i class="fas fa-edit"></i> Éditer Profil
-                    </a>
-                    <a href="../view_player_profile.html?id=playerD" class="btn-view-profile primary-agent">
-                        <i class="fas fa-eye"></i> Voir Profil
-                    </a>
-                </div>
-            </div>
-
-            <div class="result-card">
-                <div class="card-image-container">
-                    <img src="https://placehold.co/400x220/17a2b8/ffffff?text=Joueur+E" alt="Profil de Joueur E">
-                </div>
-                <div class="card-content">
-                    <h3>Zara Traoré</h3>
-                    <div class="profile-details">
-                        <span class="detail-item"><i class="fas fa-hand-paper"></i> Gardien</span>
-                        <span class="detail-item"><i class="fas fa-globe-africa"></i> Malienne</span>
-                    </div>
-                </div>
-                 <div class="card-actions">
-                    <a href="register_player.html?id=playerE" class="btn-edit-profile">
-                        <i class="fas fa-edit"></i> Éditer Profil
-                    </a>
-                    <a href="../view_player_profile.html?id=playerE" class="btn-view-profile primary-agent">
-                        <i class="fas fa-eye"></i> Voir Profil
-                    </a>
-                </div>
-            </div>
+                <?php
+                }
+            }
+            elseif ($ligne_trouver <= 0) {
+            
+            ?>
             
             <!-- Message if no results are found (initially hidden by JS later) -->
-            <!-- <div class="no-results">
+            <div class="no-results">
                 <i class="fas fa-exclamation-circle"></i>
                 <p>Aucun profil ne correspond à votre recherche pour le moment.</p>
                 <p>Essayez d'ajuster vos filtres.</p>
-            </div> -->
+            </div> 
+            <?php
+            }
+            ?>
         </div>
 
     </main>

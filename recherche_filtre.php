@@ -17,13 +17,32 @@ $ligne_trouver = 0;
 
                 if (!empty($keyword)) {
                     
-                    $query .= " AND nom = '$keyword' OR prenom = '$keyword' OR Club = '$keyword'";
+                    $query .= " AND (nom = '$keyword' OR prenom = '$keyword' OR Club = '$keyword')";
 
                 }
                 if (!empty($position)) {
                     
                     $query .= " AND position = '$position'";
 
+                }
+                if (!empty($nationality)) {
+                    
+                    $query .= " AND nationalite = '$nationality'";
+
+                }
+                if (!empty($min_age)) {
+                   $year = date('Y');
+
+                    $age_min_fltre = $year - $min_age;
+
+                    $query .= " AND YEAR(age) <= '$age_min_fltre'";
+                }
+                if (!empty($max_age)) {
+                   $year = date('Y');
+
+                    $age_max_fltre = $year - $max_age;
+
+                    $query .= " AND YEAR(age) >= '$age_max_fltre'";
                 }
                 
                 $recuperation_infos_joueurs = $db->query($query);
@@ -507,20 +526,21 @@ $ligne_trouver = 0;
                         <label for="keyword"><i class="fas fa-keyboard"></i> Mot-clé :</label>
                         <input type="text" id="keyword" name="keyword" placeholder="Nom, club, bio...">
                     </div>
-                    
-                    <div class="form-group">
-                        <input type="hidden" name="role" value="player">
-                    </div>
 
                     <div class="form-group">
                         <label for="position"><i class="fas fa-crosshairs"></i> Poste (Joueur) :</label>
                         <select id="position" name="position">
                             <option value="">Tous les postes</option>
                             <option value="Gardien">Gardien</option>
-                            <option value="Défenseur">Défenseur</option>
-                            <option value="Milieu">Milieu</option>
-                            <option value="Attaquant">Attaquant</option>
-                            <!-- Plus de postes peuvent être ajoutés ici -->
+                            <option value="Defenseur Central">Défenseur Central</option>
+                            <option value="Lateral Droit">Latéral Droit</option>
+                            <option value="Lateral Gauche">Latéral Gauche</option>
+                            <option value="Milieu Defensif">Milieu Défensif</option>
+                            <option value="Milieu Central">Milieu Central</option>
+                            <option value="Milieu Offensif">Milieu Offensif</option>
+                            <option value="Ailier Droit">Ailier Droit</option>
+                            <option value="Ailier Gauche">Ailier Gauche</option>
+                            <option value="Avant Centre">Avant-Centre</option>
                         </select>
                     </div>
 
@@ -575,7 +595,7 @@ $ligne_trouver = 0;
                         <div class="player-details">
                             <span class="detail-item"><i class="fas fa-crosshairs"></i> <?php echo $donnes_joueurs['position'] ?></span>
                             <span class="detail-item"><i class="fas fa-birthday-cake"></i> <?php echo $age_joueur ?> ans</span>
-                            <span class="detail-item"><i class="fas fa-globe-africa"></i> Sénégalais</span>
+                            <span class="detail-item"><i class="fas fa-globe-africa"></i> <?php echo $donnes_joueurs['nationalite'] ?></span>
                         </div>
                         <a href="profil_joueur.php?joueur=<?php echo $donnes_joueurs['reference'] ?>" class="btn-view-profile">
                             <i class="fas fa-eye"></i> Voir Profil

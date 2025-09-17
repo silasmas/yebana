@@ -331,6 +331,13 @@ if (isset($_SESSION['nom'],$_SESSION['prenom'],$_SESSION['mail'],$_SESSION['refe
                 padding: 10px 20px;
             }
         }
+        .date{
+            display: flex;
+            justify-content: space-around;
+        }
+        .date .form-group{
+            width: 30%;
+        }
     </style>
 </head>
 <body>
@@ -354,7 +361,7 @@ if (isset($_SESSION['nom'],$_SESSION['prenom'],$_SESSION['mail'],$_SESSION['refe
     <main class="player-registration-main">
         <div class="registration-card">
             <h1>Formulaire d'Enregistrement de Joueur</h1>
-            <form action="save_infos_joueur.php" method="POST" enctype="multipart/form-data">
+            <form action="#" method="POST" enctype="multipart/form-data" id="register-soccer">
                 
                 <!-- Section: Informations Personnelles -->
                 <fieldset class="form-section">
@@ -368,9 +375,91 @@ if (isset($_SESSION['nom'],$_SESSION['prenom'],$_SESSION['mail'],$_SESSION['refe
                             <label for="prenom"><i class="fas fa-user"></i> Prénom  :</label>
                             <input type="text" id="prenom" name="prenom" placeholder="Nom Prénom" required>
                         </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group" style="width:30%;">
+                            <label for="jour"><i class="fas fa-calendar-alt"></i> Jour de Naissance :</label>
+                            <select id="jour" name="jour" required>
+                                <option value="01">01</option>
+                                <option value="02">02</option>
+                                <option value="03">03</option>
+                                <option value="04">04</option>
+                                <option value="05">05</option>
+                                <option value="06">06</option>
+                                <option value="07">07</option>
+                                <option value="08">08</option>
+                                <option value="09">09</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
+                                <option value="17">17</option>
+                                <option value="18">18</option>
+                                <option value="19">19</option>
+                                <option value="20">20</option>
+                                <option value="21">21</option>
+                                <option value="22">22</option>
+                                <option value="23">23</option>
+                                <option value="24">24</option>
+                                <option value="25">25</option>
+                                <option value="26">26</option>
+                                <option value="27">27</option>
+                                <option value="28">28</option>
+                                <option value="29">29</option>
+                                <option value="30">30</option>
+                            </select>
+                        </div>
+
                         <div class="form-group">
-                            <label for="birth_date"><i class="fas fa-calendar-alt"></i> Date de Naissance :</label>
-                            <input type="date" id="birth_date" name="age" required>
+                            <label for="jour"><i class="fas fa-calendar-alt"></i> Mois de Naissance :</label>
+                            <select name="mois" id="mois">
+                                <option value="01">Jan</option>
+                                <option value="02">Fev</option>
+                                <option value="03">Mar</option>
+                                <option value="04">Avr</option>
+                                <option value="05">Mai</option>
+                                <option value="06">Jun</option>
+                                <option value="07">Jui</option>
+                                <option value="08">Aou</option>
+                                <option value="09">Sep</option>
+                                <option value="10">Oct</option>
+                                <option value="11">Nov</option>
+                                <option value="12">Dec</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group" style="margin-top:-30px;margin-bottom:15px;">
+                            <label for="annee"><i class="fas fa-calendar-alt"></i> Année de Naissance :</label>
+                            <select name="annee" id="annee">
+                                <option value="1992">1992</option>
+                                <option value="1993">1993</option>
+                                <option value="1994">1994</option>
+                                <option value="1995">1995</option>
+                                <option value="1996">1996</option>
+                                <option value="1997">1997</option>
+                                <option value="1998">1998</option>
+                                <option value="1999">1999</option>
+                                <option value="2000">2000</option>
+                                <option value="2001">2001</option>
+                                <option value="2002">2002</option>
+                                <option value="2003">2003</option>
+                                <option value="2004">2004</option>
+                                <option selected value="2006">2005</option>
+                                <option value="2006">2006</option>
+                                <option value="2007">2007</option>
+                                <option value="2008">2009</option>
+                                <option value="2006">2010</option>
+                                <option value="2006">2011</option>
+                                <option value="2007">2012</option>
+                                <option value="2008">2013</option>
+                                <option value="2006">2014</option>
+                                <option value="2006">2015</option>
+                                <option value="2007">2016</option>
+                                <option value="2008">2017</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-row">
@@ -395,12 +484,6 @@ if (isset($_SESSION['nom'],$_SESSION['prenom'],$_SESSION['mail'],$_SESSION['refe
                         <div class="form-group">
                             <label for="phone"><i class="fas fa-phone"></i> Numéro de Téléphone :</label>
                             <input type="tel" id="phone" name="phone" placeholder="Ex: +243812345678" required>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group full-width">
-                            <label for="email"><i class="fas fa-at"></i> Adresse E-mail :</label>
-                            <input type="email" id="email" name="email" placeholder="Ex: joueur@example.com">
                         </div>
                     </div>
                     <div class="form-group full-width">
@@ -463,16 +546,8 @@ if (isset($_SESSION['nom'],$_SESSION['prenom'],$_SESSION['mail'],$_SESSION['refe
                             <label for="current_club"><i class="fas fa-shield-alt"></i> Club Actuel :</label>
                             <input type="text" id="current_club" name="club" placeholder="Ex: TP Mazembe" required>
                         </div>
-                        <div class="form-group">
-                            <label for="license_number"><i class="fas fa-id-badge"></i> Numéro de Licence :</label>
-                            <input type="text" id="license_number" name="numero_license" placeholder="Ex: FECOFA12345">
-                        </div>
                     </div>
-                    <div class="form-group full-width">
-                        <label for="club_history"><i class="fas fa-history"></i> Historique des Clubs (années/clubs) :</label>
-                        <textarea id="club_history" name="historique_clubs" rows="4" placeholder="Ex: 2020-2022 : AS Dragons, 2022-Présent : AS Vita Club"></textarea>
-                    </div>
-                    <div class="form-row">
+                    <div class="form-row" style="margin-top:18px;">
                         <div class="form-group">
                             <label for="manager"><i class="fas fa-user"></i> Manager ou Agent :</label>
                             <input type="text" id="manager" name="manager" placeholder="" required>
@@ -482,7 +557,6 @@ if (isset($_SESSION['nom'],$_SESSION['prenom'],$_SESSION['mail'],$_SESSION['refe
                             <input type="text" id="contact_manager" name="contact_manager" placeholder="">
                         </div>
                         
-                <div id="message-erreur" style=" color: green; margin-bottom: 10px;text-align:center;"> <?php echo $message; ?></div>
                     </div>
                 </fieldset>
 
@@ -537,6 +611,11 @@ if (isset($_SESSION['nom'],$_SESSION['prenom'],$_SESSION['mail'],$_SESSION['refe
                     </div>
         
                 </fieldset>
+                
+                <div id="message-patience" style="display: none; color: green; margin-top: 10px;text-align:center;">Veuillez patienter, connexion en cours...</div>
+                <div id="message-erreur" style="display: none; color: red; margin-top: 10px;text-align:center;"></div>
+                <div id="message-succes" style="display: none; color: green; margin-top: 10px;text-align:center;">Enregistrement fait avec succès !</div>
+
 
                 <div class="form-actions">
                     <button type="reset" class="btn-cancel"><i class="fas fa-times-circle"></i> Annuler</button>
@@ -567,6 +646,50 @@ if (isset($_SESSION['nom'],$_SESSION['prenom'],$_SESSION['mail'],$_SESSION['refe
     </nav>
 
     <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const agentRegistrationForm = document.getElementById('register-soccer');
+            const messagePatience = document.getElementById('message-patience');
+            const messageErreur = document.getElementById('message-erreur');
+            const messageSucces = document.getElementById('message-succes');
+
+            // 4. Gestion de la soumission du formulaire
+            agentRegistrationForm.addEventListener('submit', (event) => {
+
+                event.preventDefault(); // Empêche l'envoi par défaut du formulaire
+
+                messagePatience.style.display = 'block'; 
+
+                const formData = new FormData(agentRegistrationForm);
+
+                fetch('save_infos_joueur.php', {
+                    method: 'POST',
+                    body: formData,
+                })
+                .then(response => response.text()) // Récupère la réponse en tant que texte
+                .then(data => {
+                    messagePatience.style.display = 'none'; // Cache le message de patience
+                    if (data === 'success') {
+                        messageSucces.style.display = 'block'; // Affiche le message de succès
+                        agentRegistrationForm.reset(); // Réinitialise le formulaire
+                        // Optionnel : On pourrait recharger la liste des produits ici si on voulait un affichage immédiat
+                        setTimeout(() => {
+                            messageSucces.style.display = 'none';
+                    }, 3500); // Cache le message de succès après 3 secondes
+                    } else {
+                        messageErreur.textContent = 'Erreur lors de la connexion : ' + data;
+                        messageErreur.style.display = 'block'; // Affiche le message d'erreur
+                        setTimeout(() => {
+                            messageErreur.style.display = 'none';
+                        }, 4000);
+                    }
+                })
+                .catch(error => {
+                    messagePatience.style.display = 'none'; // Cache le message de patience
+                    messageErreur.textContent = 'Erreur réseau : ' + error;
+                    messageErreur.style.display = 'block'; // Affiche le message d'erreur en cas d'erreur réseau
+                });
+            });
+        });
         // JavaScript for displaying selected file names
         document.getElementById('profile_picture_upload').addEventListener('change', function() {
             const fileName = this.files.length > 0 ? this.files[0].name : 'Aucun fichier choisi';

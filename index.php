@@ -16,7 +16,7 @@ if(isset($_POST['send_form'])){
      }
 }
 
-$recuperation_infos_joueurs = $db->prepare('SELECT * FROM `jouers` ORDER BY RAND() LIMIT 50');
+$recuperation_infos_joueurs = $db->prepare('SELECT * FROM `jouers` ORDER BY RAND()');
 $recuperation_infos_joueurs->execute(array());
 ?>
 <!DOCTYPE html>
@@ -525,7 +525,7 @@ $recuperation_infos_joueurs->execute(array());
 
     <div class="hero-section">
         <h1>Découvrez les Talents Émergents du Football Africain</h1>
-        <p>YEBANA connecte les jeunes prodiges avec les clubs, managers et recruteurs du monde entier.</p>
+        <p>YEBANA SPORT connecte les jeunes prodiges avec les clubs, managers et recruteurs du monde entier.</p>
         <a href="login.php" class="hero-btn">
             <i class="fas fa-user-plus"></i> Rejoignez-nous !
         </a>

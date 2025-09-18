@@ -2,59 +2,59 @@
 include('db.php');
 $ligne_trouver = 0;
 
-    if(isset($_POST['keyword'],$_POST['role'],$_POST['position'],$_POST['nationality'],$_POST['min_age'],$_POST['max_age'])){
+if(isset($_POST['keyword'],$_POST['role'],$_POST['position'],$_POST['nationality'],$_POST['min_age'],$_POST['max_age'])){
         
-        $keyword = strip_tags($_POST['keyword']);
-        $role = strip_tags($_POST['role']);
-        $position = strip_tags($_POST['position']);
-        $nationality = strip_tags($_POST['nationality']);
-        $min_age = strip_tags($_POST['min_age']);
-        $max_age = strip_tags($_POST['max_age']);
+    $keyword = strip_tags($_POST['keyword']);
+    $role = strip_tags($_POST['role']);
+    $position = strip_tags($_POST['position']);
+    $nationality = strip_tags($_POST['nationality']);
+    $min_age = strip_tags($_POST['min_age']);
+    $max_age = strip_tags($_POST['max_age']);
 
-        switch ($role) {
-            case 'player':
-                $query = "SELECT * FROM jouers WHERE 1";
+    switch ($role) {
+        case 'player':
+            $query = "SELECT * FROM jouers WHERE 1";
 
-                if (!empty($keyword)) {
-                    
-                    $query .= " AND (nom = '$keyword' OR prenom = '$keyword' OR Club = '$keyword')";
-
-                }
-                if (!empty($position)) {
-                    
-                    $query .= " AND position = '$position'";
-
-                }
-                if (!empty($nationality)) {
-                    
-                    $query .= " AND nationalite = '$nationality'";
-
-                }
-                if (!empty($min_age)) {
-                   $year = date('Y');
-
-                    $age_min_fltre = $year - $min_age;
-
-                    $query .= " AND YEAR(age) <= '$age_min_fltre'";
-                }
-                if (!empty($max_age)) {
-                   $year = date('Y');
-
-                    $age_max_fltre = $year - $max_age;
-
-                    $query .= " AND YEAR(age) >= '$age_max_fltre'";
-                }
+            if (!empty($keyword)) {
                 
-                $recuperation_infos_joueurs = $db->query($query);
+                $query .= " AND (nom = '$keyword' OR prenom = '$keyword' OR Club = '$keyword')";
 
-                $ligne_trouver = $recuperation_infos_joueurs->rowCount();
-                break;
+            }
+            if (!empty($position)) {
+                
+                $query .= " AND position = '$position'";
+
+            }
+            if (!empty($nationality)) {
+                
+                $query .= " AND nationalite = '$nationality'";
+
+            }
+            if (!empty($min_age)) {
+                $year = date('Y');
+
+                $age_min_fltre = $year - $min_age;
+
+                $query .= " AND YEAR(age) <= '$age_min_fltre'";
+            }
+            if (!empty($max_age)) {
+                $year = date('Y');
+
+                $age_max_fltre = $year - $max_age;
+
+                $query .= " AND YEAR(age) >= '$age_max_fltre'";
+            }
             
-            default:
-                # code...
-                break;
-        }
+            $recuperation_infos_joueurs = $db->query($query);
+
+            $ligne_trouver = $recuperation_infos_joueurs->rowCount();
+            break;
+        
+        default:
+            # code...
+            break;
     }
+}
     
 ?>
 <!DOCTYPE html>
@@ -520,12 +520,14 @@ $ligne_trouver = 0;
 
         <div class="filter-card">
             <h2><i class="fas fa-search-plus"></i> Options de Recherche</h2>
-            <form action="#" method="POST" class="filter-form">
+            <form action="" method="POST" class="filter-form">
                 <div class="filter-grid">
                     <div class="form-group">
                         <label for="keyword"><i class="fas fa-keyboard"></i> Mot-clé :</label>
                         <input type="text" id="keyword" name="keyword" placeholder="Nom, club, bio...">
                     </div>
+
+                    <input type="hidden" id="role" name="role" value="player">
 
                     <div class="form-group">
                         <label for="position"><i class="fas fa-crosshairs"></i> Poste (Joueur) :</label>

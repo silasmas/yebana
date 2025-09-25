@@ -639,12 +639,12 @@ if (isset($_SESSION['nom'],$_SESSION['prenom'],$_SESSION['mail'],$_SESSION['refe
             <div class="form-row">
                 <div class="form-group">
                     <label for="current_club"><i class="fas fa-shield-alt"></i> Club Actuel :</label>
-                    <input type="text" id="current_club" name="club" value="<?= $donnees_joueur['club'] ?>" required>
+                    <input type="text" id="current_club" name="club" value="<?= $donnees_joueur['club'] ?>">
                 </div>
             </div>
                 <div class="form-group" style="margin-top:18px;">
                     <label for="mot_passe"><i class="fas fa-user"></i> Nouveau Mot de passe :</label>
-                    <input type="text" id="mot_passe" name="mot_passe" placeholder="Ecrivez votre nouveau mot de passe" required>
+                    <input type="text" id="mot_passe" name="mot_passe" placeholder="Ecrivez votre nouveau mot de passe">
                 </div>
         </fieldset>
 

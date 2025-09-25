@@ -37,44 +37,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             $enregistrement_joueur = $db->prepare('UPDATE `jouers` SET `nom`= ?,`prenom`= ?,`age`= ?,`lieu_naissance`= ?,`taille`= ?,`poid`= ?,`position`= ?,`position_secondaires`= ?,`club`= ?,`pied`= ?,`sexe`= ?,`contact`= ? WHERE reference = ?');
             
-            if ($enregistrement_joueur->execute(array($nom,$prenom,$age,$lieu_naissance,$taille,$poid,$position,$position_secondaire,$club,$pied,$sexe,$phone,$_SESSION['reference']))) {
+            if (!empty($mot_passe)) {
                 
                 $enregistrement_joueur_comme_utilisateur = $db->prepare('UPDATE `utilisateurs` SET `nom`= ?,`prenom`= ?,`mot_passe`= ?,`contact`= ? WHERE reference = ?');
+                $enregistrement_joueur_comme_utilisateur->execute(array($nom,$prenom,$mot_passe,$phone,$_SESSION['reference']));
+            }
+
+            if ($enregistrement_joueur->execute(array($nom,$prenom,$age,$lieu_naissance,$taille,$poid,$position,$position_secondaire,$club,$pied,$sexe,$phone,$_SESSION['reference']))) {
+                    
+                echo 'success';
+
+                if (isset($_FILES['fichier']) && ($_FILES['fichier']['error'] === UPLOAD_ERR_OK)) {
                 
-                if ($enregistrement_joueur_comme_utilisateur->execute(array($nom,$prenom,$mot_passe,$phone,$_SESSION['reference']))) {
+                    $dossier = "../profil_soccer/";
+                    $check = getimagesize($_FILES['fichier']['tmp_name']);
                     
+                    if($check !== false){
                     
-                    if (isset($_FILES['fichier']) AND !empty($_FILES['fichier'])) {
-                    
-                        $dossier = "../profil_soccer/";
-                        $check = getimagesize($_FILES['fichier']['tmp_name']);
+                        $uploadirFile = $dossier . basename($_FILES['fichier']['name']);
                         
-                        if($check ==! false){
-                        
-                            $uploadirFile = $dossier . basename($_FILES['fichier']['name']);
+                        if (move_uploaded_file($_FILES['fichier']['tmp_name'], $uploadirFile)) {
                             
-                            if (move_uploaded_file($_FILES['fichier']['tmp_name'], $uploadirFile)) {
-                                
-                                $mise_jour = $db->prepare('UPDATE `jouers` SET `profil`= ? WHERE (reference = ?)');
-                                $mise_jour->execute(array($_FILES['fichier']['name'],$_SESSION['reference']));
+                            $mise_jour = $db->prepare('UPDATE `jouers` SET `profil`= ? WHERE (reference = ?)');
+                            $mise_jour->execute(array($_FILES['fichier']['name'],$_SESSION['reference']));
 
-                                echo 'success';
 
-                            } else {
-                                echo $error_sub_form =" Echec de televersement !";
-                            }
+                        } else {
+                            echo $error_sub_form =" Echec de televersement !";
                         }
-                        else {
-                            echo 'Choisissez une image svp ! '; 
-                        }
-                    } else {
-                        echo $error_sub_form =" selectionner une photo de profil !";
                     }
-
-                    
-                } else {
-                    echo 'error 501';
-                }
+                    else {
+                        echo 'Choisissez une image svp ! '; 
+                    }
+                } 
                 
             } else {
                 echo 'error 500';

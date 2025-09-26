@@ -503,6 +503,55 @@ $recuperation_infos_joueurs->execute(array());
                 padding: 2px;
             }
         }
+        /* Pagination styles (reused from showcase.php) */
+        .pagination-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 30px;
+            margin-bottom: 40px;
+        }
+
+        .pagination-controls button {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            box-shadow: 0 3px 10px var(--primary-shadow-color);
+        }
+
+        .pagination-controls button i {
+            margin: 0 5px;
+        }
+
+        .pagination-controls button:hover:not(:disabled) {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px var(--primary-shadow-color);
+        }
+
+        .pagination-controls button:disabled {
+            background-color: var(--border-color);
+            color: var(--medium-text-color);
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .pagination-info {
+            font-size: 1em;
+            color: var(--dark-text-color);
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
     </style>
 </head>
 <body>
@@ -533,51 +582,57 @@ $recuperation_infos_joueurs->execute(array());
 
     <div class="main-content-showcase">
         <h2 class="section-title">Nos Talents à la Une</h2>
+        <div class="player-profiles-grid" id="playerProfilesGrid">
+            <div class="showcase-grid">
+                <?php
+                    while($donnes_joueurs = $recuperation_infos_joueurs->fetch()){
+                                
+                        $date_naissance = $donnes_joueurs['age'];
+                        $date_info = date_parse($date_naissance);
+                        $naissance = $date_info['year'];
+                        $date_actuel = date('Y');
+                        $age_joueur = $date_actuel - $naissance;
 
-        <div class="showcase-grid">
-            <?php
-                while($donnes_joueurs = $recuperation_infos_joueurs->fetch()){
-                            
-                    $date_naissance = $donnes_joueurs['age'];
-                    $date_info = date_parse($date_naissance);
-                    $naissance = $date_info['year'];
-                    $date_actuel = date('Y');
-                    $age_joueur = $date_actuel - $naissance;
-
-                    $recuperation_vues = $db->prepare('SELECT * FROM `nombre_vues` WHERE (reference_jouers = ?)');
-                    $recuperation_vues->execute(array($donnes_joueurs['reference']));
-                    $nbr_vues = $recuperation_vues->rowCount();
-                ?>
-            <!-- Exemple de carte de Joueur -->
-            <div class="showcase-card">
-                <div class="card-image-container">
-                    <img src="profil_soccer/<?php echo $donnes_joueurs['profil'] ?>" alt="Joueur Talentueux">
-                </div>
-                <div class="card-content">
-                    <h3><?php echo $donnes_joueurs['prenom']." ".$donnes_joueurs['nom'] ?></h3>
-                    <div class="player-details">
-                        <span class="detail-item"><i class="fas fa-crosshairs"></i> <?php echo $donnes_joueurs['position'] ?></span>
-                        <span class="detail-item"><i class="fas fa-birthday-cake"></i> <?php echo $age_joueur ?> ans</span>
-                        <span class="detail-item"><i class="fas fa-globe-africa"></i> <?php echo $donnes_joueurs['nationalite'] ?></span>
+                        $recuperation_vues = $db->prepare('SELECT SUM(nombre) as nbr_views FROM `nombre_vues` WHERE (reference_jouers = ?)');
+                        $recuperation_vues->execute(array($donnes_joueurs['reference']));
+                        $nbr_vues = $recuperation_vues->fetch();
+                    ?>
+                <!-- Exemple de carte de Joueur -->
+                <div class="showcase-card">
+                    <div class="card-image-container">
+                        <img src="profil_soccer/<?php echo $donnes_joueurs['profil'] ?>" alt="Joueur Talentueux">
                     </div>
-                    <a href="profil_joueur.php?joueur=<?php echo $donnes_joueurs['reference'] ?>" class="btn-view-profile">
-                        <i class="fas fa-eye"></i> <?php echo $nbr_vues ?>
-                    </a>
+                    <div class="card-content">
+                        <h3><?php echo $donnes_joueurs['prenom']." ".$donnes_joueurs['nom'] ?></h3>
+                        <div class="player-details">
+                            <span class="detail-item"><i class="fas fa-crosshairs"></i> <?php echo $donnes_joueurs['position'] ?></span>
+                            <span class="detail-item"><i class="fas fa-birthday-cake"></i> <?php echo $age_joueur ?> ans</span>
+                            <span class="detail-item"><i class="fas fa-globe-africa"></i> <?php echo $donnes_joueurs['nationalite'] ?></span>
+                        </div>
+                        <a href="profil_joueur.php?joueur=<?php echo $donnes_joueurs['reference'] ?>" class="btn-view-profile">
+                            <?php echo $nbr_vues['nbr_views'] ?> <i class="fas fa-eye" style="margin-left:5px"></i> 
+                        </a>
+                    </div>
                 </div>
-            </div>
-        <?php
-        }
-        ?>
+            <?php
+            }
+            ?>
+        </div> <!-- end showcase-grid -->
+    </div>
 
-    </div> <!-- end showcase-grid -->
+    <div class="pagination-controls">
+        <button id="prevPageBtn" disabled><i class="fas fa-arrow-left"></i> Précédent</button>
+        <span id="paginationInfo" class="pagination-info">Page 1 sur 1</span>
+        <button id="nextPageBtn"><i class="fas fa-arrow-right"></i> Suivant</button>
+    </div>
 
-        <div class="cta-section">
-            <h2>Vous êtes un recruteur ou un club ?</h2>
-            <p>Trouvez votre prochaine étoile du football africain. Accédez à des milliers de profils vérifiés, de statistiques détaillées et de vidéos de match.</p>
-            <a href="login.php" class="cta-btn">
-                Explorer les profils <i class="fas fa-arrow-right"></i>
-            </a>
-        </div>
+    <div class="cta-section">
+        <h2>Vous êtes un recruteur ou un club ?</h2>
+        <p>Trouvez votre prochaine étoile du football africain. Accédez à des milliers de profils vérifiés, de statistiques détaillées et de vidéos de match.</p>
+        <a href="login.php" class="cta-btn">
+            Explorer les profils <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
 
     </div> <!-- end main-content-showcase -->
 
@@ -587,9 +642,9 @@ $recuperation_infos_joueurs->execute(array());
             <a href="#">Contact</a>
             <a href="#">Confidentialité</a>
             <a href="#">Conditions d'utilisation</a>
-            <a href="index.html">S'inscrire</a>
+            <a href="inscription.html">S'inscrire</a>
         </div>
-        <p>&copy; 2024 YEBANA. Tous droits réservés.</p>
+        <p>&copy; 2025 YEBANA. Tous droits réservés.</p>
     </footer>
 
     <!-- Bottom fixed navigation menu - Uses global navigation styles from soccer.css -->
@@ -615,5 +670,59 @@ $recuperation_infos_joueurs->execute(array());
             <span>Contact</span>
         </a>
     </nav>
+    <script>
+        const playerProfilesGrid = document.getElementById('playerProfilesGrid');
+        const prevPageBtn = document.getElementById('prevPageBtn');
+        const nextPageBtn = document.getElementById('nextPageBtn');
+        const paginationInfo = document.getElementById('paginationInfo');
+        const profileCards = Array.from(playerProfilesGrid.getElementsByClassName('profile-card'));
+
+        const cardsPerPage = 10; // Nombre de cartes à afficher par page
+        let currentPage = 1;
+
+        function displayCards(page) {
+            const startIndex = (page - 1) * cardsPerPage;
+            const endIndex = startIndex + cardsPerPage;
+
+            profileCards.forEach((card, index) => {
+                if (index >= startIndex && index < endIndex) {
+                    card.style.display = 'flex'; // Afficher la carte
+                } else {
+                    card.style.display = 'none'; // Masquer la carte
+                }
+            });
+
+            updatePaginationControls();
+        }
+
+        function updatePaginationControls() {
+            const totalPages = Math.ceil(profileCards.length / cardsPerPage);
+            paginationInfo.textContent = `Page ${currentPage} sur ${totalPages}`;
+
+            prevPageBtn.disabled = currentPage === 1;
+            nextPageBtn.disabled = currentPage === totalPages;
+        }
+
+        // Écouteurs d'événements pour les boutons de pagination
+        prevPageBtn.addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                displayCards(currentPage);
+            }
+        });
+
+        nextPageBtn.addEventListener('click', () => {
+            const totalPages = Math.ceil(profileCards.length / cardsPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                displayCards(currentPage);
+            }
+        });
+
+        // Affichage initial au chargement de la page
+        document.addEventListener('DOMContentLoaded', () => {
+            displayCards(currentPage);
+        });
+    </script>
 </body>
 </html>

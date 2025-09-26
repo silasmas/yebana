@@ -11,13 +11,13 @@ if (isset($_SESSION['nom'],$_SESSION['prenom'],$_SESSION['mail'],$_SESSION['refe
         $recuperation_joueurs_enregistrer->execute(array(date('Y-m-d')));
         $nbr_jouers_enregistrer = $recuperation_joueurs_enregistrer->rowCount();
 
-        $recuperation_manager_enregistrer = $db->prepare('SELECT * FROM `utilisateurs` WHERE date_adhesion = ? AND acces = ?  ORDER BY id DESC');
-        $recuperation_manager_enregistrer->execute(array(date('Y-m-d'),'manager'));
+        $recuperation_manager_enregistrer = $db->prepare('SELECT * FROM `utilisateurs` WHERE date_adhesion = ? AND (acces = ? OR acces = ?)  ORDER BY id DESC');
+        $recuperation_manager_enregistrer->execute(array(date('Y-m-d'),'recruteur','manager'));
         $nbr_manager_enregistrer = $recuperation_manager_enregistrer->rowCount();
 
-        $recuperation_recruteur_enregistrer = $db->prepare('SELECT * FROM `utilisateurs` WHERE date_adhesion = ? AND acces = ?  ORDER BY id DESC');
-        $recuperation_recruteur_enregistrer->execute(array(date('Y-m-d'),'recruteur'));
-        $nbr_recruteur_enregistrer = $recuperation_recruteur_enregistrer->rowCount();
+        $recuperation_nbr_joueurs = $db->prepare('SELECT * FROM `jouers`  ORDER BY id DESC');
+        $recuperation_nbr_joueurs->execute(array());
+        $nbr_global_joueurs = $recuperation_nbr_joueurs->rowCount();
 
         $recuperation_utilisateurs_agents = $db->prepare('SELECT * FROM `utilisateurs` WHERE acces = ?  ORDER BY id DESC');
         $recuperation_utilisateurs_agents->execute(array('Agent'));
@@ -59,8 +59,8 @@ if (isset($_SESSION['nom'],$_SESSION['prenom'],$_SESSION['mail'],$_SESSION['refe
             </div>
             <div class="stat-card">
                 <i class="fas fa-handshake icon-recruiter"></i>
-                <h3>Recruteurs/Clubs Enregistrés Aujourd'hui</h3>
-                <p class="stat-value" id="recruitersToday"><?php echo $nbr_recruteur_enregistrer ?></p>
+                <h3>Nombre Total des Joueurs</h3>
+                <p class="stat-value" id="recruitersToday"><?php echo $nbr_global_joueurs ?></p>
             </div>
         </div>
 

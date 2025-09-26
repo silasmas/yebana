@@ -6,7 +6,7 @@ include('db.php');
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // 2. Récupération et nettoyage des données du formulaire avec htmlspecialchars
-    $email = htmlspecialchars($_POST['email']);
+    $email = htmlspecialchars($_POST['country-code']).''.htmlspecialchars($_POST['telephone']);
     $password = htmlspecialchars($_POST['password']);
 
     $verification_email_phone = $db->prepare('SELECT * FROM `utilisateurs` WHERE (`mail` = ?) OR (`contact` = ?) AND (`mot_passe` = ?)');

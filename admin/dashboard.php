@@ -71,6 +71,7 @@ if (isset($_SESSION['nom'],$_SESSION['prenom'],$_SESSION['mail'],$_SESSION['refe
                     <tr>
                         <th>ID</th>
                         <th>Nom Complet</th>
+                        <th>Telephone</th>
                         <th>Date d'Enregistrement</th>
                         <th>Actions</th>
                     </tr>
@@ -83,6 +84,7 @@ if (isset($_SESSION['nom'],$_SESSION['prenom'],$_SESSION['mail'],$_SESSION['refe
                     <tr>
                         <td><?php echo $donnes_enregistrements_attente['id'] ?></td>
                         <td><?php echo $donnes_enregistrements_attente['nom'].' '.$donnes_enregistrements_attente['prenom'] ?></td>
+                        <td><?php echo $donnes_enregistrements_attente['contact'] ?></td>
                         <td><?php echo $donnes_enregistrements_attente['date_enregistrement'].' '.$donnes_enregistrements_attente['heure_enregistrement'] ?></td>
                         
                         

@@ -6,7 +6,7 @@ $error_sub_form = null;
 // S'assurer que le formulaire a été soumis via POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    if (isset($_POST['nom'],$_POST['prenom'],$_POST['lieu_naissance'],$_POST['nationality'],$_POST['sexe'],$_POST['phone'],$_POST['adresse'],$_POST['taille'],$_POST['poid'],$_POST['pied'],$_POST['position'],$_POST['position_secondaire'],$_POST['club'],$_POST['manager'],$_POST['contact_manager']) AND !empty($_POST['nom']) AND !empty($_POST['prenom'])) {
+    if (isset($_POST['nom'],$_POST['prenom'],$_POST['lieu_naissance'],$_POST['nationality'],$_POST['sexe'],$_POST['adresse'],$_POST['taille'],$_POST['poid'],$_POST['pied'],$_POST['position'],$_POST['position_secondaire'],$_POST['club'],$_POST['manager'],$_POST['contact_manager']) AND !empty($_POST['nom']) AND !empty($_POST['prenom'])) {
         
         
         $nom = htmlspecialchars($_POST['nom']);
@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $lieu_naissance = htmlspecialchars($_POST['taille']);
         $nationality = htmlspecialchars($_POST['nationality']);
         $sexe = htmlspecialchars($_POST['sexe']);
-        $phone = htmlspecialchars($_POST['phone']);
+        $phone = htmlspecialchars($_POST['country-code']).''.htmlspecialchars($_POST['telephone']);
         $adresse = htmlspecialchars($_POST['adresse']);
 
         $taille = htmlspecialchars($_POST['taille']);

@@ -389,6 +389,14 @@ if (isset($_GET['message']) AND !empty($_GET['message'])) {
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
+        }    
+        .number{
+            display: flex;
+        }
+        .number select{
+            width: 30%;
+            padding:0px;
+            margin-right:10px;
         }
     </style>
 </head>
@@ -554,9 +562,68 @@ if (isset($_GET['message']) AND !empty($_GET['message'])) {
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="phone"><i class="fas fa-phone"></i> Numéro de whatsapp:</label>
-                            <input type="tel" id="phone" name="phone" placeholder="Ex: +243812345678" required>
-                        </div>
+                    <label for="telephone"><i class="fas fa-phone"></i> Numéro de Téléphone  :</label>
+                    <div class="number">
+                    <select id="country-code" class="form-control" name="country-code">
+                        <option value="213">🇩🇿 +213 (Algérie)</option>
+                        <option value="244">🇦🇴 +244 (Angola)</option>
+                        <option value="229">🇧🇯 +229 (Bénin)</option>
+                        <option value="226">🇧🇫 +226 (Burkina Faso)</option>
+                        <option value="257">🇧🇮 +257 (Burundi)</option>
+                        <option value="237">🇨🇲 +237 (Cameroun)</option>
+                        <option value="238">🇨🇻 +238 (Cap-Vert)</option>
+                        <option value="236">🇨🇫 +236 (Centrafrique)</option>
+                        <option value="235">🇹🇩 +235 (Tchad)</option>
+                        <option value="269">🇰🇲 +269 (Comores)</option>
+                        <option value="242">🇨🇬 +242 (Congo)</option>
+                        <option value="243" selected>+243 (RDC)</option>
+                        <option value="225">🇨🇮 +225 (Côte d'Ivoire)</option>
+                        <option value="253">🇩🇯 +253 (Djibouti)</option>
+                        <option value="20">🇪🇬 +20 (Égypte)</option>
+                        <option value="240">🇬🇶 +240 (Guinée équatoriale)</option>
+                        <option value="291">🇪🇷 +291 (Érythrée)</option>
+                        <option value="268">🇸🇿 +268 (Eswatini)</option>
+                        <option value="251">🇪🇹 +251 (Éthiopie)</option>
+                        <option value="241">🇬🇦 +241 (Gabon)</option>
+                        <option value="220">🇬🇲 +220 (Gambie)</option>
+                        <option value="233">🇬🇭 +233 (Ghana)</option>
+                        <option value="224">🇬🇳 +224 (Guinée)</option>
+                        <option value="245">🇬🇼 +245 (Guinée-Bissau)</option>
+                        <option value="225">🇨🇮 +225 (Côte d’Ivoire)</option>
+                        <option value="254">🇰🇪 +254 (Kenya)</option>
+                        <option value="266">🇱🇸 +266 (Lesotho)</option>
+                        <option value="231">🇱🇷 +231 (Libéria)</option>
+                        <option value="218">🇱🇾 +218 (Libye)</option>
+                        <option value="261">🇲🇬 +261 (Madagascar)</option>
+                        <option value="265">🇲🇼 +265 (Malawi)</option>
+                        <option value="223">🇲🇱 +223 (Mali)</option>
+                        <option value="222">🇲🇷 +222 (Mauritanie)</option>
+                        <option value="230">🇲🇺 +230 (Maurice)</option>
+                        <option value="212">🇲🇦 +212 (Maroc)</option>
+                        <option value="258">🇲🇿 +258 (Mozambique)</option>
+                        <option value="264">🇳🇦 +264 (Namibie)</option>
+                        <option value="227">🇳🇪 +227 (Niger)</option>
+                        <option value="234">🇳🇬 +234 (Nigéria)</option>
+                        <option value="250">🇷🇼 +250 (Rwanda)</option>
+                        <option value="239">🇸🇹 +239 (Sao Tomé)</option>
+                        <option value="221">🇸🇳 +221 (Sénégal)</option>
+                        <option value="248">🇸🇨 +248 (Seychelles)</option>
+                        <option value="232">🇸🇱 +232 (Sierra Leone)</option>
+                        <option value="252">🇸🇴 +252 (Somalie)</option>
+                        <option value="27">🇿🇦 +27 (Afrique du Sud)</option>
+                        <option value="211">🇸🇸 +211 (Soudan du Sud)</option>
+                        <option value="249">🇸🇩 +249 (Soudan)</option>
+                        <option value="255">🇹🇿 +255 (Tanzanie)</option>
+                        <option value="228">🇹🇬 +228 (Togo)</option>
+                        <option value="216">🇹🇳 +216 (Tunisie)</option>
+                        <option value="256">🇺🇬 +256 (Ouganda)</option>
+                        <option value="260">🇿🇲 +260 (Zambie)</option>
+                        <option value="263">🇿🇼 +263 (Zimbabwe)</option>
+                        <option value="971">UAE +971 (Dubai)</option>
+                    </select>
+                    <input type="tel" id="telephone" name="telephone" placeholder="ex : 999999999" required>
+                    </div>
+                </div>
                     </div>
                     <div class="form-group full-width">
                         <label for="address"><i class="fas fa-home"></i> Adresse Complète (Ville, Pays) :</label>

@@ -49,7 +49,7 @@ if (isset($_GET['message']) AND !empty($_GET['message'])) {
             flex-grow: 1; /* Allows content to expand */
             width: 100%;
             max-width: 800px; /* Max width for the form container */
-            margin: 5px auto; /* Center the form and add some top margin */
+            margin: 5 auto; /* Center the form and add some top margin */
             padding: 0 20px; /* Side padding */
             box-sizing: border-box;
         }
@@ -58,7 +58,7 @@ if (isset($_GET['message']) AND !empty($_GET['message'])) {
             background-color: var(--white-color);
             border-radius: 15px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-            padding: 30px 10px;
+            padding: 30px;
             text-align: left;
         }
 
@@ -75,7 +75,7 @@ if (isset($_GET['message']) AND !empty($_GET['message'])) {
         .form-section {
             border: 1px solid var(--border-color);
             border-radius: 10px;
-            padding: 10px;
+            padding: 20px;
             margin-bottom: 30px; /* Space between sections */
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
@@ -433,7 +433,7 @@ if (isset($_GET['message']) AND !empty($_GET['message'])) {
         </div>
         <div class="registration-card">
             <h1>Enregistre-toi pour trouver un club</h1>
-            <form action="#" method="POST" enctype="multipart/form-data" id="register-soccer">
+            <form action="#" method="POST" enctype="multipart/form-data" id="save">
                 
                 <!-- Section: Informations Personnelles -->
                 <fieldset class="form-section">
@@ -650,7 +650,7 @@ if (isset($_GET['message']) AND !empty($_GET['message'])) {
                 
                 <div id="message-patience" style="display: none; color: green; margin-top: 10px;text-align:center;">Veuillez patienter, connexion en cours...</div>
                 <div id="message-erreur" style="display: none; color: red; margin-top: 10px;text-align:center;"></div>
-                <div id="message-succes" style="display: none; color: green; margin-top: 10px;text-align:center;">vous êtes enregistrer !</div>
+                <div id="message-succes" style="display: none; color: green; margin-top: 10px;text-align:center;"><a href="https://whatsapp.com/channel/0029VbBHzH0CXC3OtynxUV1H">Félicitation ! <br> integrez maintenant notre chaîne whatsapp pour plus d'informations</a></div>
 
                 <div id="statusPopup" class="popup-overlay">
                     <div class="popup-content">
@@ -670,7 +670,7 @@ if (isset($_GET['message']) AND !empty($_GET['message'])) {
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const agentRegistrationForm = document.getElementById('register-soccer');
+            const agentRegistrationForm = document.getElementById('save');
             const messagePatience = document.getElementById('message-patience');
             const messageErreur = document.getElementById('message-erreur');
             const messageSucces = document.getElementById('message-succes');
@@ -678,19 +678,12 @@ if (isset($_GET['message']) AND !empty($_GET['message'])) {
             // Références aux éléments du pop-up
             const statusPopup = document.getElementById('statusPopup');
             const popupMessage = document.getElementById('popupMessage');
-            const popupCloseBtn = document.getElementById('popupCloseBtn');
-            const audioNotification = document.getElementById('notification');
 
             // Fonction pour afficher le pop-up
             function showPopup(message) {
                 popupMessage.textContent = message;
                 statusPopup.style.display = 'flex';
             }
-
-            // Écouteur pour fermer le pop-up
-            popupCloseBtn.addEventListener('click', () => {
-                statusPopup.style.display = 'none';
-            });
             
             // Fermer le pop-up en cliquant en dehors
             window.addEventListener('click', (event) => {
@@ -717,7 +710,8 @@ if (isset($_GET['message']) AND !empty($_GET['message'])) {
                     messagePatience.style.display = 'none'; // Cache le message de patience
                     if (data === 'success') {
 
-                        showPopup('Enregistrement réussi ! <br> nous allons vous contacter via le numéro whatsapp que vous avez fournis');
+                        showPopup('Enregistrement réussi ! nous allons vous contacter via le numéro whatsapp que vous avez fournis');
+                        messageSucces.style.display = "block";
                         agentRegistrationForm.reset(); // Réinitialise le formulaire
 
                     } else {
@@ -739,15 +733,6 @@ if (isset($_GET['message']) AND !empty($_GET['message'])) {
             document.getElementById('profilePictureFileName').textContent = fileName;
         });
 
-        document.getElementById('cv_upload').addEventListener('change', function() {
-            const fileName = this.files.length > 0 ? this.files[0].name : 'Aucun fichier choisi';
-            document.getElementById('cvFileName').textContent = fileName;
-        });
-
-        // JavaScript for displaying video URL preview
-        document.getElementById('video_url').addEventListener('input', function() {
-            document.getElementById('videoUrlPreview').textContent = this.value;
-        });
     </script>
 </body>
 </html>

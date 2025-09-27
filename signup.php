@@ -371,7 +371,7 @@ if (isset($_GET['message']) AND !empty($_GET['message'])) {
         }
 
         .popup-close-btn {
-            background-color: var(--primary-blue);
+            background-color: var(--primary-color);
             color: white;
             border: none;
             padding: 10px 20px;
@@ -717,12 +717,13 @@ if (isset($_GET['message']) AND !empty($_GET['message'])) {
                 
                 <div id="message-patience" style="display: none; color: green; margin-top: 10px;text-align:center;">Veuillez patienter, connexion en cours...</div>
                 <div id="message-erreur" style="display: none; color: red; margin-top: 10px;text-align:center;"></div>
-                <div id="message-succes" style="display: none; color: green; margin-top: 10px;text-align:center;"><a href="https://whatsapp.com/channel/0029VbBHzH0CXC3OtynxUV1H">Félicitation ! <br> integrez maintenant notre chaîne whatsapp pour plus d'informations</a></div>
+                <div id="message-succes" style="display: none; color: green; margin-top: 10px;text-align:center;"></div>
 
                 <div id="statusPopup" class="popup-overlay">
                     <div class="popup-content">
                         <h3 id="popupTitle">Notification</h3>
                         <p id="popupMessage" class="popup-message"></p>
+                        <a href="https://whatsapp.com/channel/0029VbBHzH0CXC3OtynxUV1H" style="color:#f5b70e;text-decoration:none;" class="popup-close-btn"> Rejoignez ici !</a>
                     </div>
                 </div>
 
@@ -751,13 +752,6 @@ if (isset($_GET['message']) AND !empty($_GET['message'])) {
                 popupMessage.textContent = message;
                 statusPopup.style.display = 'flex';
             }
-            
-            // Fermer le pop-up en cliquant en dehors
-            window.addEventListener('click', (event) => {
-                if (event.target === statusPopup) {
-                    statusPopup.style.display = 'none';
-                }
-            });
 
             // 4. Gestion de la soumission du formulaire
             agentRegistrationForm.addEventListener('submit', (event) => {
@@ -777,7 +771,7 @@ if (isset($_GET['message']) AND !empty($_GET['message'])) {
                     messagePatience.style.display = 'none'; // Cache le message de patience
                     if (data === 'success') {
 
-                        showPopup('Enregistrement réussi ! nous allons vous contacter via le numéro whatsapp que vous avez fournis');
+                        showPopup("Félicitation ! integrez notre chaîne whatsapp pour plus d'informations");
                         messageSucces.style.display = "block";
                         agentRegistrationForm.reset(); // Réinitialise le formulaire
 

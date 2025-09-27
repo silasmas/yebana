@@ -102,6 +102,10 @@ if (isset($_SESSION['acces']) AND !empty($_SESSION['acces'])) {
             padding:0px;
             margin-right:10px;
         }
+        input[type='password']{
+            width: 100%;
+            padding:0px;
+        }
     </style>
 </head>
 <body>
@@ -128,7 +132,7 @@ if (isset($_SESSION['acces']) AND !empty($_SESSION['acces'])) {
                         <option value="235">🇹🇩 +235 (Tchad)</option>
                         <option value="269">🇰🇲 +269 (Comores)</option>
                         <option value="242">🇨🇬 +242 (Congo)</option>
-                        <option value="243" selected>+243 (RDC)</option>
+                        <option value="243" selected>+243(RDC)</option>
                         <option value="225">🇨🇮 +225 (Côte d'Ivoire)</option>
                         <option value="253">🇩🇯 +253 (Djibouti)</option>
                         <option value="20">🇪🇬 +20 (Égypte)</option>
@@ -232,7 +236,7 @@ if (isset($_SESSION['acces']) AND !empty($_SESSION['acces'])) {
                             window.location.href = "login.php";
                     }, 1500); // Cache le message de succès après 3 secondes
                     } else {
-                        messageErreur.textContent = 'Erreur lors de la connexion : ' + data;
+                        messageErreur.textContent = 'Echec : ' + data;
                         messageErreur.style.display = 'block'; // Affiche le message d'erreur
                         setTimeout(() => {
                             messageErreur.style.display = 'none';

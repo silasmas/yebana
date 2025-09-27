@@ -31,8 +31,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         echo 'success';
 
-    } else {
-        echo "compte non trouver !";
+    } elseif($verification_email_phone->rowCount() > 1) {
+        echo "Doublon réperer, contacter l'administration svp !";
+    }
+    else {
+        echo "Informations incorrect ou compte non existant !";
     }
 
 } else {

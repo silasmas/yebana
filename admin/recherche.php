@@ -171,7 +171,7 @@ $ligne_trouver = 0;
             <i class="fas fa-search"></i>
             <span>Recherche</span>
         </a>
-        <a href="sollicitation.php" class="nav-item">
+        <a href="check.php" class="nav-item">
             <i class="fas fa-envelope-open-text"></i>
             <span>Sollicitation</span>
         </a>

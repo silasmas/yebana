@@ -68,7 +68,7 @@ if (isset($_SESSION['nom'],$_SESSION['prenom'],$_SESSION['mail'],$_SESSION['refe
             <div id="formMessage" class="message"></div>
         </form>
     </div>
-
+ 
     <nav class="footer-nav">
         <a href="dashboard.php" class="nav-item">
             <i class="fas fa-tachometer-alt"></i>
@@ -82,7 +82,7 @@ if (isset($_SESSION['nom'],$_SESSION['prenom'],$_SESSION['mail'],$_SESSION['refe
             <i class="fas fa-search"></i>
             <span>Recherche</span>
         </a>
-        <a href="sollicitation.php" class="nav-item">
+        <a href="check.php" class="nav-item">
             <i class="fas fa-envelope-open-text"></i>
             <span>Sollicitation</span>
         </a>

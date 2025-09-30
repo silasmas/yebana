@@ -3,10 +3,6 @@ include('../db.php');
 if (isset($_SESSION['nom'],$_SESSION['prenom'],$_SESSION['mail'],$_SESSION['reference'])) {
     if($_SESSION['acces'] == 'admin'){
 
-        $recuperation_jouers = $recuperation_jouers = $db->prepare('SELECT * FROM `pre_enregistrement` ORDER BY id DESC ');
-        $recuperation_jouers->execute(array());
-        $nbr_jouers = $recuperation_jouers->rowCount();
-
         $recuperation_joueurs_enregistrer = $db->prepare('SELECT * FROM `jouers`WHERE date_enregistrement = ?  ORDER BY id DESC');
         $recuperation_joueurs_enregistrer->execute(array(date('Y-m-d')));
         $nbr_jouers_enregistrer = $recuperation_joueurs_enregistrer->rowCount();
@@ -43,11 +39,6 @@ if (isset($_SESSION['nom'],$_SESSION['prenom'],$_SESSION['mail'],$_SESSION['refe
         <h2>Statistiques Clés Aujourd'hui</h2>
         <div class="stats-grid">
             <div class="stat-card">
-                <i class="fas fa-user-plus icon-manager"></i>
-                <h3> Enregistrement en Attente</h3>
-                <p class="stat-value" id="playersToday"><?php echo $nbr_jouers ?></p>
-            </div>
-            <div class="stat-card">
                 <i class="fas fa-user-plus icon-player"></i>
                 <h3>Joueurs Enregistrés Aujourd'hui</h3>
                 <p class="stat-value" id="playersToday"><?php echo $nbr_jouers_enregistrer ?></p>
@@ -64,7 +55,7 @@ if (isset($_SESSION['nom'],$_SESSION['prenom'],$_SESSION['mail'],$_SESSION['refe
             </div>
         </div>
 
-        <h2>Enregistrements en Attente d'Approbation</h2>
+        <h2>Enregistrements Journalier</h2>
         <div class="pending-registrations">
             <table>
                 <thead>
@@ -78,13 +69,13 @@ if (isset($_SESSION['nom'],$_SESSION['prenom'],$_SESSION['mail'],$_SESSION['refe
                 </thead>
                 <tbody id="pendingRegistrationsBody">
                     <?php
-                    while ($donnes_enregistrements_attente = $recuperation_jouers->fetch()) {
+                    while ($donnes_enregistrements_attente = $recuperation_joueurs_enregistrer->fetch()) {
                         
                     ?>
                     <tr>
                         <td><?php echo $donnes_enregistrements_attente['id'] ?></td>
                         <td><?php echo $donnes_enregistrements_attente['nom'].' '.$donnes_enregistrements_attente['prenom'] ?></td>
-                        <td><?php echo $donnes_enregistrements_attente['contact'] ?></td>
+                        <td> <a href="https://wa.me/243980331073?text=Bonjour,<?= $donnes_enregistrements_attente['nom'].' '.$donnes_enregistrements_attente['prenom'] ?>.Votre compte est bien créer.votre telephone est : <?= $donnes_enregistrements_attente['contact']?> et mot de passe : 000000. Connectez-vous via https://yebana.cd/login.php"><?php echo $donnes_enregistrements_attente['contact'] ?></a></td>
                         <td><?php echo $donnes_enregistrements_attente['date_enregistrement'].' '.$donnes_enregistrements_attente['heure_enregistrement'] ?></td>
                         
                         
@@ -112,6 +103,7 @@ if (isset($_SESSION['nom'],$_SESSION['prenom'],$_SESSION['mail'],$_SESSION['refe
             -->
         </div>
 
+        <!--
         <h2>Performance des Agents sur le Terrain</h2>
         <div class="agent-performance">
             <table>
@@ -148,6 +140,8 @@ if (isset($_SESSION['nom'],$_SESSION['prenom'],$_SESSION['mail'],$_SESSION['refe
                 </tbody>
             </table>
         </div>
+        
+        -->
     </div>
 
     <nav class="footer-nav">

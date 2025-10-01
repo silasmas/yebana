@@ -10,12 +10,17 @@ if (isset($_SESSION['nom'],$_SESSION['prenom'],$_SESSION['mail'],$_SESSION['refe
 
         $donnees_joueur = $recuperation_joueurs_enregistrer->fetch();
 
+        
+        $recuperation_vues = $db->prepare('SELECT SUM(nombre) as nbr_views FROM `nombre_vues` WHERE (reference_jouers = ?)');
+        $recuperation_vues->execute(array($donnees_joueur['reference']));
+        $nbr_vues = $recuperation_vues->fetch();
+
         if ($nbr_jouers_enregistrer === 0) {
             
             header('location:complete_profile.php');
 
         }
-
+       $_SESSION['id'] = $donnees_joueur['id']; 
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -88,17 +93,17 @@ if (isset($_SESSION['nom'],$_SESSION['prenom'],$_SESSION['mail'],$_SESSION['refe
         <div class="dashboard-section quick-links">
             <h2><i class="fas fa-external-link-alt"></i> Accès Rapide</h2>
             <div class="links-grid">
-                <a href="#" class="quick-link-card">
+                <a href="player_videos.php" class="quick-link-card">
                     <i class="fas fa-video"></i>
                     <span>Mes Vidéos</span>
                 </a>
-                <a href="#" class="quick-link-card">
+                <a href="player_photos.php" class="quick-link-card">
                     <i class="fas fa-chart-bar"></i>
-                    <span>Mes Statistiques</span>
+                    <span>Mes Photos</span>
                 </a>
                 <a href="#" class="quick-link-card">
                     <i class="fas fa-users"></i>
-                    <span>Mon Manager</span>
+                    <span>Vues <?= $nbr_vues['nbr_views'] ?></span>
                 </a>
                 <a href="#" class="quick-link-card">
                     <i class="fas fa-calendar-alt"></i>

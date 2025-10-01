@@ -723,7 +723,7 @@ if (isset($_GET['message']) AND !empty($_GET['message'])) {
                     <div class="popup-content">
                         <h3 id="popupTitle">Notification</h3>
                         <p id="popupMessage" class="popup-message"></p>
-                        <a href="https://whatsapp.com/channel/0029VbBHzH0CXC3OtynxUV1H" style="color:#f5b70e;text-decoration:none;" class="popup-close-btn"> Rejoignez ici !</a>
+                        <a href="login.php" style="color:#f5b70e;text-decoration:none;" class="popup-close-btn"> Connectez-vous !</a>
                     </div>
                 </div>
 
@@ -771,7 +771,7 @@ if (isset($_GET['message']) AND !empty($_GET['message'])) {
                     messagePatience.style.display = 'none'; // Cache le message de patience
                     if (data === 'success') {
 
-                        showPopup("Félicitation ! integrez notre chaîne whatsapp pour plus d'informations");
+                        showPopup("Félicitation ! votre compte à été créer avec succès");
                         messageSucces.style.display = "block";
                         agentRegistrationForm.reset(); // Réinitialise le formulaire
 

@@ -31,9 +31,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         $heure = date('H');
         $heure = $heure.date(':i');
-
         
-        $verification = $db->prepare('SELECT * FROM `pre_enregistrement` WHERE (contact = ?)');
+        $verification = $db->prepare('SELECT * FROM `jouers` WHERE (contact = ?)');
         $verification->execute(array($phone));
         
         $nbr_verification = $verification->rowCount();
@@ -42,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             $reference = uniqid();
             
-            $enregistrement_joueur = $db->prepare('INSERT INTO `pre_enregistrement`(`nom`, `prenom`, `age`, `lieu_naissance`, `taille`, `poid`, `position`, `position_secondaires`, `club`, `pied`, `agent`, `sexe`, `manager`, `contact_manager`, `contact`, `reference`, `profil`, `nationalite`, `heure_enregistrement`) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+            $enregistrement_joueur = $db->prepare('INSERT INTO `jouers` (`nom`, `prenom`, `age`, `lieu_naissance`, `taille`, `poid`, `position`, `position_secondaires`, `club`, `pied`, `agent`, `sexe`, `manager`, `contact_manager`, `contact`, `reference`, `profil`, `nationalite`, `heure_enregistrement`) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
             
             if ($enregistrement_joueur->execute(array($nom,$prenom,$age,$lieu_naissance,$taille,$poid,$position,$position_secondaire,$club,$pied,'enligne',$sexe,$manager,$contact_manager,$phone,$reference,'user.jpg',$nationality,$heure))) {
                 
@@ -64,6 +63,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 
                                 $mise_jour = $db->prepare('UPDATE `pre_enregistrement` SET `profil`= ? WHERE (reference = ?)');
                                 $mise_jour->execute(array($_FILES['fichier']['name'],$reference));
+
+                                $_SESSION['nom'] = $nom;
+                                $_SESSION['prenom'] = $prenom;
+                                $_SESSION['mail'] = ' ';
+                                $_SESSION['contact'] = $phone;
+                                $_SESSION['reference'] = $reference;
+                                $_SESSION['profil'] = $_FILES['fichier']['name'];
+                                $_SESSION['fonction'] = ' ';
+                                $_SESSION['biographie'] = ' ';
+                                $_SESSION['date_adhesion'] = date('Y-m-d');
+                                $_SESSION['contact_whatsapp'] = $phone;
+                                $_SESSION['adresse_physique'] = $adresse;
+                                $_SESSION['acces'] = 'joueur';
 
                                 echo 'success';
 

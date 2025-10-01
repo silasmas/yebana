@@ -75,7 +75,7 @@ if (isset($_SESSION['nom'],$_SESSION['prenom'],$_SESSION['mail'],$_SESSION['refe
                     <tr>
                         <td><?php echo $donnes_enregistrements_attente['id'] ?></td>
                         <td><?php echo $donnes_enregistrements_attente['nom'].' '.$donnes_enregistrements_attente['prenom'] ?></td>
-                        <td> <a href="https://wa.me/243980331073?text=Bonjour,<?= $donnes_enregistrements_attente['nom'].' '.$donnes_enregistrements_attente['prenom'] ?>.Votre compte est bien créer.votre telephone est : <?= $donnes_enregistrements_attente['contact']?> et mot de passe : 000000. Connectez-vous via https://yebana.cd/login.php"><?php echo $donnes_enregistrements_attente['contact'] ?></a></td>
+                        <td> <a href="https://wa.me/<?= $donnes_enregistrements_attente['contact']?>?text=Bonjour,<?= $donnes_enregistrements_attente['nom'].' '.$donnes_enregistrements_attente['prenom'] ?>.Votre compte est bien créer.votre telephone est : <?= $donnes_enregistrements_attente['contact']?> et mot de passe : 000000. Connectez-vous via https://yebana.cd/login.php" target="_black"><?php echo $donnes_enregistrements_attente['contact'] ?></a></td>
                         <td><?php echo $donnes_enregistrements_attente['date_enregistrement'].' '.$donnes_enregistrements_attente['heure_enregistrement'] ?></td>
                         
                         

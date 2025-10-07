@@ -69,6 +69,7 @@ if(isset($_POST['keyword'],$_POST['role'],$_POST['position'],$_POST['nationality
     <link rel="stylesheet" href="style.css">
     <!-- Lien vers le fichier CSS spécifique à la section soccer (pour la nav et le header) -->
     <link rel="stylesheet" href="soccer/soccer.css">
+     <link rel="shortcut icon" href="images/2000 2000.png" type="image/x-icon">
 
     <!-- Inline styles specific to the search and filter page -->
     <style>

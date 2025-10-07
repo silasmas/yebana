@@ -23,6 +23,7 @@ if (isset($_GET['message']) AND !empty($_GET['message'])) {
     <link rel="stylesheet" href="style.css"> <!-- Note: Adjusted path for subfolder -->
     <!-- Lien vers le fichier CSS spécifique à la section soccer (pour le header et le menu de navigation) -->
     <link rel="stylesheet" href="soccer/soccer.css"> <!-- Note: Adjusted path for subfolder -->
+     <link rel="shortcut icon" href="images/2000 2000.png" type="image/x-icon">
 
     <!-- Inline styles specific to the player registration page for commercial agents -->
     <style>

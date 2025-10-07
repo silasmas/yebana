@@ -47,6 +47,7 @@ if (isset($_SESSION['acces']) AND !empty($_SESSION['acces'])) {
     <title>YEBANA - Connexion</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+     <link rel="shortcut icon" href="images/2000 2000.png" type="image/x-icon">
     <style>
         .form-group input[type="text"],
         .form-group input[type="email"],

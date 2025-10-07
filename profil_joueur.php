@@ -73,13 +73,14 @@ if (isset($_GET['joueur'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YEBANA - Profil de Samuel Eto'o</title>
+    <title>YEBANA - Profil de <?php echo $donnees['nom'].' '.$donnees['prenom'] ?></title>
     <!-- Lien vers Font Awesome pour les icônes -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Lien vers le fichier CSS principal global (pour les variables et styles de base) -->
     <link rel="stylesheet" href="style.css">
     <!-- Lien vers le fichier CSS spécifique à la section soccer (pour la nav et le header) -->
     <link rel="stylesheet" href="soccer/soccer.css">
+     <link rel="shortcut icon" href="images/2000 2000.png" type="image/x-icon">
 
     <!-- Inline styles specific to the player profile view page -->
    <style>

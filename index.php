@@ -26,6 +26,7 @@ $recuperation_infos_joueurs->execute(array());
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YEBANA - Le Réseau Football Africain</title>
     <!-- Lien vers Font Awesome pour les icônes -->
+     <link rel="shortcut icon" href="images/2000 2000.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Lien vers le fichier CSS principal global (pour les variables de couleur et styles de base) -->
     <link rel="stylesheet" href="style.css">

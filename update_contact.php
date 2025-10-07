@@ -16,7 +16,7 @@ while ($row = $stmt->fetch()) {
     if (strpos($numero, 243) === 0) {
         // Déjà au bon format
         $numeroFinal = $numero;
-    }} elseif (strpos($numero, +243) === 0) {
+    } elseif (strpos($numero, +243) === 0) {
         // Commence par 0 → on enlève le 0 et on ajoute 243
         $numeroFinal = "243" . substr($numero, 1);
     }

@@ -564,9 +564,9 @@ $recuperation_infos_joueurs->execute(array());
             </div>
             <div class="header-user">
                 <!-- Links for public actions -->
-                <a href="live/" style="text-decoration: none; color: inherit; display: flex; align-items: center;">
+                <a href="login.php" style="text-decoration: none; color: inherit; display: flex; align-items: center;">
                     <i class="fas fa-sign-in-alt"></i>
-                    <span>FOOT TV</span>
+                    <span>Se Connecter</span>
                 </a>
             </div>
         </div>
@@ -575,8 +575,8 @@ $recuperation_infos_joueurs->execute(array());
     <div class="hero-section">
         <h1>Découvrez les Talents Émergents du Football Africain</h1>
         <p>YEBANA SPORT connecte les jeunes prodiges avec les clubs, managers et recruteurs du monde entier.</p>
-        <a href="login.php" class="hero-btn">
-            <i class="fas fa-user-plus"></i> Rejoignez-nous !
+        <a href="landing.php" class="hero-btn">
+            <i class="fab fa-google-play"></i> Telecharger L'application !
         </a>
     </div>
 

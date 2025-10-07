@@ -17,19 +17,26 @@ echo "<h2>Liste des doublons (même numéro de téléphone)</h2>";
 if ($result->rowCount() > 0) {
     while ($row = $result->fetch()) {
         $contact = $row['contact'];
-        $count   = $row['total'];
 
-        echo "<p><b>Numéro :</b> $contact → trouvé $count fois</p>";
-
-        // Montrer les utilisateurs concernés
-        $sqlUsers = "SELECT id, nom, prenom, mail FROM utilisateurs WHERE contact='$contact'";
+        // Étape 2 : sélectionner tous les utilisateurs ayant ce numéro
+        $sqlUsers = "SELECT id FROM utilisateurs WHERE contact='$contact' ORDER BY id ASC";
         $resUsers = $db->query($sqlUsers);
 
-        echo "<ul>";
+        $first = true; // pour garder le premier compte
         while ($userRow = $resUsers->fetch()) {
-            echo "<li>ID: ".$userRow['id']." | ".$userRow['nom']." ".$userRow['prenom']." | ".$userRow['mail']."</li>";
+            $id = $userRow['id'];
+
+            if ($first) {
+                // On garde ce premier utilisateur
+                $first = false;
+            } else {
+                // Supprimer les autres
+                $delete = "DELETE FROM utilisateurs WHERE id=$id";
+                $db->query($delete);
+                
+                echo "Doublon supprimé : utilisateur ID $id avec numéro $contact <br>";
+            }
         }
-        echo "</ul>";
     }
 } else {
     echo "<p>Aucun doublon trouvé ✅</p>";

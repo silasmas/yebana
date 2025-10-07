@@ -434,7 +434,7 @@
     </section>
 
     <script>
-        const APK_URL = 'https://yebana.cd/images/YebanaSport_1_1.0.apk'; // <-- remplacer par ton URL
+        const APK_URL = 'images/YebanaSport_1_1.0.apk'; // <-- remplacer par ton URL
         const FILENAME = 'YebanaSport_1_1.0.apk';
 
         const status = document.getElementById('status');

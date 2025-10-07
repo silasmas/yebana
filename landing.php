@@ -366,8 +366,8 @@
                     <i class="fab fa-apple"></i>
                     <span>Disponible bientôt sur l'App Store</span>
                 </button>
-                <p id="status"></p>
             </div>
+            <p id="status"></p>
             
             <i class="fas fa-arrow-down down-arrow"></i>
         </div>

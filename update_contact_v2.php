@@ -6,7 +6,7 @@ echo "<h3>🚀 Correction des numéros commençant par 2430...</h3>";
 // --------------------------
 // RÉCUPÉRATION DES NUMÉROS
 // --------------------------
-$sql = "SELECT id, contact FROM jouers WHERE contact LIKE '2430%'";
+$sql = "SELECT id, contact FROM utilisateurs WHERE contact LIKE '2430%'";
 $result = $db->query($sql);
 
 $count = 0;
@@ -25,7 +25,7 @@ if ($result->rowCount() > 0) {
             $new_contact = '243' . substr($contact, 4);
 
             // Mettre à jour la base
-            $update = $db->prepare("UPDATE jouers SET contact=? WHERE id=?");
+            $update = $db->prepare("UPDATE utilisateurs SET contact=? WHERE id=?");
             $update->execute([$new_contact, $id]);
 
             echo "✅ Numéro ID $id corrigé : $contact → <b>$new_contact</b><br>";

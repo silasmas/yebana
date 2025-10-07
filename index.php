@@ -504,54 +504,6 @@ $recuperation_infos_joueurs->execute(array());
                 padding: 2px;
             }
         }
-        /* Pagination styles (reused from showcase.php) */
-        .pagination-controls {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            margin-top: 30px;
-            margin-bottom: 40px;
-        }
-
-        .pagination-controls button {
-            background-color: var(--primary-color);
-            color: var(--white-color);
-            padding: 12px 25px;
-            border: none;
-            border-radius: 25px;
-            font-size: 1em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            box-shadow: 0 3px 10px var(--primary-shadow-color);
-        }
-
-        .pagination-controls button i {
-            margin: 0 5px;
-        }
-
-        .pagination-controls button:hover:not(:disabled) {
-            background-color: #0056b3;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px var(--primary-shadow-color);
-        }
-
-        .pagination-controls button:disabled {
-            background-color: var(--border-color);
-            color: var(--medium-text-color);
-            cursor: not-allowed;
-            box-shadow: none;
-        }
-
-        .pagination-info {
-            font-size: 1em;
-            color: var(--dark-text-color);
-            font-weight: 600;
-            white-space: nowrap;
-        }
 
     </style>
 </head>
@@ -577,7 +529,10 @@ $recuperation_infos_joueurs->execute(array());
         <h1>Découvrez les Talents Émergents du Football Africain</h1>
         <p>YEBANA SPORT connecte les jeunes prodiges avec les clubs, managers et recruteurs du monde entier.</p>
         <a href="landing.php" class="hero-btn">
-            <i class="fab fa-google-play"></i> Telecharger L'application !
+            <i class="fab fa-google-play"></i> Telecharger
+        </a>
+        <a href="login.php" class="hero-btn" style="background-color: #f5b70e;">
+            <i class="fas fa-sign-in-alt"></i> Connexion
         </a>
     </div>
 

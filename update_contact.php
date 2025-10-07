@@ -2,7 +2,7 @@
 include('db.php');
 
 // Récupérer tous les utilisateurs
-$sql = "SELECT id, contact FROM utilisateurs";
+$sql = "SELECT id, contact FROM jouers";
 $stmt = $db->query($sql);
 
 while ($row = $stmt->fetch()) {
@@ -13,13 +13,17 @@ while ($row = $stmt->fetch()) {
     $numero = preg_replace('/\D/', '', $numero);
 
     // Normaliser le numéro
-    if (strpos($numero, "243") === 0) {
+    if (strpos($numero, 243) === 0) {
         // Déjà au bon format
         $numeroFinal = $numero;
-    } elseif (strpos($numero, "0") === 0) {
+    }} elseif (strpos($numero, +243) === 0) {
         // Commence par 0 → on enlève le 0 et on ajoute 243
         $numeroFinal = "243" . substr($numero, 1);
-    } elseif (strpos($numero, "9") === 0) {
+    }
+     elseif (strpos($numero, 0) === 0) {
+        // Commence par 0 → on enlève le 0 et on ajoute 243
+        $numeroFinal = "243" . substr($numero, 1);
+    } elseif (strpos($numero, 9) === 0) {
         // Commence par 9 (ex: 89xxxxxxx ou 90xxxxxxx)
         $numeroFinal = "243" . $numero;
     } else {
@@ -28,7 +32,7 @@ while ($row = $stmt->fetch()) {
     }
 
     // Mettre à jour dans la base
-    $update = $db->prepare("UPDATE utilisateurs SET contact = :contact WHERE id = :id");
+    $update = $db->prepare("UPDATE jouers SET contact = :contact WHERE id = :id");
     $update->execute([
         ':contact' => $numeroFinal,
         ':id' => $id

@@ -621,7 +621,7 @@ if (isset($_GET['message']) AND !empty($_GET['message'])) {
                         <option value="263">🇿🇼 +263 (Zimbabwe)</option>
                         <option value="971">UAE +971 (Dubai)</option>
                     </select>
-                    <input type="tel" id="telephone" name="telephone" placeholder="ex : 999999999" required>
+                    <input type="number" id="telephone" name="telephone" placeholder="ex : 999999999" required>
                     </div>
                 </div>
                     </div>

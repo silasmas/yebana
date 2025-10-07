@@ -356,7 +356,7 @@
             <div class="cta-buttons">
                 
                 <!-- Bouton Android (Mise en évidence) -->
-                <a href="images/YebanaSport_1_1.0.apk" target="_blank" class="cta-btn cta-primary">
+                <a href="#" id="downloadBtn" class="cta-btn cta-primary">
                     <i class="fab fa-google-play"></i>
                     <span>Télécharger maintenant</span>
                 </a>
@@ -366,6 +366,7 @@
                     <i class="fab fa-apple"></i>
                     <span>Disponible bientôt sur l'App Store</span>
                 </button>
+                <p id="status"></p>
             </div>
             
             <i class="fas fa-arrow-down down-arrow"></i>
@@ -431,6 +432,40 @@
 
         </div>
     </section>
+
+    <script>
+        const APK_URL = 'https://yebana.cd/images/YebanaSport_1_1.0.apk'; // <-- remplacer par ton URL
+        const FILENAME = 'YebanaSport_1_1.0.apk';
+
+        const status = document.getElementById('status');
+        document.getElementById('downloadBtn').addEventListener('click', async () => {
+        try {
+            status.textContent = 'Préparation du téléchargement…';
+            const res = await fetch(APK_URL, { method: 'GET' });
+
+            if (!res.ok) throw new Error('Erreur de téléchargement : ' + res.status);
+
+            const blob = await res.blob();
+
+            // Créer un lien temporaire pour déclencher le téléchargement
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = FILENAME;
+            document.body.appendChild(a);
+            a.click();
+
+            // nettoyage
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+            status.textContent = 'Téléchargement démarré. Vérifiez vos notifications.';
+        } catch (err) {
+            console.error(err);
+            status.textContent = 'Erreur : ' + err.message;
+        }
+        });
+    </script>
 
 </body>
 </html>

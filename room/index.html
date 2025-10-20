@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formation en Génie Logiciel Assisté par l'IA</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+     /* --- Variables de charte Yebana.cd --- */
+    :root {
+        --primary-color: #0e1125; /* Bleu Yebana */
+        --secondary-color: #F3F6FB; /* Fond clair */
+        --text-color: #1F2937; /* Texte sombre */
+        --bot-color: #007bff; /* Bleu plus foncé pour bot */
+        --border-radius: 12px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: #0e1125;
+      color: #fff;
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(135deg, #007bff, #6610f2);
+      padding: 2rem 10%;
+      text-align: center;
+      color: white;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: .5rem;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+
+    .hero {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      padding: 3rem 10%;
+    }
+
+    .hero-text {
+      flex: 1;
+      min-width: 300px;
+      animation: fadeInLeft 1s ease-in-out;
+    }
+
+    @keyframes fadeInLeft {
+      from {opacity: 0; transform: translateX(-50px);}
+      to {opacity: 1; transform: translateX(0);}
+    }
+
+    .hero h2 {
+      font-size: 2.2rem;
+      color: #00bfff;
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+    }
+
+    .hero img {
+      width: 400px;
+      max-width: 100%;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.4);
+      animation: fadeInRight 1s ease-in-out;
+    }
+
+    @keyframes fadeInRight {
+      from {opacity: 0; transform: translateX(50px);}
+      to {opacity: 1; transform: translateX(0);}
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.8rem 1.5rem;
+      background: #00bfff;
+      color: white;
+      border-radius: 10px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: #6610f2;
+    }
+
+    section {
+      padding: 3rem 10%;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      text-align: center;
+    }
+
+    .feature-box {
+      background: #161b3b;
+      border-radius: 15px;
+      padding: 2rem 1.5rem;
+      transition: 0.3s;
+    }
+
+    .feature-box:hover {
+      transform: translateY(-10px);
+      background: #1c245a;
+    }
+
+    .feature-box i {
+      font-size: 2rem;
+      color: #00bfff;
+      margin-bottom: 1rem;
+    }
+
+    .cta {
+      text-align: center;
+      padding: 4rem 10%;
+      background: linear-gradient(135deg, #6610f2, #007bff);
+    }
+
+    .cta h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .cta p {
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      background: #0a0d1f;
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
+
+    /* Animation légère lors du scroll */
+    .hidden {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 1s ease;
+    }
+
+    .show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===== POPUP FORM ===== */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    .modal-content {
+      background: #161b3b;
+      padding: 2rem;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      position: relative;
+      animation: zoomIn 0.4s ease;
+    }
+
+    @keyframes zoomIn {
+      from {transform: scale(0.5); opacity: 0;}
+      to {transform: scale(1); opacity: 1;}
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px; right: 15px;
+      font-size: 1.5rem;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    form input, form select {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+    }
+
+    form button {
+      background: #00bfff;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    form button:hover {
+      background: #6610f2;
+    }
+
+    /* ===== RESPONSIVE DESIGN ===== */
+
+/* Tablettes (max-width: 992px) */
+@media (max-width: 992px) {
+  header h1 {
+    font-size: 2rem;
+  }
+
+  .hero {
+    padding: 2rem 5%;
+  }
+
+  .hero h2 {
+    font-size: 1.8rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  .feature-box {
+    padding: 1.5rem 1rem;
+  }
+
+  .cta h2 {
+    font-size: 1.6rem;
+  }
+}
+
+/* Mobiles (max-width: 768px) */
+@media (max-width: 768px) {
+  header {
+    padding: 1.5rem 5%;
+  }
+
+  header h1 {
+    font-size: 1.6rem;
+  }
+
+  header p {
+    font-size: 0.95rem;
+  }
+
+  .hero {
+    flex-direction: column;
+    text-align: center;
+    padding: 2rem 5%;
+  }
+
+  .hero-text {
+    order: 2;
+  }
+
+  .hero img {
+    order: 1;
+    width: 100%;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h2 {
+    font-size: 1.6rem;
+  }
+
+  .hero p {
+    font-size: 0.95rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .btn {
+    padding: 0.7rem 1.2rem;
+    font-size: 0.95rem;
+  }
+
+  section {
+    padding: 2rem 5%;
+  }
+
+  .features {
+    grid-template-columns: 1fr;
+  }
+
+  .feature-box h3 {
+    font-size: 1.1rem;
+  }
+
+  .feature-box p {
+    font-size: 0.9rem;
+  }
+
+  .cta {
+    padding: 3rem 5%;
+  }
+
+  .cta h2 {
+    font-size: 1.4rem;
+  }
+
+  .cta p {
+    font-size: 0.95rem;
+  }
+
+  footer {
+    font-size: 0.8rem;
+  }
+
+  /* Formulaire popup */
+  .modal-content {
+    width: 90%;
+    padding: 1.5rem;
+  }
+
+  .modal-content h3 {
+    font-size: 1.3rem;
+  }
+
+  form input, form select {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  form button {
+    font-size: 0.95rem;
+    padding: 8px 16px;
+  }
+}
+
+/* Très petits écrans (max-width: 480px) */
+@media (max-width: 480px) {
+  header h1 {
+    font-size: 1.4rem;
+  }
+
+  .hero h2 {
+    font-size: 1.3rem;
+  }
+
+  .hero p {
+    font-size: 0.9rem;
+  }
+
+  .btn {
+    font-size: 0.85rem;
+    padding: 0.6rem 1rem;
+  }
+
+  .cta h2 {
+    font-size: 1.2rem;
+  }
+
+  .cta p {
+    font-size: 0.9rem;
+  }
+
+  footer {
+    font-size: 0.75rem;
+  }
+}
+
+.btn-close {
+      background: transparent;
+      border: none;
+      color: #555;
+      margin-top: 15px;
+      cursor: pointer;
+    }
+
+    .loading {
+      display: none;
+      color: #007bff;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    .message {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    .message.success {
+      color: green;
+    }
+
+    .message.error {
+      color: red;
+    }
+    .technos {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
+      margin-top: 40px;
+    }
+
+    .tech-item {
+      text-align: center;
+      flex: 1 1 150px;
+    }
+
+    .tech-item i {
+      font-size: 40px;
+      color: #007bff;
+      margin-bottom: 10px;
+    }
+
+    /* === Bouton flottant === */
+    .chat-button {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      font-size: 24px;
+      transition: 0.3s;
+      z-index: 999;
+    }
+
+    .chat-button:hover {
+      background: #0056b3;
+      transform: scale(1.1);
+    }
+
+    /* === Pop-up de chat === */
+    .chat-popup {
+      display: none;
+      position: fixed;
+      bottom: 90px;
+      right: 25px;
+      width: 400px;
+      height: 550px;
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      z-index: 1000;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    /* En-tête du chat */
+    .chat-header {
+      background: linear-gradient(90deg, #007bff, #004aad);
+      color: white;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .chat-header h3 {
+      margin: 0;
+      font-size: 1.1em;
+    }
+
+    .chat-header button {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.3em;
+      cursor: pointer;
+    }
+
+    /* Zone du chat */
+    .chat-body {
+      padding: 15px;
+      height: 400px;
+      overflow-y: auto;
+      background: #f9fafc;
+    }
+
+   
+
+    /* Pied du chat */
+    .chat-footer {
+      display: flex;
+      padding: 10px;
+      border-top: 1px solid #ddd;
+      background: #fff;
+    }
+
+    .chat-footer input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 25px;
+      outline: none;
+    }
+
+    .chat-footer button {
+      background: #007bff;
+      border: none;
+      color: white;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      margin-left: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .chat-footer button:hover {
+      background: #0056b3;
+    }
+
+    /* === Responsive === */
+    @media (max-width: 600px) {
+      .chat-popup {
+        width: 100%;
+        height: 100%;
+        bottom: 0;
+        right: 0;
+        border-radius: 0;
+      }
+    }
+
+    #chat-box {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background-color: var(--secondary-color);
+        }
+
+        .message {
+            max-width: 70%;
+            padding: 10px 15px;
+            border-radius: var(--border-radius);
+            word-wrap: break-word;
+            line-height: 1.4;
+        }
+
+        .user {
+            background-color: #E0E7FF;
+            align-self: flex-end;
+            color: var(--text-color);
+        }
+
+        .bot {
+            background-color: var(--bot-color);
+            align-self: flex-start;
+            color: rgb(24, 1, 1);
+        }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Formation en Génie Logiciel Assisté par l'IA</h1>
+    <p>Deviens un développeur complet et autonome en 8 semaines – Début le <strong>3 Novembre</strong> !</p>
+  </header>
+
+  <section class="hero">
+    <div class="hero-text">
+      <h2>Crée ton futur digital 🚀</h2>
+      <p>Apprends à concevoir des <strong>applications web, mobiles, logiciels desktop et programmes IA</strong> grâce à une méthode pratique et innovante.  
+      Avec notre approche, tu apprendras à <strong>coder plus vite</strong> et à <strong>travailler comme un vrai freelance.</strong></p>
+      <a class="btn" id="openModal">Je m’inscris maintenant</a>
+    </div>
+    <img src="le-support-technique-supervise-le-reseau-neuronal-d-ia.jpg" alt="Formation IA">
+  </section>
+
+ <section>
+    <div class="technos">
+      <div class="tech-item">
+        <i class="fa-brands fa-html5"></i>
+        <p>HTML5</p>
+      </div>
+      <div class="tech-item">
+        <i class="fa-brands fa-css3-alt"></i>
+        <p>CSS3</p>
+      </div>
+      <div class="tech-item">
+        <i class="fa-brands fa-square-js"></i>
+        <p>JavaScript</p>
+      </div>
+      <div class="tech-item">
+        <i class="fa-brands fa-php"></i>
+        <p>PHP</p>
+      </div>
+      <div class="tech-item">
+        <i class="fa-solid fa-database"></i>
+        <p>MySQL</p>
+      </div>
+    </div>
+ </section>
+
+  <section>
+    <h2 style="text-align:center; margin-bottom:2rem;">Pourquoi suivre cette formation ?</h2>
+    <div class="features">
+      <div class="feature-box hidden">
+        <i class="fa-solid fa-brain"></i>
+        <h3>IA & Productivité</h3>
+        <p>Découvre comment utiliser l’intelligence artificielle pour accélérer ton apprentissage et ton code.</p>
+      </div>
+      <div class="feature-box hidden">
+        <i class="fa-solid fa-laptop-code"></i>
+        <h3>Projets Réels</h3>
+        <p>Travaille sur des applications web concrètes que tu pourras montrer à tes futurs clients.</p>
+      </div>
+      <div class="feature-box hidden">
+        <i class="fa-solid fa-user-tie"></i>
+        <h3>Prépare-toi au Freelance</h3>
+        <p>Apprends à travailler en autonomie et à vendre tes compétences en ligne.</p>
+      </div>
+      <div class="feature-box hidden">
+        <i class="fa-solid fa-certificate"></i>
+        <h3>Certificat de Compétence</h3>
+        <p>Reçois un certificat professionnel prouvant tes nouvelles compétences.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <h2>Inscris-toi dès maintenant</h2>
+    <p><i class="fa-solid fa-calendar-days"></i> Début : <strong>03 Novembre</strong> &nbsp;&nbsp; | &nbsp;&nbsp; <i class="fa-solid fa-clock"></i> Durée : <strong>8 semaines</strong><br><br>
+       <i class="fa-solid fa-location-dot"></i> Local 81 Immeuble Botour, Avenue de la Presse, Kinshasa Gombe</p>
+    <a class="btn" id="openModal2">Je réserve ma place (59$)</a>
+  </section>
+
+  <footer>
+    © 2025 Yebana Academy — Tous droits réservés.
+  </footer>
+
+  <!-- ============ POPUP FORM ============ -->
+  <div class="modal" id="formModal">
+    <div class="modal-content">
+      <span class="close-btn" id="closeModal">&times;</span>
+      <h3>Réserve ta place 🧠</h3>
+      <form id="formReservation">
+        <input type="text" name="nom"  placeholder="Nom complet" required>
+        <input type="email" name="email"  placeholder="Adresse email" required>
+        <input type="tel" name="telephone"  placeholder="Numéro de téléphone" required>
+        <select required name="niveau" >
+          <option value="">Ton niveau actuel</option>
+          <option>Débutant</option>
+          <option>Intermédiaire</option>
+        </select>
+        <button type="submit">Envoyer ma demande</button>
+      </form>
+
+      
+      <div id="loading" class="loading">⏳ Envoi en cours...</div>
+      <div id="message" class="message"></div>
+    </div>
+  </div>
+
+  <!-- Bouton flottant -->
+  <button class="chat-button" id="openChat">
+    <i class="fa-solid fa-comments"></i>
+  </button>
+
+  <!-- Pop-up de chat -->
+  <div class="chat-popup" id="chatPopup">
+    <div class="chat-header">
+      <h3>Yebana Assistant</h3>
+      <button id="closeChat"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <div class="chat-body" id="chatBody">
+      <div class="chat-message bot">
+        <div id="chat-box"></div>
+      </div>
+    </div>
+
+    <div class="chat-footer">
+      <input type="text" id="userInput" placeholder="Écris ton message...">
+      <button id="sendMessage"><i class="fa-solid fa-paper-plane"></i></button>
+    </div>
+  </div>
+
+  <script>
+    // Animation scroll
+    const hiddenElements = document.querySelectorAll('.hidden');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('show');
+      });
+    });
+    hiddenElements.forEach(el => observer.observe(el));
+
+    // Popup modal
+    const modal = document.getElementById('formModal');
+    const openButtons = [document.getElementById('openModal'), document.getElementById('openModal2')];
+    const closeModal = document.getElementById('closeModal');
+
+    openButtons.forEach(btn => btn.addEventListener('click', () => {
+      modal.style.display = 'flex';
+    }));
+
+    closeModal.onclick = () => modal.style.display = 'none';
+    window.onclick = (e) => { if (e.target === modal) modal.style.display = 'none'; }
+
+    document.getElementById('formReservation').addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+        const loading = document.getElementById('loading');
+        const message = document.getElementById('message');
+
+        loading.style.display = 'block';
+        message.innerHTML = '';
+
+        try {
+            const response = await fetch('save_reservation.php', {
+            method: 'POST',
+            body: formData
+            });
+
+            const result = await response.json();
+            loading.style.display = 'none';
+
+            if (result.status === 'success') {
+            message.innerHTML = "✅ Réservation enregistrée avec succès !";
+            message.className = "message success";
+            this.reset();
+            setTimeout(() => {
+                document.getElementById('formulaire-popup').style.display = 'none';
+            }, 2000);
+            } else {
+            message.innerHTML = "❌ " + result.message;
+            message.className = "message error";
+            }
+
+        } catch (error) {
+            loading.style.display = 'none';
+            message.innerHTML = "⚠️ Erreur de connexion au serveur.";
+            message.className = "message error";
+        }
+    });
+
+    const openChat = document.getElementById('openChat');
+    const closeChat = document.getElementById('closeChat');
+    const chatPopup = document.getElementById('chatPopup');
+    const chatBody = document.getElementById('chatBody');
+    const sendMessage = document.getElementById('sendMessage');
+    const userInput = document.getElementById('userInput');
+
+    // Ouvrir et fermer le chat
+    openChat.addEventListener('click', () => {
+      chatPopup.style.display = 'block';
+    });
+
+    closeChat.addEventListener('click', () => {
+      chatPopup.style.display = 'none';
+    });
+
+    // Simuler l’envoi d’un message
+    sendMessage.addEventListener('click', () => {
+      sendQuestion();
+    });
+
+    async function sendQuestion() {
+        const questionInput = document.getElementById('userInput');
+        const chatBox = document.getElementById('chat-box');
+        const question = questionInput.value.trim();
+        if (!question) return;
+
+        // Affiche la question
+        chatBox.innerHTML += `<div class="message user">${question}</div>`;
+        chatBox.scrollTop = chatBox.scrollHeight;
+        questionInput.value = "";
+
+        try {
+            // Récupérer les données depuis la base
+            const contextResponse = await fetch('get_data.php');
+            const contextJson = await contextResponse.json();
+            const contextData = contextJson.context;
+
+            const prompt = `Réponds comme un agent commerciale de manière plus humain en convaicant l'apprenant et uniquement en te basant sur ces informations et les réponses ne doit pas être très longues :\n${contextData}\n\nQuestion: ${question}\nRéponse:`;
+
+            // Envoyer à OpenAI
+            const response = await fetch('ask_openai.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ prompt: prompt })
+            });
+
+            const data = await response.json();
+            const answer = data.answer;
+
+            // Affiche la réponse
+            chatBox.innerHTML += `<div class="message bot">${answer}</div>`;
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+        } catch (err) {
+            chatBox.innerHTML += `<div class="message bot">Une erreur est survenue.</div>`;
+            chatBox.scrollTop = chatBox.scrollHeight;
+            console.error(err);
+        }
+    }
+
+    // Entrée pour envoyer
+    document.getElementById('userInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') sendQuestion();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bouton Chat Pop-up</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      margin: 0;
+      background: #f5f7fa;
+    }
+
+    /* === Bouton flottant === */
+    .chat-button {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      font-size: 24px;
+      transition: 0.3s;
+      z-index: 999;
+    }
+
+    .chat-button:hover {
+      background: #0056b3;
+      transform: scale(1.1);
+    }
+
+    /* === Pop-up de chat === */
+    .chat-popup {
+      display: none;
+      position: fixed;
+      bottom: 90px;
+      right: 25px;
+      width: 400px;
+      height: 550px;
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      z-index: 1000;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    /* En-tête du chat */
+    .chat-header {
+      background: linear-gradient(90deg, #007bff, #004aad);
+      color: white;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .chat-header h3 {
+      margin: 0;
+      font-size: 1.1em;
+    }
+
+    .chat-header button {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.3em;
+      cursor: pointer;
+    }
+
+    /* Zone du chat */
+    .chat-body {
+      padding: 15px;
+      height: 400px;
+      overflow-y: auto;
+      background: #f9fafc;
+    }
+
+    .chat-message {
+      margin-bottom: 10px;
+    }
+
+    .chat-message.user {
+      text-align: right;
+    }
+
+    .chat-message p {
+      display: inline-block;
+      padding: 10px 14px;
+      border-radius: 15px;
+      max-width: 80%;
+    }
+
+    .chat-message.user p {
+      background: #007bff;
+      color: white;
+      border-bottom-right-radius: 0;
+    }
+
+    .chat-message.bot p {
+      background: #e6e6e6;
+      color: #333;
+      border-bottom-left-radius: 0;
+    }
+
+    /* Pied du chat */
+    .chat-footer {
+      display: flex;
+      padding: 10px;
+      border-top: 1px solid #ddd;
+      background: #fff;
+    }
+
+    .chat-footer input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 25px;
+      outline: none;
+    }
+
+    .chat-footer button {
+      background: #007bff;
+      border: none;
+      color: white;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      margin-left: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .chat-footer button:hover {
+      background: #0056b3;
+    }
+
+    /* === Responsive === */
+    @media (max-width: 600px) {
+      .chat-popup {
+        width: 100%;
+        height: 100%;
+        bottom: 0;
+        right: 0;
+        border-radius: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Bouton flottant -->
+  <button class="chat-button" id="openChat">
+    <i class="fa-solid fa-comments"></i>
+  </button>
+
+  <!-- Pop-up de chat -->
+  <div class="chat-popup" id="chatPopup">
+    <div class="chat-header">
+      <h3>Yebana Assistant</h3>
+      <button id="closeChat"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <div class="chat-body" id="chatBody">
+      <div class="chat-message bot">
+        <p>👋 Bonjour ! Comment puis-je t’aider aujourd’hui ?</p>
+      </div>
+    </div>
+
+    <div class="chat-footer">
+      <input type="text" id="userInput" placeholder="Écris ton message...">
+      <button id="sendMessage"><i class="fa-solid fa-paper-plane"></i></button>
+    </div>
+  </div>
+
+  <script>
+    const openChat = document.getElementById('openChat');
+    const closeChat = document.getElementById('closeChat');
+    const chatPopup = document.getElementById('chatPopup');
+    const chatBody = document.getElementById('chatBody');
+    const sendMessage = document.getElementById('sendMessage');
+    const userInput = document.getElementById('userInput');
+
+    // Ouvrir et fermer le chat
+    openChat.addEventListener('click', () => {
+      chatPopup.style.display = 'block';
+    });
+
+    closeChat.addEventListener('click', () => {
+      chatPopup.style.display = 'none';
+    });
+
+    // Simuler l’envoi d’un message
+    sendMessage.addEventListener('click', () => {
+      const text = userInput.value.trim();
+      if (text !== "") {
+        const userMsg = document.createElement('div');
+        userMsg.classList.add('chat-message', 'user');
+        userMsg.innerHTML = `<p>${text}</p>`;
+        chatBody.appendChild(userMsg);
+        userInput.value = "";
+
+        setTimeout(() => {
+          const botMsg = document.createElement('div');
+          botMsg.classList.add('chat-message', 'bot');
+          botMsg.innerHTML = `<p>Merci pour ton message ! 😊</p>`;
+          chatBody.appendChild(botMsg);
+          chatBody.scrollTop = chatBody.scrollHeight;
+        }, 700);
+      }
+    });
+  </script>
+
+</body>
+</html>

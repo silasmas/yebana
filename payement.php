@@ -634,7 +634,7 @@
 
                             } else if(code == 1) {
 
-                                alert("Transaction Annuler !" + code );
+                                alert("Transaction échouer solde insuffisant ou mot de passe oublier. code :" + code );
 
                             }
                             else {

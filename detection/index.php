@@ -77,7 +77,7 @@
                       bg-whatsapp hover-bg-whatsapp text-white text-xl md:text-2xl font-bold 
                       py-4 px-8 rounded-full shadow-2xl transition duration-300 ease-in-out transform hover:scale-105 border-4 border-white">
                 <i class="fab fa-whatsapp whatsapp-icon text-3xl"></i>
-                <span>INSCRIVEZ-VOUS VIA WHATSAPP MAINTENANT !</span>
+                <span>INSCRIVEZ-VOUS !</span>
             </a>
             <p class="mt-4 text-sm font-semibold text-gray-200">Places limitées. Contactez-nous pour les détails (date, lieu et frais).</p>
         </div>

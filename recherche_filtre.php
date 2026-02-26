@@ -62,7 +62,7 @@ if(isset($_POST['keyword'],$_POST['role'],$_POST['position'],$_POST['nationality
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YEBANA - Recherche et Filtres</title>
+    <title>Zénit - Recherche et Filtres</title>
     <!-- Lien vers Font Awesome pour les icônes -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Lien vers le fichier CSS principal global (pour les variables de couleur et styles de base) -->
@@ -504,7 +504,7 @@ if(isset($_POST['keyword'],$_POST['role'],$_POST['position'],$_POST['nationality
         <div class="header-content">
              <div class="header-logo">
                 <i class="fas fa-futbol"></i>
-                <span> YEBANA</span>
+                <span> Zénit</span>
             </div>
             <div class="header-user">
                 <!-- Links for public actions or user options -->

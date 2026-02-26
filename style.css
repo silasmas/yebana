@@ -4,7 +4,7 @@
 
 /* Définition des variables CSS pour les couleurs */
 :root {
-    --primary-color: #cc0000;          /* Bleu vif (pour les accents, liens) */
+    --primary-color: #f9383f;          /* Bleu vif (pour les accents, liens) */
     --secondary-color: #f5b70e;        /* Vert (pour les boutons d'action) */
     --dark-text-color: #333;           /* Texte sombre général */
     --medium-text-color: #666;         /* Texte secondaire */

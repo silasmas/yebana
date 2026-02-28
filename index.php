@@ -24,7 +24,7 @@ $recuperation_infos_joueurs->execute(array());
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zénit - Le Réseau Football Africain</title>
+    <title>Yebana - Le Réseau Football Africain</title>
     <!-- Lien vers Font Awesome pour les icônes -->
      <link rel="shortcut icon" href="images/2000 2000.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -513,7 +513,7 @@ $recuperation_infos_joueurs->execute(array());
         <div class="header-content">
             <div class="header-logo">
                 <i class="fas fa-futbol"></i>
-                <span> Zénit</span>
+                <span> Yebana</span>
             </div>
             <div class="header-user">
                 <!-- Links for public actions -->
@@ -527,7 +527,7 @@ $recuperation_infos_joueurs->execute(array());
 
     <div class="hero-section">
         <h1>Découvrez les Talents Émergents du Football Africain</h1>
-        <p>Zénit SPORT connecte les jeunes prodiges avec les clubs, managers et recruteurs du monde entier.</p>
+        <p>Yebana SPORT connecte les jeunes prodiges avec les clubs, managers et recruteurs du monde entier.</p>
         <a href="landing.php" class="hero-btn">
             <i class="fab fa-google-play"></i> Telecharger
         </a>
@@ -600,7 +600,7 @@ $recuperation_infos_joueurs->execute(array());
             <a href="#">Conditions d'utilisation</a>
             <a href="inscription.html">S'inscrire</a>
         </div>
-        <p>&copy; 2025 Zénit. Tous droits réservés.</p>
+        <p>&copy; 2025 Yebana. Tous droits réservés.</p>
     </footer>
 
     <!-- Bottom fixed navigation menu - Uses global navigation styles from soccer.css -->
